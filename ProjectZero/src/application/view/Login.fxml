@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.LoginController">
+   <children>
+      <ImageView fitHeight="200.0" fitWidth="160.0" AnchorPane.leftAnchor="115.0" AnchorPane.topAnchor="30.0">
+         <image>
+            <Image url="@../data/images/logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="400.0" fitWidth="410.0" opacity="0.4">
+         <image>
+            <Image url="@../data/images/loginbc.jpg" />
+         </image>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </ImageView>
+      <AnchorPane layoutX="436.0" layoutY="22.0" style="-fx-background-color: #9C2B27;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="460.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <VBox alignment="CENTER" layoutX="131.0" layoutY="52.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <Label layoutX="131.0" layoutY="52.0" text="Anmelden" textFill="#dad6d6">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <VBox spacing="10.0">
+                     <children>
+                        <VBox>
+                           <children>
+                              <JFXTextField fx:id="tFUsernameEmail" focusColor="#0480d8" layoutX="46.0" layoutY="109.0" promptText="Benutzername/Email" unFocusColor="#d0cbcb">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust brightness="0.6" />
+                                 </effect>
+                              </JFXTextField>
+                              <JFXPasswordField fx:id="tFpw" focusColor="#0480d8" layoutX="46.0" layoutY="144.0" promptText="Passwort" unFocusColor="#d0cbcb">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <effect>
+                                    <ColorAdjust brightness="0.6" />
+                                 </effect>
+                              </JFXPasswordField>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <JFXButton onAction="#signIn" prefHeight="25.0" prefWidth="349.0" style="-fx-background-color: #E45652;" text="Login" textFill="#dad6d6">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </JFXButton>
+                  <VBox>
+                     <children>
+                        <Label layoutX="47.0" layoutY="187.0" text="Passwort vergessen" textFill="#6ba4ff" />
+                        <Label layoutX="44.0" layoutY="210.0" text="Benutzername vergessen" textFill="#6ba4ff" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+         <effect>
+            <DropShadow color="RED" />
+         </effect>
+      </AnchorPane>
+      <VBox layoutX="39.0" layoutY="118.0" AnchorPane.topAnchor="230.0">
+         <children>
+            <Label layoutX="39.0" layoutY="118.0" text="Willkommen in ProjectZero" textFill="#dad6d6">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="39.0" layoutY="153.0" text="Hier kann eine kleine Beschreibung oder News stehen" textFill="#dad6d6">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <JFXButton onAction="#register" style="-fx-background-color: #E45652;" text="Registrieren" textFill="#dad6d6">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Label fx:id="closeL" layoutX="766.0" layoutY="6.0" onMouseClicked="#close" onMouseEntered="#enterClose" onMouseExited="#leaveClose" text="X" textFill="#d0cbcb">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="minimizeL" layoutX="745.0" layoutY="-2.0" onMouseClicked="#minimize" onMouseEntered="#enterMinimize" onMouseExited="#leaveMinimize" text="-" textFill="#d0cbcb">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
