@@ -37,7 +37,7 @@
                      <children>
                         <VBox>
                            <children>
-                              <JFXTextField focusColor="#0480d8" layoutX="46.0" layoutY="109.0" promptText="Benutzername/Email" unFocusColor="#d0cbcb">
+                              <JFXTextField fx:id="tFUsernameEmail" focusColor="#0480d8" layoutX="46.0" layoutY="109.0" promptText="Benutzername/Email" unFocusColor="#d0cbcb">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -45,7 +45,7 @@
                                     <ColorAdjust brightness="0.6" />
                                  </effect>
                               </JFXTextField>
-                              <JFXPasswordField focusColor="#0480d8" layoutX="46.0" layoutY="144.0" promptText="Passwort" unFocusColor="#d0cbcb">
+                              <JFXPasswordField fx:id="tFpw" focusColor="#0480d8" layoutX="46.0" layoutY="144.0" promptText="Passwort" unFocusColor="#d0cbcb">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -96,7 +96,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <JFXButton style="-fx-background-color: #E45652;" text="Registrieren" textFill="#dad6d6">
+            <JFXButton onAction="#register" style="-fx-background-color: #E45652;" text="Registrieren" textFill="#dad6d6">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

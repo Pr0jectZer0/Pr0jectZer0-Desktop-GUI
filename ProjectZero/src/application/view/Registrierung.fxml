@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane style="-fx-background-color: #9C2B27;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.RegistrierungController">
+   <children>
+      <VBox alignment="CENTER" layoutX="131.0" layoutY="52.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Label layoutX="131.0" layoutY="52.0" style="-fx-background-color: grey;" text="Registrieren" textFill="#dad6d6">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+            </Label>
+            <VBox spacing="10.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <JFXTextField fx:id="tFUsername" focusColor="#0480d8" layoutX="46.0" layoutY="109.0" promptText="Benutzername" unFocusColor="#d0cbcb">
+                           <effect>
+                              <ColorAdjust brightness="0.6" />
+                           </effect>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="tFEmail" focusColor="#0480d8" promptText="Email-Adresse" unFocusColor="#d0cbcb">
+                           <effect>
+                              <ColorAdjust brightness="0.6" />
+                           </effect>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXPasswordField fx:id="tFPw" focusColor="#0480d8" promptText="Passwort" unFocusColor="#d0cbcb">
+                           <effect>
+                              <ColorAdjust brightness="0.6" />
+                           </effect>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXPasswordField>
+                        <JFXPasswordField fx:id="tFPw2" focusColor="#0480d8" layoutX="46.0" layoutY="144.0" promptText="Passwort erneut eingeben" unFocusColor="#d0cbcb">
+                           <effect>
+                              <ColorAdjust brightness="0.6" />
+                           </effect>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXPasswordField>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </VBox>
+            <JFXButton fx:id="bRegister" onAction="#register" prefHeight="25.0" prefWidth="349.0" style="-fx-background-color: #E45652;" text="Registrieren" textFill="#dad6d6">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+            <VBox>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <effect>
+      <DropShadow color="RED" />
+   </effect>
+</AnchorPane>
