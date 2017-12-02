@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -9,16 +10,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane style="-fx-background-color: #9C2B27;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.RegistrierungController">
+<AnchorPane style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.RegistrierungController">
    <children>
+      <ImageView fitHeight="75.0" fitWidth="60.0" opacity="0.3" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="35.0">
+         <image>
+            <Image url="@../data/images/logo.png" />
+         </image>
+      </ImageView>
       <VBox alignment="CENTER" layoutX="131.0" layoutY="52.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Label layoutX="131.0" layoutY="52.0" style="-fx-background-color: grey;" text="Registrieren" textFill="#dad6d6">
+            <Label layoutX="131.0" layoutY="52.0" text="Neuen Benutzer erstellen" textFill="#dad6d6">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
                <VBox.margin>
-                  <Insets />
+                  <Insets left="70.0" />
                </VBox.margin>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -67,7 +73,7 @@
                   </VBox>
                </children>
                <VBox.margin>
-                  <Insets top="30.0" />
+                  <Insets top="50.0" />
                </VBox.margin>
             </VBox>
             <JFXButton fx:id="bRegister" onAction="#register" prefHeight="25.0" prefWidth="349.0" style="-fx-background-color: #E45652;" text="Registrieren" textFill="#dad6d6">
