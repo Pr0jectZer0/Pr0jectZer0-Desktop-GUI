@@ -1,13 +1,7 @@
 package application.view;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -22,6 +16,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
+/**
+ * Diese Klasse enthält die Controller und Methoden zur Registrierung
+ * 
+ * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ */
 public class RegistrierungController {
 	@FXML
 	private JFXTextField tFUsername;
@@ -33,15 +32,17 @@ public class RegistrierungController {
 	private JFXPasswordField tFPw2;
 	@FXML
 	private JFXButton bRegister;
-	
+
+	/**
+	 * Diese Methode registriert einen Nutzer
+	 */
 	@FXML
 	private void register() {
-		String[][] parameter = {{ "email", tFEmail.getText() }, {"name", tFUsername.getText()}, {"password", tFPw.getText()}};
-		try{
+		String[][] parameter = { { "email", tFEmail.getText() }, { "name", tFUsername.getText() },
+				{ "password", tFPw.getText() } };
+		try {
 			HttpPostRequest.send("user/", parameter);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Fehler!");
 			alert.setHeaderText("Es gab ein Fehler beim Registrieren!");

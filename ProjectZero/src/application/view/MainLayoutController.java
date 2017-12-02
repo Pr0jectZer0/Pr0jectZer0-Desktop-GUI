@@ -16,6 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Main-Controller-Klasse
+ * 
+ * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ */
 public class MainLayoutController implements Initializable {
 	// ########################################################################
 	// Initialisierungen
@@ -42,7 +47,10 @@ public class MainLayoutController implements Initializable {
 	public static AnchorPane rootTerminplanerAnchor;
 	public static AnchorPane rootNotizenAnchor;
 	public static AnchorPane rootSpielebibliothekAnchor;
-	
+
+	/**
+	 * Diese Methode initialisiert den Drawer und Hamburger
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		rootChatr‰umeAnchor = chatr‰umeAnchor;
@@ -68,35 +76,55 @@ public class MainLayoutController implements Initializable {
 		});
 	}
 
-	// ########################################################################
-	// Beenden
-	// ########################################################################
-
+	/**
+	 * Die Methode schlieﬂt die Applikation
+	 */
 	@FXML
 	private void close() {
 		System.exit(0);
 	}
 
-	// ########################################################################
-	// Getters & Setters
-	// ########################################################################
-
+	/**
+	 * Getter
+	 * 
+	 * @return chatr‰umeAnchor
+	 */
 	public AnchorPane getChatr‰umeAnchor() {
 		return chatr‰umeAnchor;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return gruppenAnchor
+	 */
 	public AnchorPane getGruppenAnchor() {
 		return gruppenAnchor;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return terminplanerAnchor
+	 */
 	public AnchorPane getTerminplanerAnchor() {
 		return terminplanerAnchor;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return notizenAnchor
+	 */
 	public AnchorPane getNotizenAnchor() {
 		return notizenAnchor;
 	}
 
+	/**
+	 * Getter
+	 * 
+	 * @return spielebibliothekAnchor
+	 */
 	public AnchorPane getSpielebibliothekAnchor() {
 		return spielebibliothekAnchor;
 	}

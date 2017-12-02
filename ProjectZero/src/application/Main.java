@@ -19,19 +19,18 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Diese Klasse startet das Login-Fenster
+ *  @author Dorsch, Paul, Deutsch, Penner, Kramer
+ */
 public class Main extends Application {
-	// ########################################################################
-	// Initialisierungen
-	// ########################################################################
-	
 	private Stage loginStage;
 	private double xOffset = 0;
-    private double yOffset = 0;
+	private double yOffset = 0;
 
-	// ########################################################################
-	// Initialisierungen der Fenster
-	// ########################################################################
-
+	/**
+	 * Initialisiert und Startet das loginStage (Login-Fenster)
+	 */
 	@Override
 	public void start(Stage loginStage) {
 		try {
@@ -41,19 +40,19 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("view/Login.fxml"));
 			AnchorPane loginAnchor = (AnchorPane) loader.load();
 			loginAnchor.setOnMousePressed(new EventHandler<MouseEvent>() {
-	            @Override
-	            public void handle(MouseEvent event) {
-	                xOffset = event.getSceneX();
-	                yOffset = event.getSceneY();
-	            }
-	        });
+				@Override
+				public void handle(MouseEvent event) {
+					xOffset = event.getSceneX();
+					yOffset = event.getSceneY();
+				}
+			});
 			loginAnchor.setOnMouseDragged(new EventHandler<MouseEvent>() {
-	            @Override
-	            public void handle(MouseEvent event) {
-	            	loginStage.setX(event.getScreenX() - xOffset);
-	            	loginStage.setY(event.getScreenY() - yOffset);
-	            }
-	        });
+				@Override
+				public void handle(MouseEvent event) {
+					loginStage.setX(event.getScreenX() - xOffset);
+					loginStage.setY(event.getScreenY() - yOffset);
+				}
+			});
 			Scene scene = new Scene(loginAnchor);
 			LoginController controller = loader.getController();
 			controller.setMain(this);
@@ -91,18 +90,20 @@ public class Main extends Application {
 		}
 	}
 
-	// ########################################################################
-	// Start
-	// ########################################################################
-
+	/**
+	 * Aufruf der Start()-Methode
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch();
 	}
 
-	// ########################################################################
-	// Getters & Setters
-	// ########################################################################
-
+	/**
+	 * Getter
+	 * 
+	 * @return loginStage
+	 */
 	public Stage getLoginStage() {
 		return loginStage;
 	}

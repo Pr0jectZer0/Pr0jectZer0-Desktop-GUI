@@ -3,7 +3,6 @@ package application.view;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
@@ -22,13 +21,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
+/**
+ * Controller-Klasse für das Login-Fenster
+ * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ */
 public class LoginController {
-	// ########################################################################
-	// Initialisierungen
-	// ########################################################################
-	
 	@FXML
 	private Label minimizeL;
 	@FXML
@@ -37,17 +35,20 @@ public class LoginController {
 	private JFXTextField tFUsernameEmail;
 	@FXML
 	private JFXPasswordField tFpw;
-	private Main main;
 	private Stage mainStage;
+	private Main main;
 
+	/**
+	 * Übergibt eine Referenz zu den Controllern der Main-Methode
+	 * @param main
+	 */
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	
-	// ########################################################################
-	// Login
-	// ########################################################################
 
+	/**
+	 * Methode zum Anmelden/Einloggen
+	 */
 	@FXML
 	private void signIn() {
 		try {
@@ -105,6 +106,9 @@ public class LoginController {
 		}
 	}
 	
+	/**
+	 * Methode zum Registrieren
+	 */
 	@FXML
 	private void register() {
 		try {
@@ -149,37 +153,51 @@ public class LoginController {
 		}
 	}
 
-	// ########################################################################
-	// Schließen & Minimieren
-	// ########################################################################
-
+	/**
+	 * Methode zum Schließen der Applikation
+	 */
 	@FXML
 	private void close() {
 		System.exit(0);
 	}
 
+	/**
+	 * Methode zum Minimieren des Login-Fensters
+	 */
 	@FXML
 	private void minimize() {
 		main.getLoginStage().setIconified(true);;
 	}
 	
+	/**
+	 * Diese Methode färbt den Exit-Label sobald die Maus drüber bewegt wird
+	 */
 	@FXML
 	private void enterClose() {
 		SepiaTone st = new SepiaTone();
 		closeL.setEffect(st);
 	}
 	
+	/**
+	 * Diese Methode entfärbt den Exit-Label sobald die Maus drüber bewegt wird
+	 */
 	@FXML
 	private void leaveClose() {
 		closeL.setEffect(null);
 	}
 	
+	/**
+	 * Diese Methode färbt den Minimieren-Label sobald die Maus drüber bewegt wird
+	 */
 	@FXML
 	private void enterMinimize() {
 		SepiaTone st = new SepiaTone();
 		minimizeL.setEffect(st);
 	}
 	
+	/**
+	 * Diese Methode entfärbt den Minimieren-Label sobald die Maus drüber bewegt wird
+	 */
 	@FXML
 	private void leaveMinimize() {
 		minimizeL.setEffect(null);
