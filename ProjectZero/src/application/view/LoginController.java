@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
 import application.model.HttpPostRequest;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.effect.SepiaTone;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -27,10 +27,6 @@ import javafx.stage.Stage;
  * @author Dorsch, Paul, Deutsch, Penner, Kramer
  */
 public class LoginController {
-	@FXML
-	private Label minimizeL;
-	@FXML
-	private Label closeL;
 	@FXML
 	private JFXTextField tFUsernameEmail;
 	@FXML
@@ -45,12 +41,20 @@ public class LoginController {
 	public void setMain(Main main) {
 		this.main = main;
 	}
-
+	
+	/**
+	 * Diese Methode wird beim Start des Fensters automatisch initialisiert
+	 */
+	@FXML
+	private void initialize() {
+		tFUsernameEmail.requestFocus();
+	}
+	
 	/**
 	 * Methode zum Anmelden/Einloggen
 	 */
 	@FXML
-	private void signIn() {
+	private void handleLoginButtonAction(ActionEvent event) {
 		try {
 			String[][] parameter = {{ "email", tFUsernameEmail.getText() }, {"password", tFpw.getText()}};
 			String response = HttpPostRequest.send("user/login", parameter);
@@ -110,7 +114,7 @@ public class LoginController {
 	 * Methode zum Registrieren
 	 */
 	@FXML
-	private void register() {
+	private void handleRegisterButtonAction(ActionEvent event) {
 		try {
 			Stage registerStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
@@ -151,55 +155,5 @@ public class LoginController {
 			alert.getDialogPane().setExpandableContent(expContent);
 			alert.showAndWait();
 		}
-	}
-
-	/**
-	 * Methode zum Schließen der Applikation
-	 */
-	@FXML
-	private void close() {
-		System.exit(0);
-	}
-
-	/**
-	 * Methode zum Minimieren des Login-Fensters
-	 */
-	@FXML
-	private void minimize() {
-		main.getLoginStage().setIconified(true);;
-	}
-	
-	/**
-	 * Diese Methode färbt den Exit-Label sobald die Maus drüber bewegt wird
-	 */
-	@FXML
-	private void enterClose() {
-		SepiaTone st = new SepiaTone();
-		closeL.setEffect(st);
-	}
-	
-	/**
-	 * Diese Methode entfärbt den Exit-Label sobald die Maus drüber bewegt wird
-	 */
-	@FXML
-	private void leaveClose() {
-		closeL.setEffect(null);
-	}
-	
-	/**
-	 * Diese Methode färbt den Minimieren-Label sobald die Maus drüber bewegt wird
-	 */
-	@FXML
-	private void enterMinimize() {
-		SepiaTone st = new SepiaTone();
-		minimizeL.setEffect(st);
-	}
-	
-	/**
-	 * Diese Methode entfärbt den Minimieren-Label sobald die Maus drüber bewegt wird
-	 */
-	@FXML
-	private void leaveMinimize() {
-		minimizeL.setEffect(null);
 	}
 }
