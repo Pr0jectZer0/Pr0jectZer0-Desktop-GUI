@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.RegistrierungController">
+<AnchorPane stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.RegistrierungController">
    <children>
-      <ImageView fitHeight="75.0" fitWidth="60.0" opacity="0.3" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="35.0">
+      <ImageView fitHeight="75.0" fitWidth="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="35.0">
          <image>
             <Image url="@../data/images/logo.png" />
          </image>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+         </effect>
       </ImageView>
       <VBox alignment="CENTER" layoutX="131.0" layoutY="52.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
          <children>
@@ -29,15 +37,13 @@
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
-               <effect>
-                  <DropShadow blurType="ONE_PASS_BOX" />
-               </effect>
             </Label>
-            <VBox spacing="10.0">
+            <VBox spacing="25.0">
                <children>
-                  <VBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
-                        <JFXTextField fx:id="tFUsername" focusColor="#0480d8" layoutX="46.0" layoutY="109.0" promptText="Benutzername" unFocusColor="#d0cbcb">
+                        <FontAwesomeIconView glyphName="USER" size="16" />
+                        <JFXTextField fx:id="tFUsername" focusColor="#0480d8" labelFloat="true" minWidth="300.0" onAction="#handleRegisterButtonAction" promptText="Benutzername" unFocusColor="#d0cbcb">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -45,7 +51,12 @@
                               <Font size="14.0" />
                            </font>
                         </JFXTextField>
-                        <JFXTextField fx:id="tFEmail" focusColor="#0480d8" promptText="Email-Adresse" unFocusColor="#d0cbcb">
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="ENVELOPE" size="14" />
+                        <JFXTextField fx:id="tFEmail" focusColor="#0480d8" labelFloat="true" minWidth="299.0" onAction="#handleRegisterButtonAction" promptText="Email-Adresse" unFocusColor="#d0cbcb">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -53,15 +64,12 @@
                               <Font size="14.0" />
                            </font>
                         </JFXTextField>
-                        <JFXPasswordField fx:id="tFPw" focusColor="#0480d8" promptText="Passwort" unFocusColor="#d0cbcb">
-                           <effect>
-                              <ColorAdjust brightness="0.6" />
-                           </effect>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </JFXPasswordField>
-                        <JFXPasswordField fx:id="tFPw2" focusColor="#0480d8" layoutX="46.0" layoutY="144.0" promptText="Passwort erneut eingeben" unFocusColor="#d0cbcb">
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="LOCK" size="16" />
+                        <JFXPasswordField fx:id="tFPw" focusColor="#0480d8" labelFloat="true" minWidth="305.0" onAction="#handleRegisterButtonAction" promptText="Passwort" unFocusColor="#d0cbcb">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -70,13 +78,26 @@
                            </font>
                         </JFXPasswordField>
                      </children>
-                  </VBox>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <FontAwesomeIconView glyphName="LOCK" size="16" />
+                        <JFXPasswordField fx:id="tFPw2" focusColor="#0480d8" labelFloat="true" minWidth="305.0" onAction="#handleRegisterButtonAction" promptText="Passwort erneut eingeben" unFocusColor="#d0cbcb">
+                           <effect>
+                              <ColorAdjust brightness="0.6" />
+                           </effect>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXPasswordField>
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets left="20.0" top="50.0" />
                </VBox.margin>
             </VBox>
-            <JFXButton fx:id="bRegister" onAction="#register" prefHeight="25.0" prefWidth="349.0" style="-fx-background-color: #E45652;" text="Registrieren" textFill="#dad6d6">
+            <JFXButton onAction="#handleRegisterButtonAction" prefWidth="350.0" styleClass="login-button" text="Registrieren" textFill="#dad6d6">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -84,15 +105,10 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </JFXButton>
-            <VBox>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </VBox>
          </children>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+         </effect>
       </VBox>
    </children>
-   <effect>
-      <DropShadow color="RED" />
-   </effect>
 </AnchorPane>
