@@ -3,11 +3,11 @@ package application.view;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.model.HttpPostRequest;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -30,14 +30,12 @@ public class RegistrierungController {
 	private JFXPasswordField tFPw;
 	@FXML
 	private JFXPasswordField tFPw2;
-	@FXML
-	private JFXButton bRegister;
 
 	/**
 	 * Diese Methode registriert einen Nutzer
 	 */
 	@FXML
-	private void register() {
+	private void handleRegisterButtonAction(ActionEvent event) {
 		String[][] parameter = { { "email", tFEmail.getText() }, { "name", tFUsername.getText() },
 				{ "password", tFPw.getText() } };
 		try {
