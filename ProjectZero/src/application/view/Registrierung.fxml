@@ -43,7 +43,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
                         <FontAwesomeIconView glyphName="USER" size="16" />
-                        <JFXTextField fx:id="tFUsername" focusColor="#0480d8" labelFloat="true" minWidth="300.0" onAction="#handleRegisterButtonAction" promptText="Benutzername" unFocusColor="#d0cbcb">
+                        <JFXTextField fx:id="tFUsername" focusColor="#0480d8" labelFloat="true" minWidth="300.0" onAction="#handleRegisterButtonAction" promptText="Benutzername" unFocusColor="#b2b2b2">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -56,7 +56,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
                         <FontAwesomeIconView glyphName="ENVELOPE" size="14" />
-                        <JFXTextField fx:id="tFEmail" focusColor="#0480d8" labelFloat="true" minWidth="299.0" onAction="#handleRegisterButtonAction" promptText="Email-Adresse" unFocusColor="#d0cbcb">
+                        <JFXTextField fx:id="tFEmail" focusColor="#0480d8" labelFloat="true" minWidth="299.0" onAction="#handleRegisterButtonAction" promptText="Email-Adresse" unFocusColor="#b2b2b2">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -69,7 +69,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
                         <FontAwesomeIconView glyphName="LOCK" size="16" />
-                        <JFXPasswordField fx:id="tFPw" focusColor="#0480d8" labelFloat="true" minWidth="305.0" onAction="#handleRegisterButtonAction" promptText="Passwort" unFocusColor="#d0cbcb">
+                        <JFXPasswordField fx:id="tFPw" focusColor="#0480d8" labelFloat="true" minWidth="305.0" onAction="#handleRegisterButtonAction" promptText="Passwort" unFocusColor="#b2b2b2">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -82,7 +82,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="10.0">
                      <children>
                         <FontAwesomeIconView glyphName="LOCK" size="16" />
-                        <JFXPasswordField fx:id="tFPw2" focusColor="#0480d8" labelFloat="true" minWidth="305.0" onAction="#handleRegisterButtonAction" promptText="Passwort erneut eingeben" unFocusColor="#d0cbcb">
+                        <JFXPasswordField fx:id="tFPw2" focusColor="#0480d8" labelFloat="true" minWidth="305.0" onAction="#handleRegisterButtonAction" promptText="Passwort erneut eingeben" unFocusColor="#b2b2b2">
                            <effect>
                               <ColorAdjust brightness="0.6" />
                            </effect>
@@ -94,7 +94,12 @@
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets left="20.0" top="50.0" />
+                  <Insets left="20.0" top="60.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox fx:id="vBoxErrorMsg">
+               <VBox.margin>
+                  <Insets left="40.0" top="30.0" />
                </VBox.margin>
             </VBox>
             <JFXButton onAction="#handleRegisterButtonAction" prefWidth="350.0" styleClass="login-button" text="Registrieren" textFill="#dad6d6">
@@ -102,7 +107,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets top="30.0" />
+                  <Insets top="40.0" />
                </VBox.margin>
             </JFXButton>
          </children>

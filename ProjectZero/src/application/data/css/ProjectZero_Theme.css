@@ -30,7 +30,6 @@
  .login-button:hover {
  	-fx-border-color: -fx-secondary;
  	-fx-background-color: -fx-secondary;
- 	-fx-text-fill: -fx-primary;
  }
  
  .text-field {
