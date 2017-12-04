@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<ScrollPane hbarPolicy="NEVER" minHeight="500.0" minWidth="200.0" style="-fx-border-color: red;" stylesheets="@../data/css/ProjectZero_Theme.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <AnchorPane minHeight="500.0" minWidth="200.0" styleClass="context-menu" />
+   </content>
+</ScrollPane>

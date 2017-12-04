@@ -35,7 +35,7 @@
  
  .text-field {
  	-fx-text-fill: -fx-primarytext;
- 	-fx-font-size: 12.0pt;
+ 	-fx-font-size: 13.0pt;
  	-jfx-focus-color: -fx-secondary;
  }
  
@@ -46,6 +46,7 @@
  
 .label {
 	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 12.0pt;
 }
  
  /*
@@ -74,4 +75,9 @@
 
 .context-menu {
   	-fx-background-color: derive(-fx-primary, 20.0%);
+}
+
+.Freundesliste {
+	-fx-background-color: -fx-secondary;
+	-fx-background-radius: 10 10 0 0;
 }
