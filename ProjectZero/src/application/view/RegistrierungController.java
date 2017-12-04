@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.model.ErrorMsg;
+import application.model.ErrorWindow;
 import application.model.HttpPostRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -93,32 +94,7 @@ public class RegistrierungController {
 				alert.setContentText("Sie können sich nun einloggen.");
 				alert.showAndWait();
 			} catch (Exception e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Fehler!");
-				alert.setHeaderText("Es gab ein Fehler beim Registrieren!");
-				alert.setContentText("Bitte wenden Sie sich an den Support.");
-
-				StringWriter sw = new StringWriter();
-				PrintWriter pw = new PrintWriter(sw);
-				e.printStackTrace(pw);
-				String exceptionText = sw.toString();
-
-				Label label = new Label("The exception stacktrace was:");
-
-				TextArea textArea = new TextArea(exceptionText);
-				textArea.setEditable(false);
-
-				textArea.setMaxWidth(Double.MAX_VALUE);
-				textArea.setMaxHeight(Double.MAX_VALUE);
-				GridPane.setVgrow(textArea, Priority.ALWAYS);
-				GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-				GridPane expContent = new GridPane();
-				expContent.setMaxWidth(Double.MAX_VALUE);
-				expContent.add(label, 0, 0);
-				expContent.add(textArea, 0, 1);
-				alert.getDialogPane().setExpandableContent(expContent);
-				alert.showAndWait();
+				ErrorWindow.newErrorWindow("Es gab ein Fehler beim Registrieren!", loginController.getRegisterStage(), e);
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
 import application.model.ErrorMsg;
+import application.model.ErrorWindow;
 import application.model.HttpPostRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,40 +78,14 @@ public class LoginController {
 					mainStage.show();
 					main.getLoginStage().close();
 				} catch (Exception e) {
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Fehler!");
-					alert.setHeaderText("Es gab ein Fehler bei der Anmeldung!");
-					alert.setContentText("Bitte wenden Sie sich an den Support.");
-					alert.initOwner(main.getLoginStage());
-
-					StringWriter sw = new StringWriter();
-					PrintWriter pw = new PrintWriter(sw);
-					e.printStackTrace(pw);
-					String exceptionText = sw.toString();
-
-					Label label = new Label("The exception stacktrace was:");
-
-					TextArea textArea = new TextArea(exceptionText);
-					textArea.setEditable(false);
-
-					textArea.setMaxWidth(Double.MAX_VALUE);
-					textArea.setMaxHeight(Double.MAX_VALUE);
-					GridPane.setVgrow(textArea, Priority.ALWAYS);
-					GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-					GridPane expContent = new GridPane();
-					expContent.setMaxWidth(Double.MAX_VALUE);
-					expContent.add(label, 0, 0);
-					expContent.add(textArea, 0, 1);
-					alert.getDialogPane().setExpandableContent(expContent);
-					alert.showAndWait();
+					ErrorWindow.newErrorWindow("Es gab ein Fehler bei der Anmeldung!", main.getLoginStage(), e);
 				}
 			} else {
 				ErrorMsg.newError("Falscher Benutzername oder Passwort eingegeben!", vBoxErrorMsg, tFUsernameEmail);
 				tFpw.getStyleClass().add("wrong-details");
 			}
 		} catch (Exception e) {
-			System.out.println("error");
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim HTTP-Request zur Anmeldung", main.getLoginStage(), e);
 		}
 	}
 	
@@ -133,33 +108,7 @@ public class LoginController {
 			registerStage.setScene(scene);
 			registerStage.show();
 		} catch (Exception e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Fehler!");
-			alert.setHeaderText("Es gab ein Fehler beim Öffnen des Registrier-Fensters!");
-			alert.setContentText("Bitte wenden Sie sich an den Support.");
-			alert.initOwner(main.getLoginStage());
-
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			String exceptionText = sw.toString();
-
-			Label label = new Label("The exception stacktrace was:");
-
-			TextArea textArea = new TextArea(exceptionText);
-			textArea.setEditable(false);
-
-			textArea.setMaxWidth(Double.MAX_VALUE);
-			textArea.setMaxHeight(Double.MAX_VALUE);
-			GridPane.setVgrow(textArea, Priority.ALWAYS);
-			GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-			GridPane expContent = new GridPane();
-			expContent.setMaxWidth(Double.MAX_VALUE);
-			expContent.add(label, 0, 0);
-			expContent.add(textArea, 0, 1);
-			alert.getDialogPane().setExpandableContent(expContent);
-			alert.showAndWait();
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Registrier-Fensters!", main.getLoginStage(), e);
 		}
 	}
 	

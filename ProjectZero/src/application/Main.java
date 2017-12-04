@@ -3,6 +3,7 @@ package application;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import application.model.ErrorWindow;
 import application.view.LoginController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -51,33 +52,7 @@ public class Main extends Application {
 			loginStage.setScene(scene);
 			loginStage.show();
 		} catch (Exception e) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Fehler!");
-			alert.initOwner(loginStage);
-			alert.setHeaderText("Es gab ein Fehler beim Starten der Applikation!");
-			alert.setContentText("Bitte wenden Sie sich an den Support.");
-
-			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			String exceptionText = sw.toString();
-
-			Label label = new Label("The exception stacktrace was:");
-
-			TextArea textArea = new TextArea(exceptionText);
-			textArea.setEditable(false);
-
-			textArea.setMaxWidth(Double.MAX_VALUE);
-			textArea.setMaxHeight(Double.MAX_VALUE);
-			GridPane.setVgrow(textArea, Priority.ALWAYS);
-			GridPane.setHgrow(textArea, Priority.ALWAYS);
-
-			GridPane expContent = new GridPane();
-			expContent.setMaxWidth(Double.MAX_VALUE);
-			expContent.add(label, 0, 0);
-			expContent.add(textArea, 0, 1);
-			alert.getDialogPane().setExpandableContent(expContent);
-			alert.showAndWait();
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Starten der Applikation!", loginStage, e);
 		}
 	}
 
