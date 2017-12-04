@@ -2,15 +2,25 @@
 
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <MenuBar layoutX="-47.0" layoutY="-161.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="Datei" />
-          <Menu mnemonicParsing="false" text="Über uns" />
-          <Menu mnemonicParsing="false" text="Hilfe" />
+          <Menu mnemonicParsing="false" text="Datei">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Schließen" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="Über uns">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Über uns" />
+               </items></Menu>
+          <Menu mnemonicParsing="false" text="Hilfe">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Hilfe-Center" />
+               </items></Menu>
         </menus>
       </MenuBar>
    </children>

@@ -75,7 +75,7 @@
                   <Insets left="40.0" />
                </StackPane.margin>
             </Label>
-            <JFXHamburger fx:id="hamburger" alignment="CENTER_LEFT" onMouseDragOver="#test">
+            <JFXHamburger fx:id="hamburger" alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>

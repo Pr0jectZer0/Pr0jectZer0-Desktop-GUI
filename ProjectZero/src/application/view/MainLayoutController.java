@@ -1,19 +1,13 @@
 package application.view;
 
-import java.beans.EventHandler;
-
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
-import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 /**
  * Main-Controller-Klasse
@@ -48,10 +42,5 @@ public class MainLayoutController {
 			} else
 				drawer.open();
 		});
-	}
-	
-	@FXML
-	private void test() {
-		System.out.println("test");
 	}
 }
