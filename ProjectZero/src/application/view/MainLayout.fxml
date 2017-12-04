@@ -1,60 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MainLayoutController">
+<AnchorPane stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutX="-1.0" prefHeight="630.0" prefWidth="205.0" />
-      <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="14.0" />
-      <VBox layoutX="204.0">
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <StackPane alignment="TOP_RIGHT">
-               <children>
-                  <Label onMouseClicked="#close" text="X">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets right="5.0" />
-               </VBox.margin>
-            </StackPane>
-            <StackPane>
-               <children>
-                  <AnchorPane fx:id="chaträumeAnchor" prefHeight="200.0" prefWidth="200.0" visible="false">
-                     <children>
-                        <fx:include source="Chaträume.fxml" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="gruppenAnchor" prefHeight="200.0" prefWidth="200.0" visible="false">
-                     <children>
-                        <fx:include source="Gruppen.fxml" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="terminplanerAnchor" prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <fx:include source="Terminplaner.fxml" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="notizenAnchor" prefHeight="200.0" prefWidth="200.0" visible="false">
-                     <children>
-                        <fx:include source="Notizen.fxml" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="spielebibliothekAnchor" layoutX="204.0" visible="false">
-                     <children>
-                        <fx:include source="Spielebibliothek.fxml" />
-                     </children>
-                  </AnchorPane>
-               </children>
-            </StackPane>
+            <fx:include fx:id="menuBar" source="MenuBar.fxml" />
+      		<JFXTabPane>
+      			<tabs>
+      				<Tab text="Spielebibliothek">
+      					<content>
+      						<fx:include fx:id="spielebibliothek" source="Spielebibliothek.fxml" />
+      					</content>
+      				</Tab>
+      				<Tab text="Gruppen">
+      					<content>
+      						<fx:include fx:id="gruppen" source="Gruppen.fxml" />
+      					</content>
+      				</Tab>
+      				<Tab text="Chatraeume">
+      					<content>
+      						<fx:include fx:id="chatraeume" source="Chatraeume.fxml" />
+      					</content>
+      				</Tab>
+      				<Tab text="Terminplaner">
+      					<content>
+      						<fx:include fx:id="terminplaner" source="Terminplaner.fxml" />
+      					</content>
+      				</Tab>
+      				<Tab text="Notizen">
+      					<content>
+      						<fx:include fx:id="notizen" source="Notizen.fxml" />
+      					</content>
+      				</Tab>
+      			</tabs>
+      		</JFXTabPane>
          </children>
       </VBox>
    </children>

@@ -1,8 +1,5 @@
 package application.view;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
@@ -12,11 +9,7 @@ import application.model.HttpPostRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 /**
@@ -94,7 +87,8 @@ public class RegistrierungController {
 				alert.setContentText("Sie können sich nun einloggen.");
 				alert.showAndWait();
 			} catch (Exception e) {
-				ErrorWindow.newErrorWindow("Es gab ein Fehler beim Registrieren!", loginController.getRegisterStage(), e);
+				ErrorWindow.newErrorWindow("Es gab ein Fehler beim Registrieren!", loginController.getRegisterStage(),
+						e);
 			}
 		}
 	}

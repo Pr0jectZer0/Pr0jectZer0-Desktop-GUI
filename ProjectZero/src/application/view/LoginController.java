@@ -1,8 +1,5 @@
 package application.view;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
@@ -14,19 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
  * Controller-Klasse für das Login-Fenster
+ * 
  * @author Dorsch, Paul, Deutsch, Penner, Kramer
  */
 public class LoginController {
@@ -42,12 +34,13 @@ public class LoginController {
 
 	/**
 	 * Übergibt eine Referenz zu den Controllern der Main-Methode
+	 * 
 	 * @param main
 	 */
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	
+
 	/**
 	 * Diese Methode wird beim Start des Fensters automatisch initialisiert
 	 */
@@ -55,7 +48,7 @@ public class LoginController {
 	private void initialize() {
 		tFUsernameEmail.requestFocus();
 	}
-	
+
 	/**
 	 * Methode zum Anmelden/Einloggen
 	 */
@@ -63,7 +56,7 @@ public class LoginController {
 	private void handleLoginButtonAction(ActionEvent event) {
 		try {
 			vBoxErrorMsg.getChildren().clear();
-			String[][] parameter = {{ "email", tFUsernameEmail.getText() }, {"password", tFpw.getText()}};
+			String[][] parameter = { { "email", tFUsernameEmail.getText() }, { "password", tFpw.getText() } };
 			String response = HttpPostRequest.send("user/login", parameter);
 			if (response.contains("token")) {
 				try {
@@ -72,6 +65,9 @@ public class LoginController {
 					mainStage = new Stage();
 					FXMLLoader loader = new FXMLLoader();
 					loader.setLocation(Main.class.getResource("view/MainLayout.fxml"));
+					mainStage.setTitle("Pr0jectZer0");
+					Image image = new Image("application/data/images/logo.png");
+					mainStage.getIcons().add(image);
 					AnchorPane mainAnchor = (AnchorPane) loader.load();
 					Scene scene = new Scene(mainAnchor);
 					mainStage.setScene(scene);
@@ -88,7 +84,7 @@ public class LoginController {
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim HTTP-Request zur Anmeldung", main.getLoginStage(), e);
 		}
 	}
-	
+
 	/**
 	 * Methode zum Registrieren
 	 */
@@ -108,10 +104,11 @@ public class LoginController {
 			registerStage.setScene(scene);
 			registerStage.show();
 		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Registrier-Fensters!", main.getLoginStage(), e);
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Registrier-Fensters!", main.getLoginStage(),
+					e);
 		}
 	}
-	
+
 	public Stage getRegisterStage() {
 		return registerStage;
 	}

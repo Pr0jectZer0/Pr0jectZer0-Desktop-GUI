@@ -24,8 +24,8 @@
 
  .login-button {
  	-fx-border-color: -fx-secondary;
- 	-fx-border-radius: 20px;
- 	-fx-background-radius: 20px;
+ 	-fx-border-radius: 20.0px;
+ 	-fx-background-radius: 20.0px;
  }
  
  .login-button:hover {
@@ -35,7 +35,7 @@
  
  .text-field {
  	-fx-text-fill: -fx-primarytext;
- 	-fx-font-size: 12pt;
+ 	-fx-font-size: 12.0pt;
  	-jfx-focus-color: -fx-secondary;
  }
  
@@ -43,3 +43,35 @@
  	-jfx-unfocus-color: -fx-red;
  	-jfx-focus-color: -fx-red;
  }
+ 
+.label {
+	-fx-text-fill: -fx-primarytext;
+}
+ 
+ /*
+  * Hier beginnt das Layout vom MainLayout
+  */
+  
+.tab {
+  	-fx-background-color: -fx-primary;
+}
+  
+.tab-header-background {
+  	-fx-background-color: -fx-primary;
+}
+  
+.menu-bar {
+  	-fx-base: -fx-primary;
+}
+
+.jfx-tab-pane .tab-selected-line {
+	-fx-background-color: #cc0000;
+}
+
+.jfx-tab-pane .tab-header-area .jfx-rippler {
+    -jfx-rippler-fill :-fx-red;
+}
+
+.context-menu {
+  	-fx-background-color: derive(-fx-primary, 20.0%);
+}
