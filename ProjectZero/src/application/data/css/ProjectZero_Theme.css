@@ -7,6 +7,7 @@
  	-fx-primary: #2A2E37;
  	-fx-secondary: #9C2B27;
  	-fx-primarytext: #B2B2B2;
+ 	-fx-red: #FF0000;
  }
  
  .root{
@@ -36,4 +37,9 @@
  	-fx-text-fill: -fx-primarytext;
  	-fx-font-size: 12pt;
  	-jfx-focus-color: -fx-secondary;
+ }
+ 
+ .wrong-details {
+ 	-jfx-unfocus-color: -fx-red;
+ 	-jfx-focus-color: -fx-red;
  }

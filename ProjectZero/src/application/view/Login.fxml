@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="800.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.LoginController">
    <children>
-      <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" spacing="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="CENTER">
                <children>
@@ -64,14 +64,6 @@
                <children>
                   <VBox alignment="CENTER">
                      <children>
-                        <Label focusTraversable="false" styleClass="glyph-icon" stylesheets="@../data/css/ProjectZero_Theme.css" text="Anmelden" textFill="#b2b2b2">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets bottom="30.0" />
-                           </VBox.margin>
-                        </Label>
                         <HBox spacing="10.0">
                            <children>
                               <StackPane>
@@ -83,7 +75,7 @@
                                     </FontAwesomeIconView>
                                  </children>
                               </StackPane>
-                              <JFXTextField fx:id="tFUsernameEmail" focusColor="#0480d8" labelFloat="true" minWidth="250.0" onAction="#handleLoginButtonAction" promptText="Email" unFocusColor="#b2b2b2">
+                              <JFXTextField fx:id="tFUsernameEmail" focusColor="#0480d8" labelFloat="true" minWidth="295.0" onAction="#handleLoginButtonAction" promptText="Email" unFocusColor="#b2b2b2">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -103,7 +95,7 @@
                                     <FontAwesomeIconView fill="#b2b2b2" glyphName="LOCK" size="17" />
                                  </children>
                               </StackPane>
-                              <JFXPasswordField fx:id="tFpw" focusColor="#0480d8" labelFloat="true" minWidth="254.0" onAction="#handleLoginButtonAction" promptText="Passwort" unFocusColor="#b2b2b2">
+                              <JFXPasswordField fx:id="tFpw" focusColor="#0480d8" labelFloat="true" minWidth="300.0" onAction="#handleLoginButtonAction" promptText="Passwort" unFocusColor="#b2b2b2">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -113,9 +105,14 @@
                               </JFXPasswordField>
                            </children>
                         </HBox>
-                        <JFXButton onAction="#handleLoginButtonAction" styleClass="login-button" text="Einloggen" textFill="#b2b2b2">
+                        <VBox fx:id="vBoxErrorMsg">
                            <VBox.margin>
-                              <Insets top="30.0" />
+                              <Insets left="22.0" top="20.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <JFXButton minWidth="200.0" onAction="#handleLoginButtonAction" styleClass="login-button" text="Einloggen" textFill="#b2b2b2">
+                           <VBox.margin>
+                              <Insets top="20.0" />
                            </VBox.margin>
                            <font>
                               <Font name="System Bold" size="14.0" />
@@ -128,8 +125,8 @@
                   </VBox>
                   <VBox alignment="CENTER">
                      <children>
-                        <Label text="Passwort vergessen" textFill="#0066ff" />
-                        <Label text="Benutzername vergessen" textFill="#0066ff" />
+                        <Label text="Passwort vergessen" textFill="LIGHTBLUE" />
+                        <Label text="Benutzername vergessen" textFill="LIGHTBLUE" />
                      </children>
                   </VBox>
                </children>

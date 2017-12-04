@@ -6,6 +6,7 @@ import java.io.StringWriter;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import application.model.ErrorMsg;
 import application.model.HttpPostRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,6 +34,16 @@ public class RegistrierungController {
 	private JFXPasswordField tFPw2;
 	@FXML
 	private VBox vBoxErrorMsg;
+	private LoginController loginController;
+
+	/**
+	 * Diese Methode gibt eine Referenz zu den LoginController
+	 * 
+	 * @param loginController
+	 */
+	public void setLoginController(LoginController loginController) {
+		this.loginController = loginController;
+	}
 
 	/**
 	 * Diese Methode registriert einen Nutzer
@@ -40,35 +51,33 @@ public class RegistrierungController {
 	@FXML
 	private void handleRegisterButtonAction(ActionEvent event) {
 		vBoxErrorMsg.getChildren().clear();
+		tFUsername.getStyleClass().remove("wrong-details");
+		tFEmail.getStyleClass().remove("wrong-details");
+		tFPw.getStyleClass().remove("wrong-details");
+		tFPw2.getStyleClass().remove("wrong-details");
 		boolean wrongRegister = false;
 		// TODO Mögliche Abfragen beim Registrieren ergänzen, z.B. mind. Zeichen
 		// bei Benutzername oder Passwort
 		if (tFUsername.getText().equals("")) {
-			Label label = new Label();
-			label.setText("Bitte geben Sie einen gültigen Benutzernamen an!");
-			label.setStyle("-fx-text-fill: #B2B2B2;");
-			vBoxErrorMsg.getChildren().add(label);
+			ErrorMsg.newError("Bitte geben Sie einen gültigen Benutzernamen an!", vBoxErrorMsg, tFUsername);
 			wrongRegister = true;
 		}
 		if (!tFEmail.getText().matches(".*@.*.[.].*")) {
-			Label label = new Label();
-			label.setText("Bitte geben Sie eine gültige Email-Adresse an!");
-			label.setStyle("-fx-text-fill: #B2B2B2;");
-			vBoxErrorMsg.getChildren().add(label);
+			ErrorMsg.newError("Bitte geben Sie eine gültige Email-Adresse an!", vBoxErrorMsg, tFEmail);
 			wrongRegister = true;
 		}
 		if (tFPw.getText().equals("") || tFPw2.getText().equals("")) {
-			Label label = new Label();
-			label.setText("Bitte geben Sie Ihr (wiederholt) Passwort an!");
-			label.setStyle("-fx-text-fill: #B2B2B2;");
-			vBoxErrorMsg.getChildren().add(label);
+			if (tFPw.getText().equals("")) {
+				ErrorMsg.newError("Bitte geben Sie Ihr Passwort an!", vBoxErrorMsg, tFPw);
+			}
+			if (tFPw2.getText().equals("")) {
+				ErrorMsg.newError("Bitte geben Sie Ihr wiederholt Passwort an!", vBoxErrorMsg, tFPw2);
+			}
 			wrongRegister = true;
 		}
 		if (!tFPw.getText().equals(tFPw2.getText())) {
-			Label label = new Label();
-			label.setText("Die Passwörter sind nicht gleich!");
-			label.setStyle("-fx-text-fill: #B2B2B2;");
-			vBoxErrorMsg.getChildren().add(label);
+			ErrorMsg.newError("Die Passwörter sind nicht gleich!", vBoxErrorMsg, tFPw);
+			tFPw2.getStyleClass().add("wrong-details");
 			wrongRegister = true;
 		}
 		if (wrongRegister == false) {
@@ -76,6 +85,13 @@ public class RegistrierungController {
 					{ "password", tFPw.getText() } };
 			try {
 				HttpPostRequest.send("user/", parameter);
+				loginController.getRegisterStage().close();
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.initOwner(loginController.getRegisterStage());
+				alert.setTitle("Erfolgreich registriert!");
+				alert.setHeaderText("Sie haben sich erfolgreich registriert!");
+				alert.setContentText("Sie können sich nun einloggen.");
+				alert.showAndWait();
 			} catch (Exception e) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Fehler!");

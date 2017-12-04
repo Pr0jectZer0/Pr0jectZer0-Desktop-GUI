@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
+import application.model.ErrorMsg;
 import application.model.HttpPostRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -31,7 +33,10 @@ public class LoginController {
 	private JFXTextField tFUsernameEmail;
 	@FXML
 	private JFXPasswordField tFpw;
+	@FXML
+	private VBox vBoxErrorMsg;
 	private Stage mainStage;
+	private Stage registerStage;
 	private Main main;
 
 	/**
@@ -56,10 +61,13 @@ public class LoginController {
 	@FXML
 	private void handleLoginButtonAction(ActionEvent event) {
 		try {
+			vBoxErrorMsg.getChildren().clear();
 			String[][] parameter = {{ "email", tFUsernameEmail.getText() }, {"password", tFpw.getText()}};
 			String response = HttpPostRequest.send("user/login", parameter);
 			if (response.contains("token")) {
 				try {
+					tFUsernameEmail.getStyleClass().remove("wrong-details");
+					tFpw.getStyleClass().remove("wrong-details");
 					mainStage = new Stage();
 					FXMLLoader loader = new FXMLLoader();
 					loader.setLocation(Main.class.getResource("view/MainLayout.fxml"));
@@ -98,12 +106,8 @@ public class LoginController {
 					alert.showAndWait();
 				}
 			} else {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Fehler!");
-				alert.setHeaderText("Es gab ein Fehler bei der Anmeldung!");
-				alert.setContentText("Falsche Login-Daten.");
-				alert.initOwner(main.getLoginStage());
-				alert.showAndWait();
+				ErrorMsg.newError("Falscher Benutzername oder Passwort eingegeben!", vBoxErrorMsg, tFUsernameEmail);
+				tFpw.getStyleClass().add("wrong-details");
 			}
 		} catch (Exception e) {
 			System.out.println("error");
@@ -116,11 +120,13 @@ public class LoginController {
 	@FXML
 	private void handleRegisterButtonAction(ActionEvent event) {
 		try {
-			Stage registerStage = new Stage();
+			this.registerStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/Registrierung.fxml"));
 			AnchorPane registerAnchor = (AnchorPane) loader.load();
 			Scene scene = new Scene(registerAnchor);
+			RegistrierungController controller = loader.getController();
+			controller.setLoginController(this);
 			registerStage.initOwner(main.getLoginStage());
 			Image image = new Image("application/data/images/logo.png");
 			registerStage.getIcons().add(image);
@@ -155,5 +161,9 @@ public class LoginController {
 			alert.getDialogPane().setExpandableContent(expContent);
 			alert.showAndWait();
 		}
+	}
+	
+	public Stage getRegisterStage() {
+		return registerStage;
 	}
 }
