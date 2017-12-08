@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MainLayoutController">
+<AnchorPane styleClass="label2" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MainLayoutController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -64,10 +64,10 @@
       		</JFXTabPane>
          </children>
       </VBox>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" direction="BOTTOM" overLayVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" />
-      <StackPane layoutX="1024.0" layoutY="760.0" maxWidth="200.0" minWidth="200.0" styleClass="Freundesliste" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0">
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="600.0" direction="BOTTOM" overLayVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" />
+      <StackPane layoutX="1024.0" layoutY="760.0" maxWidth="250.0" minWidth="250.0" styleClass="Freundesliste" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0">
          <children>
-            <Label alignment="CENTER_RIGHT" cacheShape="false" focusTraversable="false" text="Freundesliste">
+            <Label alignment="CENTER_RIGHT" cacheShape="false" focusTraversable="false" styleClass="label2" text="Freundesliste">
                <font>
                   <Font size="13.0" />
                </font>
@@ -80,7 +80,7 @@
                   <Insets />
                </StackPane.margin>
                <padding>
-                  <Insets left="30.0" />
+                  <Insets left="45.0" />
                </padding>
             </JFXHamburger>
          </children>
