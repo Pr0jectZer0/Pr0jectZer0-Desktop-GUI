@@ -12,6 +12,7 @@
  
  .root{
  	-fx-background-color: -fx-primary;
+ 	-fx-prompt-text-fill: -fx-primarytext;
  }
  
  .glyph-icon {
@@ -37,6 +38,7 @@
  	-fx-text-fill: -fx-primarytext;
  	-fx-font-size: 13.0pt;
  	-jfx-focus-color: -fx-secondary;
+ 	-fx-prompt-text-fill: -fx-primarytext;
  }
  
  .wrong-details {
@@ -44,8 +46,23 @@
  	-jfx-focus-color: -fx-red;
  }
  
+.labelerror {
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 10.0pt;
+}
+
+.labelbig {
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 16.0pt;
+}
+
 .label {
 	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 14.0pt;
+}
+
+.labelforgot {
+	-fx-text-fill: #0174DF;
 	-fx-font-size: 12.0pt;
 }
  
@@ -79,5 +96,36 @@
 
 .Freundesliste {
 	-fx-background-color: -fx-secondary;
-	-fx-background-radius: 10 10 0 0;
+	-fx-background-radius: 10.0 10.0 0.0 0.0;
+}
+
+.addFreund {
+	-fx-background-color: -fx-secondary;
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 13.0;
+}
+
+.jfx-list-view {
+	-fx-background-color: -fx-secondary;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #232323;
+    -fx-text-fill: -fx-primarytext;
+}
+
+.list-view .label {
+    -fx-text-fill: -fx-primarytext;
+}
+
+.jfx-rippler {
+    -jfx-rippler-fill: red;
 }
