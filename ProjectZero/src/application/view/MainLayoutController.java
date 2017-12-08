@@ -6,8 +6,8 @@ import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Main-Controller-Klasse
@@ -19,7 +19,7 @@ public class MainLayoutController {
 	private JFXDrawer drawer;
 	@FXML
 	private JFXHamburger hamburger;
-	
+
 	@FXML
 	private void initialize() {
 		initFreundesliste();
@@ -27,10 +27,10 @@ public class MainLayoutController {
 
 	private void initFreundesliste() {
 		try {
-		ScrollPane freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
-		drawer.setSidePane(freundesliste);
+			AnchorPane freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
+			drawer.setSidePane(freundesliste);
 		} catch (Exception e) {
-			
+
 		}
 		HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
 		transition.setRate(-1);
@@ -43,4 +43,5 @@ public class MainLayoutController {
 				drawer.open();
 		});
 	}
+
 }

@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import application.model.ErrorMsg;
 import application.model.ErrorWindow;
-import application.model.HttpPostRequest;
+import application.model.HttpWebRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -50,8 +50,6 @@ public class RegistrierungController {
 		tFPw.getStyleClass().remove("wrong-details");
 		tFPw2.getStyleClass().remove("wrong-details");
 		boolean wrongRegister = false;
-		// TODO Mögliche Abfragen beim Registrieren ergänzen, z.B. mind. Zeichen
-		// bei Benutzername oder Passwort
 		if (tFUsername.getText().equals("")) {
 			ErrorMsg.newError("Bitte geben Sie einen gültigen Benutzernamen an!", vBoxErrorMsg, tFUsername);
 			wrongRegister = true;
@@ -78,7 +76,7 @@ public class RegistrierungController {
 			String[][] parameter = { { "email", tFEmail.getText() }, { "name", tFUsername.getText() },
 					{ "password", tFPw.getText() } };
 			try {
-				HttpPostRequest.send("user/", parameter);
+				HttpWebRequest.sendPostRequest("user/", parameter);
 				loginController.getRegisterStage().close();
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.initOwner(loginController.getRegisterStage());

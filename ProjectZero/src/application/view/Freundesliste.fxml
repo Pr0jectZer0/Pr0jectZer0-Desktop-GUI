@@ -1,10 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<ScrollPane hbarPolicy="NEVER" minHeight="500.0" minWidth="200.0" style="-fx-border-color: red;" stylesheets="@../data/css/ProjectZero_Theme.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
-   <content>
-      <AnchorPane minHeight="500.0" minWidth="200.0" styleClass="context-menu" />
-   </content>
-</ScrollPane>
+<AnchorPane fx:id="freundeslisteController" minHeight="576.0" minWidth="250.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.FreundeslisteController">
+   <children>
+      <VBox layoutX="12.0" layoutY="12.0" minHeight="576.0" minWidth="250.0" style="-fx-background-color: #2A2E37;" stylesheets="@../data/css/ProjectZero_Theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXTextField fx:id="friend" alignment="CENTER" minWidth="200.0" onAction="#addFriend" promptText="       Freund hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <effect>
+                  <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+               </effect>
+            </JFXTextField>
+            <AnchorPane minHeight="530.0">
+               <children>
+                  <JFXDrawer fx:id="drawer" cacheShape="false" centerShape="false" defaultDrawerSize="250.0" direction="RIGHT" minHeight="530.0" overLayVisible="false" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXListView fx:id="friendlist" minHeight="530.0" style="-fx-background-color: derive(#2A2E37, 20.0%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+                     </effect>
+                  </JFXListView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <FontAwesomeIconView glyphName="USER_PLUS" size="16" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="10.0" />
+   </children>
+</AnchorPane>
