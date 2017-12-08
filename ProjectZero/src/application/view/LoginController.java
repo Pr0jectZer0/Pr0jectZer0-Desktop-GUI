@@ -1,12 +1,17 @@
 package application.view;
 
+import org.json.JSONObject;
+
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
 import application.model.ErrorMsg;
 import application.model.ErrorWindow;
-import application.model.HttpPostRequest;
+import application.model.HttpWebRequest;
+import application.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,8 +33,12 @@ public class LoginController {
 	private JFXPasswordField tFpw;
 	@FXML
 	private VBox vBoxErrorMsg;
+	@FXML
 	private Stage mainStage;
 	private Stage registerStage;
+	private static String token = "";
+	private static ObservableList<User> users = FXCollections.observableArrayList();
+	private static JSONObject userIds;
 	private Main main;
 
 	/**
@@ -56,10 +65,20 @@ public class LoginController {
 	private void handleLoginButtonAction(ActionEvent event) {
 		try {
 			vBoxErrorMsg.getChildren().clear();
-			String[][] parameter = { { "email", tFUsernameEmail.getText() }, { "password", tFpw.getText() } };
-			String response = HttpPostRequest.send("user/login", parameter);
+			String[][] parameter = { { "email", tFUsernameEmail.getText() }, { "password", tFpw.getText() } };			
+			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
+			
+			userIds = new JSONObject(HttpWebRequest.sendGetRequest("users"));
+			int anzUsers = userIds.getJSONArray("users").length();
+			
+			for (int i = 0; i<anzUsers; i++) {
+				users.add(new User(userIds.getJSONArray("users").getJSONObject(i).getString("name"), userIds.getJSONArray("users").getJSONObject(i).getInt("id")));
+			}
 			if (response.contains("token")) {
 				try {
+					JSONObject jsontoken = new JSONObject(response);
+					token = jsontoken.getString("token");			
+					
 					tFUsernameEmail.getStyleClass().remove("wrong-details");
 					tFpw.getStyleClass().remove("wrong-details");
 					mainStage = new Stage();
@@ -102,6 +121,7 @@ public class LoginController {
 			Image image = new Image("application/data/images/logo.png");
 			registerStage.getIcons().add(image);
 			registerStage.setScene(scene);
+			registerStage.setResizable(false);
 			registerStage.show();
 		} catch (Exception e) {
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Registrier-Fensters!", main.getLoginStage(),
@@ -112,4 +132,22 @@ public class LoginController {
 	public Stage getRegisterStage() {
 		return registerStage;
 	}
+	
+	public Stage getMainStage() {
+		return mainStage;
+	}
+	
+	public static String getToken() {
+		return token;
+	}
+	
+	public static ObservableList<User> getUsers() {
+		return users;
+	}
+	
+	public static JSONObject getUserIds() {
+		return userIds;
+	}
+	
+	
 }

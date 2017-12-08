@@ -18,7 +18,8 @@ public class ErrorMsg {
 		icon.setSize("14");
 		Label label = new Label();
 		label.setText(msg);
-		label.setStyle("-fx-text-fill: #B2B2B2;");
+		label.getStyleClass().clear();
+		label.getStyleClass().add("labelerror");
 		tField.getStyleClass().add("wrong-details");
 		hBox.getChildren().addAll(icon, label);
 		vBox.getChildren().add(hBox);
