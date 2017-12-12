@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
+import application.Main;
 import application.model.HttpWebRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -25,10 +26,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Diese Klasse verwaltet die Freundesliste
@@ -43,15 +50,43 @@ public class FreundeslisteController {
 	@FXML
 	private JFXDrawer drawer;
 	private JFXListView<String> newfriendlist = new JFXListView<String>();
-
+	private Main main;
+	private static Stage popupstage;
+	private AnchorPane mainAnchor;
+	
 	@FXML
 	private void initialize() {
 		initFriends();
 		initNewFriend();
+		System.out.println("Hallo Test");
+		try{
+		popupstage = new Stage();
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("Popup.fxml"));
+		popupstage.setTitle("Pr0jectZer0");
+		Image image = new Image("application/data/images/logo.png");
+		popupstage.getIcons().add(image);
+		popupstage.initStyle(StageStyle.UNDECORATED);
+		mainAnchor = (AnchorPane) loader.load();
+		Scene scene = new Scene(mainAnchor);
+		popupstage.setScene(scene);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
-
+	
+	public static Stage getPopupstage()
+	{
+		return popupstage;
+	}
+	
+	public void setMain(Main main) {
+		this.main = main;
+	}
 	/**
-	 * Fügt die Freunde in die Freundesliste und legt deren Funktionen fest
+	 * Fï¿½gt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
 	private void initFriends() {
 		try {
@@ -65,6 +100,29 @@ public class FreundeslisteController {
 				icon.setSize("14");
 				label.setGraphic(icon);
 				friendlist.getItems().add(label);
+				friendlist.setOnMouseClicked(new EventHandler<MouseEvent>()
+				{
+					@Override
+					public void handle(MouseEvent event)
+					{
+						if(event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY)
+						{
+							try{
+							System.out.println("Rechte Maustaste");						
+							popupstage.setX(event.getScreenX() - 1);
+							popupstage.setY(event.getScreenY() - 1);
+							popupstage.hide();
+							popupstage.show();
+							}
+							catch(Exception e)
+							{
+								e.printStackTrace();
+							}
+							
+						}    
+					}
+				});
+
 			}
 		} catch (IOException e) {
 			// TODO
@@ -72,7 +130,7 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Diese Methode öffnet die Freund-Hinzufügen-Funktionen
+	 * Diese Methode ï¿½ffnet die Freund-Hinzufï¿½gen-Funktionen
 	 */
 	private void initNewFriend() {
 		friend.textProperty().addListener((ChangeListener<String>) (observableValue, newValue, oldValue) -> {
@@ -96,7 +154,7 @@ public class FreundeslisteController {
 					AnchorPane freundesliste = new AnchorPane();
 					newfriendlist.setMinHeight(500);
 					VBox vBox = new VBox();
-					JFXButton button = new JFXButton("Hinzufügen");
+					JFXButton button = new JFXButton("Hinzufï¿½gen");
 					button.setMinWidth(250);
 					button.setStyle(button.getStyle() + "-fx-fill: #B2B2B2;");
 					vBox.getChildren().addAll(newfriendlist, button);
@@ -133,8 +191,8 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Diese Methode überprüft, ob sich der neu hinzufügende User sich bereits
-	 * in der Freundesliste befindet und fügt ihm ansonsten der Freundesliste
+	 * Diese Methode ï¿½berprï¿½ft, ob sich der neu hinzufï¿½gende User sich bereits
+	 * in der Freundesliste befindet und fï¿½gt ihm ansonsten der Freundesliste
 	 * hinzu
 	 */
 	private void addNewFriend(ArrayList<Integer> filteredusers) throws Exception {
@@ -169,7 +227,7 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Fügt einen User der Freundesliste hinzu
+	 * Fï¿½gt einen User der Freundesliste hinzu
 	 */
 	@FXML
 	private void addFriend() {
@@ -182,7 +240,7 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Löscht einen Freund aus der Freundesliste
+	 * Lï¿½scht einen Freund aus der Freundesliste
 	 * 
 	 * @throws IOException
 	 */
@@ -197,7 +255,7 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Öffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
+	 * ï¿½ffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
 	 * Freund klickt
 	 * 
 	 * @param event
