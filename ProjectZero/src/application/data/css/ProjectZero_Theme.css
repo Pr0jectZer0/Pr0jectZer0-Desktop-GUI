@@ -8,6 +8,7 @@
  	-fx-secondary: #9C2B27;
  	-fx-primarytext: #B2B2B2;
  	-fx-red: #FF0000;
+	-fx-white: #ffffff;
  }
  
  .root{
@@ -40,6 +41,11 @@
  	-jfx-focus-color: -fx-secondary;
  	-fx-prompt-text-fill: -fx-primarytext;
  }
+
+ .text-area{
+	-fx-text-fill: -fx-white;
+
+}
  
  .wrong-details {
  	-jfx-unfocus-color: -fx-red;
