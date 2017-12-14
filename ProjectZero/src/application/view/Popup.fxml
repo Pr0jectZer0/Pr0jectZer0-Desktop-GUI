@@ -8,7 +8,7 @@
    <children>
       <VBox layoutY="-1.0" prefHeight="105.0" prefWidth="193.0">
          <children>
-            <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Öffne Chat" textFill="#4d4d4d" />
+            <JFXButton fx:id="btnchat" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Öffne Chat" textFill="#4d4d4d" />
             <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Freund stummschalten" textFill="#4d4d4d" />
             <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Freund blockieren" textFill="#4d4d4d" />
             <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Freund entfernen" textFill="#4d4d4d" />
