@@ -1,13 +1,45 @@
 package application.api;
 
-public class User {
-	public static LoginState login(String EMail, String Passwort) {
-		String token = "";
-		return LoginState.Success;
+import java.io.IOException;
+
+import application.model.HttpWebRequest;
+
+public final class User {
+	
+	private User() {}
+	
+	private static String loginToken;
+	
+	public static String getLoginToken() {
+		return loginToken;
 	}
 	
-	public static RegisterState register(String EMail, String Passwort) {
-		return RegisterState.Success;
+	public static LoginState login(String eMail, String password) {	
+		try {
+			String[][] parameter = { { "email", eMail }, { "password", password } };			
+			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
+			if (response.contains("token"))
+				return LoginState.Success;
+			else if (response.contains("error"))
+				return LoginState.WrongData;
+		} catch (IOException e) {
+			return LoginState.ServerError;
+		}
+		return LoginState.ServerError;
+	}
+	
+	public static RegisterState register(String username, String eMail, String password) {
+		String[][] parameter = { { "email", eMail }, { "name", username }, { "password", password } };
+		try {
+			String response = HttpWebRequest.sendPostRequest("user/", parameter);
+			if (response.contains("id"))
+				return RegisterState.Success;
+			else //Redirecting ¯\_(ツ)_/¯
+				return RegisterState.EmailAlreadyUsed; // + RegisterState.UsernameNotAvailable;
+		}
+		catch (Exception e) {
+			return RegisterState.ServerError;
+		}
 	}
 	
 	public enum RegisterState {
@@ -19,12 +51,13 @@ public class User {
 	
 	public enum LoginState {
 		Success,
-		WrongPassword,
-		WrongEmail,
+		WrongData,
 		ServerError,
 	}
 	
-	public static boolean delete(int UserID) {
-		return true;
+	public static boolean delete(int userID) throws IOException {
+		String response = HttpWebRequest.sendDeleteRequest("user/" + Integer.toString(userID));
+		return !response.contains("token");
+		//TODO: always returns "token not provided"
 	}
 }
