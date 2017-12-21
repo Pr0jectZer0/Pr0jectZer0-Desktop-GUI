@@ -1,8 +1,6 @@
 package application.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,8 +13,10 @@ import javafx.collections.ObservableList;
 
 public class Friends {
 
-	private Friends() {}
+	private static ObservableList<User> friends = null;
 	
+	private Friends() {}
+
 	public static FriendAddState add(int id) {
 		try {
 			String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
@@ -52,13 +52,15 @@ public class Friends {
 	}
 	
 	public static ObservableList<User> getFriends() throws JSONException, IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friends?token=" + application.api.User.getLoginToken()));
-		JSONArray friendArr = response.getJSONArray("friends");
-		ObservableList<User> friends = FXCollections.observableArrayList();
-		int friendAmount = friendArr.length();
-		for (int i = 0; i < friendAmount; i++) {
-			JSONObject curFriend = friendArr.getJSONObject(i);
-			friends.add(new application.model.User(curFriend.getString("name"), curFriend.getInt("id")));
+		if (friends == null) {
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friends?token=" + application.api.User.getLoginToken()));
+			JSONArray friendArr = response.getJSONArray("friends");
+			ObservableList<User> friends = FXCollections.observableArrayList();
+			int friendAmount = friendArr.length();
+			for (int i = 0; i < friendAmount; i++) {
+				JSONObject curFriend = friendArr.getJSONObject(i);
+				friends.add(new application.model.User(curFriend.getString("name"), curFriend.getInt("id")));
+			}
 		}
 		return friends;
 	}
