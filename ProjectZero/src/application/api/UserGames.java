@@ -26,7 +26,7 @@ public class UserGames {
 	 */
 	public static boolean add(int id) throws IOException {
 		String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
-		String response = HttpWebRequest.sendPostRequest("user/game/add?token=" + LoginController.getToken(), parameter);
+		String response = HttpWebRequest.sendPostRequest("user/game/add?token=" + User.getLoginToken(), parameter);
 		return response.contains("success");
 		//TODO: check for sucess or failure
 	}
@@ -39,7 +39,7 @@ public class UserGames {
 	 */
 	public static boolean delete(int id) throws IOException {
 		String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
-		String response = HttpWebRequest.sendPostRequest("user/game/remove?token=" + LoginController.getToken(), parameter);
+		String response = HttpWebRequest.sendPostRequest("user/game/remove?token=" + User.getLoginToken(), parameter);
 		return response.contains("success");
 		//TODO: check for sucess or failure
 	}

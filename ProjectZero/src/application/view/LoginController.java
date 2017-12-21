@@ -1,11 +1,14 @@
 package application.view;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
+import application.api.User.LoginState;
 import application.model.ErrorMsg;
 import application.model.ErrorWindow;
 import application.model.HttpWebRequest;
@@ -36,9 +39,6 @@ public class LoginController {
 	@FXML
 	private Stage mainStage;
 	private Stage registerStage;
-	private static String token = "";
-	private static ObservableList<User> users = FXCollections.observableArrayList();
-	private static JSONObject userIds;
 	private Main main;
 
 	/**
@@ -60,47 +60,44 @@ public class LoginController {
 
 	/**
 	 * Methode zum Anmelden/Einloggen
+	 * 
+	 * @throws IOException
 	 */
 	@FXML
 	private void handleLoginButtonAction(ActionEvent event) {
-		try {
-			vBoxErrorMsg.getChildren().clear();
-			String[][] parameter = { { "email", tFUsernameEmail.getText() }, { "password", tFpw.getText() } };			
-			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
-			
-			userIds = new JSONObject(HttpWebRequest.sendGetRequest("users"));
-			int anzUsers = userIds.getJSONArray("users").length();
-			
-			for (int i = 0; i<anzUsers; i++) {
-				users.add(new User(userIds.getJSONArray("users").getJSONObject(i).getString("name"), userIds.getJSONArray("users").getJSONObject(i).getInt("id")));
+		vBoxErrorMsg.getChildren().clear();
+		switch (application.api.User.login(tFUsernameEmail.getText(), tFpw.getText())) {
+		case Success:
+			tFUsernameEmail.getStyleClass().remove("wrong-details");
+			tFpw.getStyleClass().remove("wrong-details");
+			mainStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("view/MainLayout.fxml"));
+			mainStage.setTitle("Pr0jectZer0");
+			Image image = new Image("application/data/images/logo.png");
+			mainStage.getIcons().add(image);
+			AnchorPane mainAnchor = null;
+			try {
+				mainAnchor = (AnchorPane) loader.load();
+			} catch (IOException e) {
+				ErrorWindow.newErrorWindow("Es gab ein Fehler bei der Anmeldung!", main.getLoginStage(), e);
 			}
-			if (response.contains("token")) {
-				try {
-					JSONObject jsontoken = new JSONObject(response);
-					token = jsontoken.getString("token");			
-					
-					tFUsernameEmail.getStyleClass().remove("wrong-details");
-					tFpw.getStyleClass().remove("wrong-details");
-					mainStage = new Stage();
-					FXMLLoader loader = new FXMLLoader();
-					loader.setLocation(Main.class.getResource("view/MainLayout.fxml"));
-					mainStage.setTitle("Pr0jectZer0");
-					Image image = new Image("application/data/images/logo.png");
-					mainStage.getIcons().add(image);
-					AnchorPane mainAnchor = (AnchorPane) loader.load();
-					Scene scene = new Scene(mainAnchor);
-					mainStage.setScene(scene);
-					mainStage.show();
-					main.getLoginStage().close();
-				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler bei der Anmeldung!", main.getLoginStage(), e);
-				}
-			} else {
-				ErrorMsg.newError("Falscher Benutzername oder Passwort eingegeben!", vBoxErrorMsg, tFUsernameEmail);
-				tFpw.getStyleClass().add("wrong-details");
-			}
-		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim HTTP-Request zur Anmeldung", main.getLoginStage(), e);
+			Scene scene = new Scene(mainAnchor);
+			mainStage.setScene(scene);
+			mainStage.show();
+			main.getLoginStage().close();
+			break;
+		case WrongData:
+			ErrorMsg.newError("Falscher Benutzername oder Passwort eingegeben!", vBoxErrorMsg, tFUsernameEmail);
+			tFpw.getStyleClass().add("wrong-details");
+			break;
+		case ServerError:
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim HTTP-Request zur Anmeldung", main.getLoginStage(),
+					new IOException("connection failed"));
+		default:
+			ErrorWindow.newErrorWindow("Es gab ein Fehler bei der Anmeldung!", main.getLoginStage(),
+					new IOException("connection failed"));
+			break;
 		}
 	}
 
@@ -132,22 +129,9 @@ public class LoginController {
 	public Stage getRegisterStage() {
 		return registerStage;
 	}
-	
+
 	public Stage getMainStage() {
 		return mainStage;
 	}
-	
-	public static String getToken() {
-		return token;
-	}
-	
-	public static ObservableList<User> getUsers() {
-		return users;
-	}
-	
-	public static JSONObject getUserIds() {
-		return userIds;
-	}
-	
-	
+
 }
