@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/jfoenix.jar"/>
 	<classpathentry kind="lib" path="lib/fontawesomefx-8.9.jar"/>
 	<classpathentry kind="lib" path="lib/json.jar"/>
+	<classpathentry kind="lib" path="lib/pusher-java-client-1.6.0-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
