@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane styleClass="label2" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MainLayoutController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <fx:include fx:id="menuBar" source="MenuBar.fxml" />
+      		<JFXTabPane>
+      			<tabs>
+      				<Tab text="Spielebibliothek">
+      					<content>
+      						<fx:include fx:id="spielebibliothek" source="Spielebibliothek.fxml" />
+      					</content>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="GAMEPAD" size="16" translateX="-3.0" />
+                     </graphic>
+      				</Tab>
+      				<Tab text="Gruppen">
+      					<content>
+      						<fx:include fx:id="gruppen" source="Gruppen.fxml" />
+      					</content>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="GROUP" size="16" translateX="-3.0" />
+                     </graphic>
+      				</Tab>
+      				<Tab text="Chaträume">
+      					<content>
+      						<fx:include fx:id="chatraeume" source="Chatraeume.fxml" />
+      					</content>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="WECHAT" size="16" translateX="-3.0" />
+                     </graphic>
+      				</Tab>
+      				<Tab text="Terminplaner">
+      					<content>
+      						<fx:include fx:id="terminplaner" source="Terminplaner.fxml" />
+      					</content>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CALENDAR" size="16" translateX="-3.0" />
+                     </graphic>
+      				</Tab>
+      				<Tab text="Notizen">
+      					<content>
+      						<fx:include fx:id="notizen" source="Notizen.fxml" />
+      					</content>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="STICKY_NOTE" size="16" translateX="-3.0" />
+                     </graphic>
+      				</Tab>
+      			</tabs>
+      		</JFXTabPane>
+         </children>
+      </VBox>
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="600.0" direction="BOTTOM" overLayVisible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0" />
+      <StackPane layoutX="1024.0" layoutY="760.0" maxWidth="250.0" minWidth="250.0" styleClass="Freundesliste" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" cacheShape="false" focusTraversable="false" styleClass="label2" text="Freundesliste">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets left="40.0" />
+               </StackPane.margin>
+            </Label>
+            <JFXHamburger fx:id="hamburger" alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+               <padding>
+                  <Insets left="45.0" />
+               </padding>
+            </JFXHamburger>
+         </children>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" />
+         </effect>
+         <padding>
+            <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+         </padding>
+      </StackPane>
+   </children>
+</AnchorPane>

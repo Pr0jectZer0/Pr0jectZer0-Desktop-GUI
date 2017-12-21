@@ -1,0 +1,131 @@
+/*
+ * Diese css-Klasse enthält die Farb-Einstellungen etc. für unser Fenster-Design
+ * Autor: Dorsch, Paul, Deutsch, Penner, Kramer
+ */
+ 
+ * {
+ 	-fx-primary: #2A2E37;
+ 	-fx-secondary: #9C2B27;
+ 	-fx-primarytext: #B2B2B2;
+ 	-fx-red: #FF0000;
+ }
+ 
+ .root{
+ 	-fx-background-color: -fx-primary;
+ 	-fx-prompt-text-fill: -fx-primarytext;
+ }
+ 
+ .glyph-icon {
+ 	-fx-fill: -fx-primarytext;
+ }
+ 
+ .button {
+ 	-fx-fill: -fx-primarytext;
+ }
+
+ .login-button {
+ 	-fx-border-color: -fx-secondary;
+ 	-fx-border-radius: 20.0px;
+ 	-fx-background-radius: 20.0px;
+ }
+ 
+ .login-button:hover {
+ 	-fx-border-color: -fx-secondary;
+ 	-fx-background-color: -fx-secondary;
+ }
+ 
+ .text-field {
+ 	-fx-text-fill: -fx-primarytext;
+ 	-fx-font-size: 13.0pt;
+ 	-jfx-focus-color: -fx-secondary;
+ 	-fx-prompt-text-fill: -fx-primarytext;
+ }
+ 
+ .wrong-details {
+ 	-jfx-unfocus-color: -fx-red;
+ 	-jfx-focus-color: -fx-red;
+ }
+ 
+.labelerror {
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 10.0pt;
+}
+
+.labelbig {
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 16.0pt;
+}
+
+.label {
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 14.0pt;
+}
+
+.labelforgot {
+	-fx-text-fill: #0174DF;
+	-fx-font-size: 12.0pt;
+}
+ 
+ /*
+  * Hier beginnt das Layout vom MainLayout
+  */
+  
+.tab {
+  	-fx-background-color: -fx-primary;
+}
+  
+.tab-header-background {
+  	-fx-background-color: -fx-primary;
+}
+  
+.menu-bar {
+  	-fx-base: -fx-primary;
+}
+
+.jfx-tab-pane .tab-selected-line {
+	-fx-background-color: #cc0000;
+}
+
+.jfx-tab-pane .tab-header-area .jfx-rippler {
+    -jfx-rippler-fill :-fx-red;
+}
+
+.context-menu {
+  	-fx-background-color: derive(-fx-primary, 20.0%);
+}
+
+.Freundesliste {
+	-fx-background-color: -fx-secondary;
+	-fx-background-radius: 10.0 10.0 0.0 0.0;
+}
+
+.addFreund {
+	-fx-background-color: -fx-secondary;
+	-fx-text-fill: -fx-primarytext;
+	-fx-font-size: 13.0;
+}
+
+.jfx-list-view {
+	-fx-background-color: -fx-secondary;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #434343;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #232323;
+    -fx-text-fill: -fx-primarytext;
+}
+
+.list-view .label {
+    -fx-text-fill: -fx-primarytext;
+}
+
+.jfx-rippler {
+    -jfx-rippler-fill: red;
+}
