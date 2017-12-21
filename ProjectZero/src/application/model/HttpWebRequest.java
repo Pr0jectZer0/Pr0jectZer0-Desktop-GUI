@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -23,9 +24,8 @@ public class HttpWebRequest {
 	 * @param urlPath
 	 * @param parameter
 	 * @return
-	 * @throws Exception
 	 */
-	public static String sendPostRequest(String urlPath, String[][] parameter) throws Exception {
+	public static String sendPostRequest(String urlPath, String[][] parameter) throws IOException{
 		URL obj = new URL(url + urlPath);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
@@ -40,10 +40,6 @@ public class HttpWebRequest {
 		wr.writeBytes(urlParameters);
 		wr.flush();
 		wr.close();
-		// int responseCode = con.getResponseCode();
-		// System.out.println("\nSending 'POST' request to URL : " + urlPath);
-		// System.out.println("Post parameters : " + urlParameters);
-		// System.out.println("Response Code : " + responseCode);
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
