@@ -9,15 +9,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import application.model.HttpWebRequest;
+import application.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Friends {
-	
+
 	private Friends() {}
 	
 	public static FriendAddState add(int id) {
 		try {
 			String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
-			HttpWebRequest.sendPostRequest("friend/add?token=" + User.getLoginToken(), parameter);
+			HttpWebRequest.sendPostRequest("friend/add?token=" + application.api.User.getLoginToken(), parameter);
 			return FriendAddState.Success;
 		}
 		catch (Exception e) {
@@ -27,7 +30,7 @@ public class Friends {
 	
 	public static FriendDeleteState delete(int id) {
 		try {
-			HttpWebRequest.sendDeleteRequest("friend/remove/" + Integer.toString(id) + "?token=" + User.getLoginToken());
+			HttpWebRequest.sendDeleteRequest("friend/remove/" + Integer.toString(id) + "?token=" + application.api.User.getLoginToken());
 			return FriendDeleteState.Success;
 		} catch (IOException e) {
 			return FriendDeleteState.ServerError;
@@ -48,10 +51,10 @@ public class Friends {
 		ServerError,
 	}
 	
-	public static List<application.model.User> getFriends() throws JSONException, IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friends?token=" + User.getLoginToken()));
+	public static ObservableList<User> getFriends() throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friends?token=" + application.api.User.getLoginToken()));
 		JSONArray friendArr = response.getJSONArray("friends");
-		List<application.model.User> friends = new ArrayList<application.model.User>();
+		ObservableList<User> friends = FXCollections.observableArrayList();
 		int friendAmount = friendArr.length();
 		for (int i = 0; i < friendAmount; i++) {
 			JSONObject curFriend = friendArr.getJSONObject(i);
