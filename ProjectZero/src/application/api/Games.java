@@ -12,7 +12,6 @@ import application.model.Game;
 import application.model.Genre;
 import application.model.HttpWebRequest;
 import application.model.Publisher;
-import application.view.LoginController;
 
 public class Games {
 	
@@ -48,7 +47,7 @@ public class Games {
 	
 	public static List<application.model.Game> getGames() throws JSONException, IOException {
 		List<application.model.Game> gameList = new ArrayList<application.model.Game>();
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + LoginController.getToken()));
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + User.getLoginToken()));
 		JSONArray gameArr = response.getJSONArray("games");
 		int amountGames = gameArr.length();
 		for (int i = 0; i < amountGames; i++) {

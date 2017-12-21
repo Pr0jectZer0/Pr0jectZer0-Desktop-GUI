@@ -1,8 +1,6 @@
 package application.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,8 +9,12 @@ import org.json.JSONObject;
 import application.model.Game;
 import application.model.HttpWebRequest;
 import application.view.LoginController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class UserGames {
+	
+	private static ObservableList<Game> games = null;
 	
 	private UserGames() {}
 	
@@ -42,16 +44,17 @@ public class UserGames {
 		//TODO: check for sucess or failure
 	}
 	
-	public static List<application.model.Game> getGames(String token) throws JSONException, IOException {
-		List<application.model.Game> gameList = new ArrayList<application.model.Game>();
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + User.getLoginToken()));
-		JSONArray gameArr = response.getJSONArray("games");
-		for (int i = 0; i < gameArr.length(); i++) {
-			JSONObject gameObj = gameArr.getJSONObject(i);
-			gameList.add(new Game(gameObj.getString("name"), gameObj.getString("beschreibung"), gameObj.getInt("id")));
+	public static ObservableList<Game> getGames(String token) throws JSONException, IOException {
+		if (games == null) {
+			games = FXCollections.observableArrayList();
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + User.getLoginToken()));
+			JSONArray gameArr = response.getJSONArray("games");
+			for (int i = 0; i < gameArr.length(); i++) {
+				JSONObject gameObj = gameArr.getJSONObject(i);
+				games.add(new Game(gameObj.getString("name"), gameObj.getString("beschreibung"), gameObj.getInt("id")));
+			}
 		}
-		return gameList;
+		return games;
 		//TODO: not tested
 	}
-
 }
