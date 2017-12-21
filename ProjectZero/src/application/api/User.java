@@ -2,6 +2,8 @@ package application.api;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
+
 import application.model.HttpWebRequest;
 
 public final class User {
@@ -18,8 +20,11 @@ public final class User {
 		try {
 			String[][] parameter = { { "email", eMail }, { "password", password } };			
 			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
-			if (response.contains("token"))
+			if (response.contains("token")) {
+				JSONObject tokenObj = new JSONObject(response);
+				loginToken = tokenObj.getString("token");
 				return LoginState.Success;
+			}
 			else if (response.contains("error"))
 				return LoginState.WrongData;
 		} catch (IOException e) {
