@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import application.model.HttpWebRequest;
 import application.model.User;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 
 public class Friends {
@@ -55,8 +56,8 @@ public class Friends {
 		if (friends == null) {
 			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friends?token=" + application.api.User.getLoginToken()));
 			JSONArray friendArr = response.getJSONArray("friends");
-			ObservableList<User> friends = FXCollections.observableArrayList();
 			int friendAmount = friendArr.length();
+			friends = FXCollections.observableArrayList();
 			for (int i = 0; i < friendAmount; i++) {
 				JSONObject curFriend = friendArr.getJSONObject(i);
 				friends.add(new application.model.User(curFriend.getString("name"), curFriend.getInt("id")));

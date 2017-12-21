@@ -230,12 +230,12 @@ public class FreundeslisteController {
 	 */
 	@FXML
 	private void addFriend() {
-		try {
-			String[][] parameter = { { "", "" }, { "id", friend.getText() } };
-			HttpWebRequest.sendPostRequest("friend/add?token=" + LoginController.getToken(), parameter);
-		} catch (Exception e) {
-			// TODO
-		}
+//		try {
+//			String[][] parameter = { { "", "" }, { "id", friend.getText() } };
+//			HttpWebRequest.sendPostRequest("friend/add?token=" + LoginController.getToken(), parameter);
+//		} catch (Exception e) {
+//			// TODO
+//		}
 	}
 
 	/**
@@ -245,12 +245,12 @@ public class FreundeslisteController {
 	 */
 	@FXML
 	private void removeFriend() {
-		try {
-			HttpWebRequest
-					.sendDeleteRequest("friend/remove/" + friend.getText() + "?token=" + LoginController.getToken());
-		} catch (IOException e) {
-			// TODO
-		}
+//		try {
+//			HttpWebRequest
+//					.sendDeleteRequest("friend/remove/" + friend.getText() + "?token=" + LoginController.getToken());
+//		} catch (IOException e) {
+//			// TODO
+//		}
 	}
 
 	/**

@@ -32,22 +32,22 @@ public class SpielebibliothekController {
 	}
 
 	private void initGames() {
-		try {
-			JSONObject response = new JSONObject(
-					HttpWebRequest.sendGetRequest("user/game/list?token=" + LoginController.getToken()));
-
-			int anzgames = response.getJSONArray("games").length();
-
-			for (int i = 0; i < anzgames; i++) {
-				games.add(new Game(response.getJSONArray("games").getJSONObject(i).getString("name"),
-						response.getJSONArray("games").getJSONObject(i).getString("beschreibung"),
-						response.getJSONArray("games").getJSONObject(i).getInt("id")));
-				subgames.add(response.getJSONArray("games").getJSONObject(i).getInt("id"));
-				gamelist.getItems().add(response.getJSONArray("games").getJSONObject(i).getString("name"));
-			}
-		} catch (IOException e) {
-			// TODO
-		}
+//		try {
+//			JSONObject response = new JSONObject(
+//					HttpWebRequest.sendGetRequest("user/game/list?token=" + LoginController.getToken()));
+//
+//			int anzgames = response.getJSONArray("games").length();
+//
+//			for (int i = 0; i < anzgames; i++) {
+//				games.add(new Game(response.getJSONArray("games").getJSONObject(i).getString("name"),
+//						response.getJSONArray("games").getJSONObject(i).getString("beschreibung"),
+//						response.getJSONArray("games").getJSONObject(i).getInt("id")));
+//				subgames.add(response.getJSONArray("games").getJSONObject(i).getInt("id"));
+//				gamelist.getItems().add(response.getJSONArray("games").getJSONObject(i).getString("name"));
+//			}
+//		} catch (IOException e) {
+//			// TODO
+//		}
 	}
 	
 	private void initSelectedGame() {
@@ -81,22 +81,22 @@ public class SpielebibliothekController {
 
 	@FXML
 	private void deleteGame() {
-		try {
-			if (!gamelist.getSelectionModel().isEmpty()) {
-				int selectedGame = gamelist.getSelectionModel().getSelectedIndex();
-				gamelist.getItems().remove(selectedGame);
-				subgames.remove(selectedGame);
-				int selectedGameId = games.get(selectedGame).getId();
-				games.remove(selectedGame);
-				gamelist.refresh();
-				System.out.println(selectedGameId);
-				String response = HttpWebRequest.sendDeleteRequest(
-						"user/game/remove/" + selectedGameId + "?token=" + LoginController.getToken());
-				System.out.println(response);
-			}
-		} catch (IOException e) {
-			// TODO
-		}
+//		try {
+//			if (!gamelist.getSelectionModel().isEmpty()) {
+//				int selectedGame = gamelist.getSelectionModel().getSelectedIndex();
+//				gamelist.getItems().remove(selectedGame);
+//				subgames.remove(selectedGame);
+//				int selectedGameId = games.get(selectedGame).getId();
+//				games.remove(selectedGame);
+//				gamelist.refresh();
+//				System.out.println(selectedGameId);
+//				String response = HttpWebRequest.sendDeleteRequest(
+//						"user/game/remove/" + selectedGameId + "?token=" + LoginController.getToken());
+//				System.out.println(response);
+//			}
+//		} catch (IOException e) {
+//			// TODO
+//		}
 	}
 
 }
