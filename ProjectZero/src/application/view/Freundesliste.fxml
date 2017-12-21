@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -27,11 +28,12 @@
             <AnchorPane minHeight="530.0">
                <children>
                   <JFXDrawer fx:id="drawer" cacheShape="false" centerShape="false" defaultDrawerSize="250.0" direction="RIGHT" minHeight="530.0" overLayVisible="false" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <JFXListView fx:id="friendlist" minHeight="530.0" style="-fx-background-color: derive(#2A2E37, 20.0%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" color="RED" />
-                     </effect>
-                  </JFXListView>
+                  <TableView fx:id="friendlist" minHeight="530.0" style="-fx-background-color: derive(#2A2E37, 20.0%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Name" />
+                      <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Id" />
+                    </columns>
+                  </TableView>
                </children>
             </AnchorPane>
          </children>
