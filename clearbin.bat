@@ -1,1 +1,0 @@
-del ProjectZero\bin\*.* /s /q
