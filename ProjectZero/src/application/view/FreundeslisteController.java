@@ -1,25 +1,18 @@
 package application.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import org.json.JSONObject;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
-import application.Main;
-import application.model.HttpWebRequest;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import application.api.Friends;
+import application.api.Users;
+import application.model.User;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,15 +20,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 /**
  * Diese Klasse verwaltet die Freundesliste
@@ -44,89 +40,72 @@ import javafx.stage.StageStyle;
  */
 public class FreundeslisteController {
 	@FXML
-	private JFXListView<Object> friendlist;
+	private TableView<User> friendlist;
+	private TableView<User> unfriendlist;
+	@FXML
+	private TableColumn<User, String> nameCol;
+	@FXML
+	private TableColumn<User, Integer> idCol;
 	@FXML
 	private JFXTextField friend;
 	@FXML
 	private JFXDrawer drawer;
-	private JFXListView<String> newfriendlist = new JFXListView<String>();
-	private Main main;
 	private static Stage popupstage;
 	private AnchorPane mainAnchor;
-	
+
 	@FXML
 	private void initialize() {
 		initFriends();
 		initNewFriend();
-		System.out.println("Hallo Test");
-		try{
-		popupstage = new Stage();
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource("Popup.fxml"));
-		popupstage.setTitle("Pr0jectZer0");
-		Image image = new Image("application/data/images/logo.png");
-		popupstage.getIcons().add(image);
-		popupstage.initStyle(StageStyle.UNDECORATED);
-		mainAnchor = (AnchorPane) loader.load();
-		Scene scene = new Scene(mainAnchor);
-		popupstage.setScene(scene);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		initPopup();
 	}
-	
-	public static Stage getPopupstage()
-	{
-		return popupstage;
-	}
-	
-	public void setMain(Main main) {
-		this.main = main;
-	}
+
 	/**
 	 * Fï¿½gt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
 	private void initFriends() {
+		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());		
+		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+
 		try {
-			JSONObject response = new JSONObject(
-					HttpWebRequest.sendGetRequest("friends?token=" + LoginController.getToken()));
-			int friends = response.getJSONArray("friends").length();
-
-			for (int i = 0; i < friends; i++) {
-				Label label = new Label(response.getJSONArray("friends").getJSONObject(i).getString("name"));
-				FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.CHILD);
-				icon.setSize("14");
-				label.setGraphic(icon);
-				friendlist.getItems().add(label);
-				friendlist.setOnMouseClicked(new EventHandler<MouseEvent>()
-				{
-					@Override
-					public void handle(MouseEvent event)
-					{
-						if(event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY)
-						{
-							try{
-							System.out.println("Rechte Maustaste");						
-							popupstage.setX(event.getScreenX() - 1);
-							popupstage.setY(event.getScreenY() - 1);
-							popupstage.hide();
-							popupstage.show();
-							}
-							catch(Exception e)
-							{
-								e.printStackTrace();
-							}
-							
-						}    
-					}
-				});
-
-			}
-		} catch (IOException e) {
-			// TODO
+			friendlist.setItems(Friends.getFriends());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
 		}
+		
+		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
+			@Override
+			public TableCell<User, String> call(TableColumn<User, String> param) {
+				ImageView imageView = new ImageView();
+				TableCell<User, String> cell = new TableCell<User, String>() {
+					public void updateItem(String item, boolean empty) {
+						if (item != null) {
+							imageView.setImage(new Image("application/data/images/friend.png"));
+							setText(item);
+						}
+					}
+				};
+				cell.setGraphic(imageView);
+				return cell;
+			}
+		});
+
+		friendlist.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY) {
+					try {
+						popupstage.setX(event.getScreenX() - 1);
+						popupstage.setY(event.getScreenY() - 1);
+						popupstage.hide();
+						popupstage.show();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		});
 	}
 
 	/**
@@ -137,34 +116,27 @@ public class FreundeslisteController {
 			if (friend.getText().length() >= 3) {
 				JFXHamburger hamburger = new JFXHamburger();
 				try {
-					ObservableList<String> subusers = FXCollections.observableArrayList();
-					ArrayList<Integer> filteredusers = new ArrayList<Integer>();
-
-					for (int i = 0; i < LoginController.getUsers().size(); i++) {
-						if (LoginController.getUsers().get(i).getName().toLowerCase()
-								.contains(friend.getText().toLowerCase())) {
-							subusers.add(LoginController.getUsers().get(i).getName());
-							filteredusers.add(LoginController.getUsers().get(i).getId());
-						}
-					}
-
-					newfriendlist.getItems().clear();
-					newfriendlist.setItems(subusers);
-
+					unfriendlist = new TableView<User>();
+					unfriendlist.setItems(Users.getNoFriends());
+					unfriendlist.getItems().add(new User ("test", 2));
+					
 					AnchorPane freundesliste = new AnchorPane();
-					newfriendlist.setMinHeight(500);
+					unfriendlist.setMinHeight(500);
 					VBox vBox = new VBox();
-					JFXButton button = new JFXButton("Hinzufï¿½gen");
+					JFXButton button = new JFXButton("Hinzufügen");
 					button.setMinWidth(250);
 					button.setStyle(button.getStyle() + "-fx-fill: #B2B2B2;");
-					vBox.getChildren().addAll(newfriendlist, button);
+					vBox.getChildren().addAll(unfriendlist, button);
 					freundesliste.getChildren().addAll(vBox);
 
 					button.setOnAction(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent e) {
 							try {
-								addNewFriend(filteredusers);
+								friendlist.getItems().add(unfriendlist.getSelectionModel().getSelectedItem());
+								unfriendlist.getItems().remove(unfriendlist.getSelectionModel().getSelectedIndex());
+								unfriendlist.refresh();
+								friendlist.refresh();
 							} catch (Exception e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -191,66 +163,22 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Diese Methode ï¿½berprï¿½ft, ob sich der neu hinzufï¿½gende User sich bereits
-	 * in der Freundesliste befindet und fï¿½gt ihm ansonsten der Freundesliste
-	 * hinzu
+	 * Diese Methode initialisert das Popup-Stage in der Freundesliste
 	 */
-	private void addNewFriend(ArrayList<Integer> filteredusers) throws Exception {
-		int friendInTable = newfriendlist.getSelectionModel().getSelectedIndex();
-		int friendId = filteredusers.get(friendInTable);
-		boolean nofriend = true;
-
-		JSONObject friendsJSON = new JSONObject(
-				HttpWebRequest.sendGetRequest("friends?token=" + LoginController.getToken()));
-		int friends = friendsJSON.getJSONArray("friends").length();
-
-		for (int i = 0; i < friends; i++) {
-			if (friendsJSON.getJSONArray("friends").getJSONObject(i).getInt("id") == friendId) {
-				nofriend = false;
-			}
-		}
-
-		if (nofriend == true) {
-			newfriendlist.getItems().remove(friendInTable);
-			newfriendlist.refresh();
-
-			String name = newfriendlist.getSelectionModel().getSelectedItem();
-			Label label = new Label(name);
-			FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.CHILD);
-			icon.setSize("14");
-			label.setGraphic(icon);
-			friendlist.getItems().add(label);
-
-			String[][] parameter = { { "", "" }, { "id", Integer.toString(friendId) } };
-			HttpWebRequest.sendPostRequest("friend/add?token=" + LoginController.getToken(), parameter);
-		}
-	}
-
-	/**
-	 * Fï¿½gt einen User der Freundesliste hinzu
-	 */
-	@FXML
-	private void addFriend() {
+	private void initPopup() {
 		try {
-			String[][] parameter = { { "", "" }, { "id", friend.getText() } };
-			HttpWebRequest.sendPostRequest("friend/add?token=" + LoginController.getToken(), parameter);
+			popupstage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("Popup.fxml"));
+			popupstage.setTitle("Pr0jectZer0");
+			Image image = new Image("application/data/images/logo.png");
+			popupstage.getIcons().add(image);
+			popupstage.initStyle(StageStyle.UNDECORATED);
+			mainAnchor = (AnchorPane) loader.load();
+			Scene scene = new Scene(mainAnchor);
+			popupstage.setScene(scene);
 		} catch (Exception e) {
-			// TODO
-		}
-	}
-
-	/**
-	 * Lï¿½scht einen Freund aus der Freundesliste
-	 * 
-	 * @throws IOException
-	 */
-	@FXML
-	private void removeFriend() {
-		try {
-			HttpWebRequest
-					.sendDeleteRequest("friend/remove/" + friend.getText() + "?token=" + LoginController.getToken());
-		} catch (IOException e) {
-			// TODO
+			e.printStackTrace();
 		}
 	}
 
@@ -282,4 +210,16 @@ public class FreundeslisteController {
 		popup.show(friendlist, event.getX(), event.getY());
 	}
 
+	public static Stage getPopupstage() {
+		return popupstage;
+	}
+	
+//	public static TableView<User> getFriends() {
+//		return friendlist;
+//	}
+	
+//	public static TableView<User> getUnFriends() {
+//		return unfriendlist;
+//	}
+	
 }

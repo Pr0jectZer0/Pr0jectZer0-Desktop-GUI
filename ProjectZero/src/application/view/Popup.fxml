@@ -4,14 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="panemain" minHeight="102.0" minWidth="114.0" prefHeight="102.0" prefWidth="192.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.PopupController">
+<AnchorPane fx:id="panemain" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.PopupController">
    <children>
-      <VBox layoutY="-1.0" prefHeight="105.0" prefWidth="193.0">
+      <VBox layoutY="-1.0" style="-fx-background-color: #2A2E37;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton fx:id="btnchat" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Öffne Chat" textFill="#4d4d4d" />
-            <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Freund stummschalten" textFill="#4d4d4d" />
-            <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Freund blockieren" textFill="#4d4d4d" />
-            <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" text="Freund entfernen" textFill="#4d4d4d" />
+            <JFXButton onAction="#chat" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Öffne Chat" textFill="#b2b2b2" />
+            <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Freund stummschalten" textFill="#b2b2b2" />
+            <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Freund blockieren" textFill="#b2b2b2" />
+            <JFXButton onAction="#removeFriend" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Freund entfernen" textFill="#b2b2b2" />
          </children>
       </VBox>
    </children>

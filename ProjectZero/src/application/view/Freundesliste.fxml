@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="freundeslisteController" minHeight="576.0" minWidth="250.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.FreundeslisteController">
+<AnchorPane minHeight="576.0" minWidth="250.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.FreundeslisteController">
    <children>
       <VBox layoutX="12.0" layoutY="12.0" minHeight="576.0" minWidth="250.0" style="-fx-background-color: #2A2E37;" stylesheets="@../data/css/ProjectZero_Theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXTextField fx:id="friend" alignment="CENTER" minWidth="200.0" onAction="#addFriend" promptText="       Freund hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;">
+            <JFXTextField fx:id="friend" alignment="CENTER" minWidth="200.0" promptText="       Freund hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -24,14 +25,18 @@
                   <DropShadow blurType="TWO_PASS_BOX" color="RED" />
                </effect>
             </JFXTextField>
-            <AnchorPane minHeight="530.0">
+            <AnchorPane minHeight="540.0">
                <children>
                   <JFXDrawer fx:id="drawer" cacheShape="false" centerShape="false" defaultDrawerSize="250.0" direction="RIGHT" minHeight="530.0" overLayVisible="false" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <JFXListView fx:id="friendlist" minHeight="530.0" style="-fx-background-color: derive(#2A2E37, 20.0%);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <effect>
-                        <DropShadow blurType="TWO_PASS_BOX" color="RED" />
-                     </effect>
-                  </JFXListView>
+                  <TableView fx:id="friendlist" fixedCellSize="30.0" minHeight="530.0" style="-fx-background-color: derive(#2A2E37, 20.0%); -fx-cell-size: 60;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="nameCol" editable="false" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="Name" />
+                      <TableColumn fx:id="idCol" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Id" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
                </children>
             </AnchorPane>
          </children>
