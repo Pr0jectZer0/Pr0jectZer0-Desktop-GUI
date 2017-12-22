@@ -30,7 +30,7 @@ public class MainLayoutController {
 			AnchorPane freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
 			drawer.setSidePane(freundesliste);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
 		transition.setRate(-1);
