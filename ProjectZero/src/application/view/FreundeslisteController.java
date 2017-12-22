@@ -1,28 +1,18 @@
 package application.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
-import application.Main;
 import application.api.Friends;
-import application.model.HttpWebRequest;
+import application.api.Users;
 import application.model.User;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,17 +20,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 /**
  * Diese Klasse verwaltet die Freundesliste
@@ -50,6 +41,7 @@ import javafx.stage.StageStyle;
 public class FreundeslisteController {
 	@FXML
 	private TableView<User> friendlist;
+	private TableView<User> unfriendlist;
 	@FXML
 	private TableColumn<User, String> nameCol;
 	@FXML
@@ -72,14 +64,31 @@ public class FreundeslisteController {
 	 * Fï¿½gt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
 	private void initFriends() {
+		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());		
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 
 		try {
 			friendlist.setItems(Friends.getFriends());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 		}
+		
+		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
+			@Override
+			public TableCell<User, String> call(TableColumn<User, String> param) {
+				ImageView imageView = new ImageView();
+				TableCell<User, String> cell = new TableCell<User, String>() {
+					public void updateItem(String item, boolean empty) {
+						if (item != null) {
+							imageView.setImage(new Image("application/data/images/friend.png"));
+							setText(item);
+						}
+					}
+				};
+				cell.setGraphic(imageView);
+				return cell;
+			}
+		});
 
 		friendlist.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -103,64 +112,54 @@ public class FreundeslisteController {
 	 * Diese Methode ï¿½ffnet die Freund-Hinzufï¿½gen-Funktionen
 	 */
 	private void initNewFriend() {
-		// friend.textProperty().addListener((ChangeListener<String>)
-		// (observableValue, newValue, oldValue) -> {
-		// if (friend.getText().length() >= 3) {
-		// JFXHamburger hamburger = new JFXHamburger();
-		// try {
-		// ObservableList<String> subusers =
-		// FXCollections.observableArrayList();
-		// ArrayList<Integer> filteredusers = new ArrayList<Integer>();
-		//
-		// for (int i = 0; i < LoginController.getUsers().size(); i++) {
-		// if (LoginController.getUsers().get(i).getName().toLowerCase()
-		// .contains(friend.getText().toLowerCase())) {
-		// subusers.add(LoginController.getUsers().get(i).getName());
-		// filteredusers.add(LoginController.getUsers().get(i).getId());
-		// }
-		// }
-		//
-		// newfriendlist.getItems().clear();
-		// newfriendlist.setItems(subusers);
-		//
-		// AnchorPane freundesliste = new AnchorPane();
-		// newfriendlist.setMinHeight(500);
-		// VBox vBox = new VBox();
-		// JFXButton button = new JFXButton("Hinzufï¿½gen");
-		// button.setMinWidth(250);
-		// button.setStyle(button.getStyle() + "-fx-fill: #B2B2B2;");
-		// vBox.getChildren().addAll(newfriendlist, button);
-		// freundesliste.getChildren().addAll(vBox);
-		//
-		// button.setOnAction(new EventHandler<ActionEvent>() {
-		// @Override
-		// public void handle(ActionEvent e) {
-		// try {
-		// addNewFriend(filteredusers);
-		// } catch (Exception e1) {
-		// // TODO Auto-generated catch block
-		// e1.printStackTrace();
-		// }
-		// }
-		// });
-		// drawer.setSidePane(freundesliste);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// HamburgerBasicCloseTransition transition = new
-		// HamburgerBasicCloseTransition(hamburger);
-		// transition.setRate(-1);
-		// transition.setRate(transition.getRate() * -1);
-		// transition.play();
-		// drawer.setVisible(true);
-		// drawer.open();
-		// friendlist.setVisible(false);
-		// } else {
-		// drawer.setVisible(false);
-		// drawer.close();
-		// friendlist.setVisible(true);
-		// }
-		// });
+		friend.textProperty().addListener((ChangeListener<String>) (observableValue, newValue, oldValue) -> {
+			if (friend.getText().length() >= 3) {
+				JFXHamburger hamburger = new JFXHamburger();
+				try {
+					unfriendlist = new TableView<User>();
+					unfriendlist.setItems(Users.getNoFriends());
+					unfriendlist.getItems().add(new User ("test", 2));
+					
+					AnchorPane freundesliste = new AnchorPane();
+					unfriendlist.setMinHeight(500);
+					VBox vBox = new VBox();
+					JFXButton button = new JFXButton("Hinzufügen");
+					button.setMinWidth(250);
+					button.setStyle(button.getStyle() + "-fx-fill: #B2B2B2;");
+					vBox.getChildren().addAll(unfriendlist, button);
+					freundesliste.getChildren().addAll(vBox);
+
+					button.setOnAction(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent e) {
+							try {
+								friendlist.getItems().add(unfriendlist.getSelectionModel().getSelectedItem());
+								unfriendlist.getItems().remove(unfriendlist.getSelectionModel().getSelectedIndex());
+								unfriendlist.refresh();
+								friendlist.refresh();
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					});
+					drawer.setSidePane(freundesliste);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+				transition.setRate(-1);
+				transition.setRate(transition.getRate() * -1);
+				transition.play();
+				drawer.setVisible(true);
+				drawer.open();
+				friendlist.setVisible(false);
+			} else {
+				drawer.setVisible(false);
+				drawer.close();
+				friendlist.setVisible(true);
+			}
+		});
 	}
 
 	/**
@@ -181,76 +180,6 @@ public class FreundeslisteController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Diese Methode ï¿½berprï¿½ft, ob sich der neu hinzufï¿½gende User sich
-	 * bereits in der Freundesliste befindet und fï¿½gt ihm ansonsten der
-	 * Freundesliste hinzu
-	 */
-	private void addNewFriend(ArrayList<Integer> filteredusers) throws Exception {
-		// int friendInTable =
-		// newfriendlist.getSelectionModel().getSelectedIndex();
-		// int friendId = filteredusers.get(friendInTable);
-		// boolean nofriend = true;
-		//
-		// JSONObject friendsJSON = new JSONObject(
-		// HttpWebRequest.sendGetRequest("friends?token=" +
-		// LoginController.getToken()));
-		// int friends = friendsJSON.getJSONArray("friends").length();
-		//
-		// for (int i = 0; i < friends; i++) {
-		// if (friendsJSON.getJSONArray("friends").getJSONObject(i).getInt("id")
-		// == friendId) {
-		// nofriend = false;
-		// }
-		// }
-		//
-		// if (nofriend == true) {
-		// newfriendlist.getItems().remove(friendInTable);
-		// newfriendlist.refresh();
-		//
-		// String name = newfriendlist.getSelectionModel().getSelectedItem();
-		// Label label = new Label(name);
-		// FontAwesomeIconView icon = new
-		// FontAwesomeIconView(FontAwesomeIcon.CHILD);
-		// icon.setSize("14");
-		// label.setGraphic(icon);
-		// friendlist.getItems().add(label);
-		//
-		// String[][] parameter = { { "", "" }, { "id",
-		// Integer.toString(friendId) } };
-		// HttpWebRequest.sendPostRequest("friend/add?token=" +
-		// LoginController.getToken(), parameter);
-		// }
-	}
-
-	/**
-	 * Fï¿½gt einen User der Freundesliste hinzu
-	 */
-	@FXML
-	private void addFriend() {
-//		try {
-//			String[][] parameter = { { "", "" }, { "id", friend.getText() } };
-//			HttpWebRequest.sendPostRequest("friend/add?token=" + LoginController.getToken(), parameter);
-//		} catch (Exception e) {
-//			// TODO
-//		}
-	}
-
-	/**
-	 * Lï¿½scht einen Freund aus der Freundesliste
-	 * 
-	 * @throws IOException
-	 */
-	@FXML
-	private void removeFriend() {
-//		try {
-//			HttpWebRequest
-//					.sendDeleteRequest("friend/remove/" + friend.getText() + "?token=" + LoginController.getToken());
-//		} catch (IOException e) {
-//			// TODO
-//		}
 	}
 
 	/**
@@ -284,4 +213,13 @@ public class FreundeslisteController {
 	public static Stage getPopupstage() {
 		return popupstage;
 	}
+	
+//	public static TableView<User> getFriends() {
+//		return friendlist;
+//	}
+	
+//	public static TableView<User> getUnFriends() {
+//		return unfriendlist;
+//	}
+	
 }
