@@ -28,14 +28,17 @@
             <AnchorPane minHeight="540.0">
                <children>
                   <JFXDrawer fx:id="drawer" cacheShape="false" centerShape="false" defaultDrawerSize="250.0" direction="RIGHT" minHeight="530.0" overLayVisible="false" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TableView fx:id="friendlist" fixedCellSize="30.0" minHeight="530.0" style="-fx-background-color: derive(#2A2E37, 20.0%); -fx-cell-size: 60;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="friendlist" fixedCellSize="31.0" minHeight="530.0" styleClass="noheader" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="nameCol" editable="false" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER;" text="Name" />
+                      <TableColumn fx:id="nameCol" editable="false" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER_LEFT;" text="Name" />
                       <TableColumn fx:id="idCol" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Id" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
+                     <effect>
+                        <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+                     </effect>
                   </TableView>
                </children>
             </AnchorPane>

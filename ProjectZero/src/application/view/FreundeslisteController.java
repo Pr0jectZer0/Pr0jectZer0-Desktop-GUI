@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,7 +37,7 @@ import javafx.util.Callback;
 /**
  * Diese Klasse verwaltet die Freundesliste
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class FreundeslisteController {
 	@FXML
@@ -53,6 +54,9 @@ public class FreundeslisteController {
 	private static Stage popupstage;
 	private AnchorPane mainAnchor;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize() {
 		initFriends();
@@ -61,10 +65,11 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Fï¿½gt die Freunde in die Freundesliste und legt deren Funktionen fest
+	 * Fügt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
 	private void initFriends() {
-		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());		
+		friendlist.setPlaceholder(new Label("Füge jetzt deine Freunde hinzu"));
+		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
 		try {
@@ -72,7 +77,7 @@ public class FreundeslisteController {
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 		}
-		
+
 		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
 			@Override
 			public TableCell<User, String> call(TableColumn<User, String> param) {
@@ -109,17 +114,19 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Diese Methode ï¿½ffnet die Freund-Hinzufï¿½gen-Funktionen
+	 * Diese Methode öffnet die Freund-Hinzufügen-Funktionen
 	 */
 	private void initNewFriend() {
+		
+		
 		friend.textProperty().addListener((ChangeListener<String>) (observableValue, newValue, oldValue) -> {
 			if (friend.getText().length() >= 3) {
 				JFXHamburger hamburger = new JFXHamburger();
 				try {
 					unfriendlist = new TableView<User>();
 					unfriendlist.setItems(Users.getNoFriends());
-					unfriendlist.getItems().add(new User ("test", 2));
-					
+					unfriendlist.getItems().add(new User("test", 2));
+
 					AnchorPane freundesliste = new AnchorPane();
 					unfriendlist.setMinHeight(500);
 					VBox vBox = new VBox();
@@ -183,7 +190,7 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * ï¿½ffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
+	 * Öffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
 	 * Freund klickt
 	 * 
 	 * @param event
@@ -213,13 +220,5 @@ public class FreundeslisteController {
 	public static Stage getPopupstage() {
 		return popupstage;
 	}
-	
-//	public static TableView<User> getFriends() {
-//		return friendlist;
-//	}
-	
-//	public static TableView<User> getUnFriends() {
-//		return unfriendlist;
-//	}
-	
+
 }
