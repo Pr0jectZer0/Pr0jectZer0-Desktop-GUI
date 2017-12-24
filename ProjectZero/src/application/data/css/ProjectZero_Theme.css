@@ -31,59 +31,67 @@
 
 .table-row-cell{
     -fx-background-color: -fx-table-cell-border-color, derive(-fx-primary, 10.0%);
-    -fx-border-color: transparent;
-    -fx-background-insets: 0, 0 0 0 0;
+    -fx-table-cell-border-color: transparent;
+    -fx-background-insets: 0.0;
     -fx-padding: 0.0em; 
 }
 
 .table-row-cell:odd{
     -fx-background-color: -fx-table-cell-border-color, derive(-fx-primary, 20.0%);
-    -fx-border-color: transparent;
-    -fx-background-insets: 0, 0 0 0 0;
+    -fx-table-cell-border-color: transparent;
+    -fx-background-insets: 0.0;
     -fx-padding: 0.0em;
 }
- 
- .table-row-cell:selected { 
- 	-fx-background-color: -fx-secondary;
- 	-fx-border-color: transparent;
- 	-fx-background-insets: 0, 0 0 0 0;
- 	-fx-padding: 0.0em; 
- }
- 
- .button {
- 	-fx-fill: -fx-primarytext;
- }
 
- .login-button {
+.table-row-cell:hover {
+ 	-fx-background-color: derive(-fx-secondary, 20.0%);
+} 
+ 
+ .table-row-cell:empty {
+  	-fx-background-color: -fx-primary;
+ }
+ 
+.table-row-cell:selected { 
+ 	-fx-background-color: -fx-secondary;
+ 	-fx-table-cell-border-color: transparent;
+ 	-fx-background-insets: 0.0;
+ 	-fx-padding: 0.0em; 
+}
+ 
+.button {
+ 	-fx-fill: -fx-primarytext;
+}
+
+.login-button {
  	-fx-border-color: -fx-secondary;
  	-fx-border-radius: 20.0px;
  	-fx-background-radius: 20.0px;
- }
+}
  
- .popup:hover {
+.popup:hover {
  	-fx-background-color: -fx-secondary;
- }
+}
  
- .login-button:hover {
+.login-button:hover {
  	-fx-border-color: -fx-secondary;
  	-fx-background-color: -fx-secondary;
- }
+}
  
- .text-field {
+.text-field {
  	-fx-text-fill: -fx-primarytext;
- 	-fx-font-size: 13.0pt;
+	-fx-font-size: 13.0pt;
  	-jfx-focus-color: -fx-secondary;
  	-fx-prompt-text-fill: -fx-primarytext;
- }
+}
 
- .text-area{
+.text-area{
 	-fx-text-fill: -fx-white;
 }
  
- .wrong-details {
+.wrong-details {
  	-jfx-unfocus-color: -fx-red;
  	-jfx-focus-color: -fx-red;
- }
+}
  
 .labelerror {
 	-fx-text-fill: -fx-primarytext;
@@ -133,6 +141,10 @@
   	-fx-background-color: derive(-fx-primary, 20.0%);
 }
 
+.jfx-hamburger StackPane {
+	-fx-background-color: -fx-primarytext;
+}
+
 .Freundesliste {
 	-fx-background-color: -fx-secondary;
 	-fx-background-radius: 10.0 10.0 0.0 0.0;
@@ -145,7 +157,30 @@
 }
 
 .noheader .column-header-background {
-    -fx-max-height: 0;
-    -fx-pref-height: 0;
-    -fx-min-height: 0;
+    -fx-max-height: 0.0;
+    -fx-pref-height: 0.0;
+    -fx-min-height: 0.0;
+}
+
+/*
+ * Dialog-Fenster
+ */
+ 
+.myDialog{
+    -fx-background-color: -fx-primary;
+}
+.myDialog > *.button-bar > *.container{
+    -fx-background-color: -fx-primary;
+}
+.myDialog > *.label.content{
+    -fx-font-size: 14.0px;
+    -fx-font-weight: bold;
+}
+.myDialog:header *.header-panel{
+    -fx-background-color: -fx-primary;
+}
+.myDialog:header *.header-panel *.label{
+    -fx-font-size: 18.0px;
+    -fx-font-style: italic;
+    -fx-fill: -fx-primary;
 }

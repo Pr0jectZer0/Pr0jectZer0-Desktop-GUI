@@ -14,7 +14,7 @@
    <children>
       <VBox layoutX="12.0" layoutY="12.0" minHeight="576.0" minWidth="250.0" style="-fx-background-color: #2A2E37;" stylesheets="@../data/css/ProjectZero_Theme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXTextField fx:id="friend" alignment="CENTER" minWidth="200.0" promptText="       Freund hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;">
+            <JFXTextField fx:id="friend" alignment="CENTER" minWidth="200.0" promptText="     Freund hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -28,7 +28,7 @@
             <AnchorPane minHeight="540.0">
                <children>
                   <JFXDrawer fx:id="drawer" cacheShape="false" centerShape="false" defaultDrawerSize="250.0" direction="RIGHT" minHeight="530.0" overLayVisible="false" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <TableView fx:id="friendlist" fixedCellSize="31.0" minHeight="530.0" styleClass="noheader" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="friendlist" editable="true" fixedCellSize="31.0" minHeight="530.0" styleClass="noheader" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="nameCol" editable="false" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" sortable="false" style="-fx-alignment: CENTER_LEFT;" text="Name" />
                       <TableColumn fx:id="idCol" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Id" />
