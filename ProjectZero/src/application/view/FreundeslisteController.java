@@ -140,6 +140,7 @@ public class FreundeslisteController {
 							String newFriend = newFriendlist.getSelectionModel().getSelectedItem().getName() + " (Id: "
 									+ newFriendlist.getSelectionModel().getSelectedItem().getId() + ")";
 
+							Friends.add(newFriendlist.getSelectionModel().getSelectedItem().getId());
 							Friends.getFriends().add(newFriendlist.getSelectionModel().getSelectedItem());
 							Users.getNoFriends().remove(newFriendlist.getSelectionModel().getSelectedItem());
 							newFriendlist.refresh();
@@ -216,6 +217,7 @@ public class FreundeslisteController {
 						String newFriend = newFriendlist.getSelectionModel().getSelectedItem().getName() + " (Id: "
 								+ newFriendlist.getSelectionModel().getSelectedItem().getId() + ")";
 
+						Friends.add(newFriendlist.getSelectionModel().getSelectedItem().getId());
 						Friends.getFriends().add(newFriendlist.getSelectionModel().getSelectedItem());
 						Users.getNoFriends().remove(newFriendlist.getSelectionModel().getSelectedItem());
 						newFriendlist.refresh();
