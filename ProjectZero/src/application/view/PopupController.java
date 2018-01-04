@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -34,9 +35,6 @@ public class PopupController {
 			Stage chatstage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("Chat.fxml"));
-			chatstage.setTitle("Platzhalter");
-			Image image = new Image("application/data/images/logo.png");
-			chatstage.getIcons().add(image);
 			// chatstage.initStyle(StageStyle.UNDECORATED);
 			AnchorPane chatAnchor = (AnchorPane) loader.load();
 			Scene scene = new Scene(chatAnchor);
@@ -48,9 +46,9 @@ public class PopupController {
 	}
 	
 	@FXML
-	private void removeFriend() {		
-//		FreundeslisteController.getFriends().getItems().add(FreundeslisteController.getUnFriends().getSelectionModel().getSelectedItem());
-//		FreundeslisteController.getUnFriends().getItems().remove(FreundeslisteController.getUnFriends().getSelectionModel().getSelectedIndex());
+	private void removeFriend() {
+//		FreundeslisteController.friendlist.getItems().add(FreundeslisteController.newFriendlist.getSelectionModel().getSelectedItem());
+//		FreundeslisteController.newFriendlist.getItems().remove(FreundeslisteController.newFriendlist.getSelectionModel().getSelectedIndex());
 	}
 
 }

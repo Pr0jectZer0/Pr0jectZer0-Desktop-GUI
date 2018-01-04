@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import application.model.Game;
 import application.model.HttpWebRequest;
-import application.view.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
