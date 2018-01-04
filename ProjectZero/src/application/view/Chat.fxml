@@ -20,7 +20,7 @@
                      <effect>
                         <Glow />
                      </effect></JFXTextArea>
-                  <JFXButton prefHeight="190.0" prefWidth="136.0" style="-fx-background-color: #9c2b27;" text="Senden" textFill="#b2b2b2" HBox.hgrow="NEVER" />
+                  <JFXButton fx:id="btnsenden" prefHeight="190.0" prefWidth="136.0" style="-fx-background-color: #9c2b27;" text="Senden" textFill="#b2b2b2" HBox.hgrow="NEVER" />
                </children>
             </HBox>
          </children>
