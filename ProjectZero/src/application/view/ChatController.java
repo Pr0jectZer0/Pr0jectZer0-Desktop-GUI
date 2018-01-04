@@ -70,8 +70,7 @@ public class ChatController
 				PusherOptions pusheroptions = new PusherOptions();
 				pusheroptions.setCluster("eu");
 				pusheroptions.setEncrypted(true);
-				pusheroptions.setHost("https://pr0jectzer0.ml");
-				pusheroptions.setWsPort(80);
+				//pusheroptions.setHost("https://pr0jectzer0.ml");
 				HttpAuthorizer authorizer = new HttpAuthorizer("https://pr0jectzer0.ml/broadcasting/auth");
 				Map<String, String> header = new TreeMap<String, String>();
 				header.put("Authorization",
