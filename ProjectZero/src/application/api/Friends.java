@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import application.model.HttpWebRequest;
 import application.model.User;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 
 public class Friends {

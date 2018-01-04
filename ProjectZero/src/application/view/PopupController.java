@@ -46,9 +46,9 @@ public class PopupController {
 	}
 	
 	@FXML
-	private void removeFriend() {		
-//		FreundeslisteController.getFriends().getItems().add(FreundeslisteController.getUnFriends().getSelectionModel().getSelectedItem());
-//		FreundeslisteController.getUnFriends().getItems().remove(FreundeslisteController.getUnFriends().getSelectionModel().getSelectedIndex());
+	private void removeFriend() {
+//		FreundeslisteController.friendlist.getItems().add(FreundeslisteController.newFriendlist.getSelectionModel().getSelectedItem());
+//		FreundeslisteController.newFriendlist.getItems().remove(FreundeslisteController.newFriendlist.getSelectionModel().getSelectedIndex());
 	}
 
 }

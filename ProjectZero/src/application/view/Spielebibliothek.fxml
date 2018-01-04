@@ -13,7 +13,7 @@
 
 <AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SpielebibliothekController">
    <children>
-      <HBox layoutX="20.0" layoutY="20.0" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <HBox alignment="CENTER_LEFT" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
          <children>
             <VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
                <children>
@@ -31,14 +31,11 @@
                      </font>
                   </JFXButton>
                </children>
-               <effect>
-                  <DropShadow blurType="TWO_PASS_BOX" color="RED" />
-               </effect>
                <padding>
-                  <Insets left="20.0" right="20.0" />
+                  <Insets left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
-            <VBox minWidth="600.0" spacing="10.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
+            <VBox spacing="10.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
                <children>
                   <Label fx:id="selectedGameName" style="-fx-font-size: 30;" text="Spieletitel">
                      <VBox.margin>
@@ -61,13 +58,10 @@
                <padding>
                   <Insets left="20.0" right="20.0" />
                </padding>
-               <effect>
-                  <DropShadow blurType="TWO_PASS_BOX" color="RED" />
-               </effect>
             </VBox>
          </children>
          <effect>
-            <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+            <DropShadow blurType="TWO_PASS_BOX" color="#9c2b27" />
          </effect>
          <padding>
             <Insets bottom="50.0" top="10.0" />
