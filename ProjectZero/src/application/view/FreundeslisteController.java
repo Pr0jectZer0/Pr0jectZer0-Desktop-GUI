@@ -88,7 +88,9 @@ public class FreundeslisteController {
 		} catch (Exception e) {
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Freunde!", (Stage) friendlist.getScene().getWindow(), e);
 		}
-
+		
+		friendlist.getSelectionModel().selectFirst();
+		
 		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
 			@Override
 			public TableCell<User, String> call(TableColumn<User, String> param) {
@@ -97,7 +99,8 @@ public class FreundeslisteController {
 					public void updateItem(String item, boolean empty) {
 						if (item != null) {
 							imageView.setImage(new Image("application/data/images/friend.png"));
-							setText(item);
+							setText(item + " (#" + friendlist.getSelectionModel().getSelectedItem().getId() + ")");
+							friendlist.getSelectionModel().selectNext();
 						}
 					}
 				};
@@ -191,6 +194,7 @@ public class FreundeslisteController {
 		newFreundesliste.setEffect(shadow);
 		newFriendlist.getStyleClass().add("noheader");
 		newFriendlist.setMinHeight(465);
+		newFriendlist.setMinWidth(250);
 		newFriendlist.setFixedCellSize(31);
 
 		JFXButton button = new JFXButton("Hinzufügen");
@@ -263,10 +267,10 @@ public class FreundeslisteController {
 						}
 
 						String lowerCaseFilter = newValue.toLowerCase();
-
+						
 						if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
 							return true;
-						} else if (newValue.matches("[0-9]")) {
+						} else if (newValue.matches("[0-9]+")) {
 							if (user.getId() == Integer.parseInt(newValue)) {
 								return true;
 							}
