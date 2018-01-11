@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="panemain" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.PopupController">
    <children>
-      <VBox layoutY="-1.0" style="-fx-background-color: #2A2E37;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutY="-1.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
          <children>
-            <JFXButton onAction="#chat" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Öffne Chat" textFill="#b2b2b2" />
+            <JFXButton onAction="#chat" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Nachricht senden" textFill="#b2b2b2" />
             <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Freund stummschalten" textFill="#b2b2b2" />
             <JFXButton prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Freund blockieren" textFill="#b2b2b2" />
             <JFXButton onAction="#removeFriend" prefHeight="25.0" prefWidth="205.0" ripplerFill="BLACK" styleClass="popup" text="Freund entfernen" textFill="#b2b2b2" />
          </children>
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" color="RED" />
+         </effect>
       </VBox>
    </children>
 </AnchorPane>

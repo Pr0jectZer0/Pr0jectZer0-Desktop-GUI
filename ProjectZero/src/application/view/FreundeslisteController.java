@@ -11,8 +11,10 @@ import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import application.api.Friends;
 import application.api.Users;
+import application.model.ErrorWindow;
 import application.model.User;
-import javafx.beans.value.ChangeListener;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,15 +22,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -36,12 +46,12 @@ import javafx.util.Callback;
 /**
  * Diese Klasse verwaltet die Freundesliste
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class FreundeslisteController {
 	@FXML
 	private TableView<User> friendlist;
-	private TableView<User> unfriendlist;
+	private TableView<User> newFriendlist;
 	@FXML
 	private TableColumn<User, String> nameCol;
 	@FXML
@@ -53,6 +63,9 @@ public class FreundeslisteController {
 	private static Stage popupstage;
 	private AnchorPane mainAnchor;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize() {
 		initFriends();
@@ -61,17 +74,22 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Fï¿½gt die Freunde in die Freundesliste und legt deren Funktionen fest
+	 * Fügt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
 	private void initFriends() {
-		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());		
+		friendlist.setPlaceholder(new Label("Füge jetzt deine Freunde hinzu"));
+		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+		
+		friend.getStyleClass().add("deleteTextField");
 
 		try {
 			friendlist.setItems(Friends.getFriends());
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Freunde!", (Stage) friendlist.getScene().getWindow(), e);
 		}
+		
+		friendlist.getSelectionModel().selectFirst();
 		
 		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
 			@Override
@@ -81,7 +99,8 @@ public class FreundeslisteController {
 					public void updateItem(String item, boolean empty) {
 						if (item != null) {
 							imageView.setImage(new Image("application/data/images/friend.png"));
-							setText(item);
+							setText(item + " (#" + friendlist.getSelectionModel().getSelectedItem().getId() + ")");
+							friendlist.getSelectionModel().selectNext();
 						}
 					}
 				};
@@ -100,7 +119,7 @@ public class FreundeslisteController {
 						popupstage.hide();
 						popupstage.show();
 					} catch (Exception e) {
-						e.printStackTrace();
+						ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Popup-Fensters der Freundesliste!", (Stage) friendlist.getScene().getWindow(), e);
 					}
 
 				}
@@ -109,57 +128,172 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Diese Methode ï¿½ffnet die Freund-Hinzufï¿½gen-Funktionen
+	 * Diese Methode öffnet die Freund-Hinzufügen-Funktionen
 	 */
+	@SuppressWarnings("unchecked")
 	private void initNewFriend() {
-		friend.textProperty().addListener((ChangeListener<String>) (observableValue, newValue, oldValue) -> {
-			if (friend.getText().length() >= 3) {
-				JFXHamburger hamburger = new JFXHamburger();
+		newFriendlist = new TableView<User>();
+		newFriendlist.setPlaceholder(new Label("Keinen Freund gefunden"));
+		newFriendlist.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
 				try {
-					unfriendlist = new TableView<User>();
-					unfriendlist.setItems(Users.getNoFriends());
-					unfriendlist.getItems().add(new User ("test", 2));
-					
-					AnchorPane freundesliste = new AnchorPane();
-					unfriendlist.setMinHeight(500);
-					VBox vBox = new VBox();
-					JFXButton button = new JFXButton("Hinzufügen");
-					button.setMinWidth(250);
-					button.setStyle(button.getStyle() + "-fx-fill: #B2B2B2;");
-					vBox.getChildren().addAll(unfriendlist, button);
-					freundesliste.getChildren().addAll(vBox);
+					if (event.getButton().equals(MouseButton.PRIMARY)) {
+						if (event.getClickCount() == 2) {
+							String newFriend = newFriendlist.getSelectionModel().getSelectedItem().getName() + " (Id: "
+									+ newFriendlist.getSelectionModel().getSelectedItem().getId() + ")";
 
-					button.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent e) {
-							try {
-								friendlist.getItems().add(unfriendlist.getSelectionModel().getSelectedItem());
-								unfriendlist.getItems().remove(unfriendlist.getSelectionModel().getSelectedIndex());
-								unfriendlist.refresh();
-								friendlist.refresh();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
+							Friends.add(newFriendlist.getSelectionModel().getSelectedItem().getId());
+							Friends.getFriends().add(newFriendlist.getSelectionModel().getSelectedItem());
+							Users.getNoFriends().remove(newFriendlist.getSelectionModel().getSelectedItem());
+							newFriendlist.refresh();
+							friendlist.refresh();
+
+							Alert alert = new Alert(AlertType.INFORMATION);
+							DialogPane dialogPane = alert.getDialogPane();
+							dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
+							dialogPane.getStyleClass().add("myDialog");
+							alert.setTitle("Freund hinzufügen");
+							alert.setHeaderText(null);
+							alert.setContentText(newFriend + " erfolgreich hinzugefügt!");
+
+							Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+							Stage owner = (Stage) newFriendlist.getScene().getWindow();
+							Image image = new Image("application/data/images/logo.png");
+							stage.getIcons().add(image);
+							alert.initOwner(owner);
+							alert.showAndWait();
 						}
-					});
-					drawer.setSidePane(freundesliste);
+					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freundes durch Maus-Doppelklick!", (Stage) friendlist.getScene().getWindow(), e);
 				}
-				HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
-				transition.setRate(-1);
-				transition.setRate(transition.getRate() * -1);
-				transition.play();
-				drawer.setVisible(true);
-				drawer.open();
-				friendlist.setVisible(false);
-			} else {
-				drawer.setVisible(false);
-				drawer.close();
-				friendlist.setVisible(true);
 			}
 		});
+
+		DropShadow shadow = new DropShadow();
+		shadow.setBlurType(BlurType.TWO_PASS_BOX);
+		shadow.setColor(Color.RED);
+
+		TableColumn<User, String> nameCol2 = new TableColumn<User, String>();
+		nameCol2.setStyle(nameCol2.getStyle() + "-fx-alignment: CENTER_LEFT;");
+		nameCol2.setEditable(false);
+		TableColumn<User, Integer> idCol2 = new TableColumn<User, Integer>();
+		idCol2.setMaxWidth(0);
+		newFriendlist.getColumns().addAll(nameCol2, idCol2);
+		nameCol2.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+		idCol2.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+
+		JFXHamburger hamburger = new JFXHamburger();
+
+		AnchorPane newFreundesliste = new AnchorPane();
+		newFreundesliste.setMinHeight(546);
+		newFreundesliste.setMinWidth(250);
+		newFreundesliste.setStyle(newFreundesliste.getStyle() + "-fx-background-color:  #2A2E37;");
+		newFreundesliste.getStylesheets().add("application/data/css/ProjectZero_Theme.css");
+		newFreundesliste.setEffect(shadow);
+		newFriendlist.getStyleClass().add("noheader");
+		newFriendlist.setMinHeight(465);
+		newFriendlist.setMinWidth(250);
+		newFriendlist.setFixedCellSize(31);
+
+		JFXButton button = new JFXButton("Hinzufügen");
+		button.setMinWidth(200);
+		button.getStyleClass().add("login-button");
+		button.setStyle(button.getStyle() + "-fx-text-fill: #B2B2B2;" + "-fx-font-size: 13.0pt;");
+
+		StackPane stack = new StackPane();
+		stack.getChildren().add(button);
+		stack.setAlignment(Pos.CENTER);
+
+		VBox vBox = new VBox();
+		vBox.setMinHeight(546);
+		vBox.setMinWidth(250);
+		vBox.setSpacing(12);
+		vBox.getChildren().addAll(newFriendlist, stack);
+
+		newFreundesliste.getChildren().addAll(vBox);
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					if (newFriendlist.getSelectionModel().getSelectedItem() != null) {
+						String newFriend = newFriendlist.getSelectionModel().getSelectedItem().getName() + " (Id: "
+								+ newFriendlist.getSelectionModel().getSelectedItem().getId() + ")";
+
+						Friends.add(newFriendlist.getSelectionModel().getSelectedItem().getId());
+						Friends.getFriends().add(newFriendlist.getSelectionModel().getSelectedItem());
+						Users.getNoFriends().remove(newFriendlist.getSelectionModel().getSelectedItem());
+						newFriendlist.refresh();
+						friendlist.refresh();
+
+						Alert alert = new Alert(AlertType.INFORMATION);
+						DialogPane dialogPane = alert.getDialogPane();
+						dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
+						dialogPane.getStyleClass().add("myDialog");
+						alert.setTitle("Freund hinzufügen");
+						alert.setHeaderText(null);
+						alert.setContentText(newFriend + " erfolgreich hinzugefügt!");
+
+						Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+						Stage owner = (Stage) newFriendlist.getScene().getWindow();
+						Image image = new Image("application/data/images/logo.png");
+						stage.getIcons().add(image);
+						alert.initOwner(owner);
+						alert.showAndWait();
+					}
+				} catch (Exception e1) {
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freunde", (Stage) friendlist.getScene().getWindow(), e1);
+				}
+			}
+		});
+
+		try {
+			FilteredList<User> filteredData = new FilteredList<>(Users.getNoFriends(), p -> true);
+
+			friend.textProperty().addListener((observable, oldValue, newValue) -> {
+				if (friend.getText().length() >= 1) {
+					drawer.setSidePane(newFreundesliste);
+					HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
+					transition.setRate(-1);
+					transition.setRate(transition.getRate() * -1);
+					transition.play();
+					drawer.setVisible(true);
+					drawer.open();
+					friendlist.setVisible(false);
+					filteredData.setPredicate(user -> {
+						if (newValue == null || newValue.isEmpty()) {
+							return true;
+						}
+
+						String lowerCaseFilter = newValue.toLowerCase();
+						
+						if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+							return true;
+						} else if (newValue.matches("[0-9]+")) {
+							if (user.getId() == Integer.parseInt(newValue)) {
+								return true;
+							}
+						}
+						return false;
+					});
+				} else {
+					drawer.setVisible(false);
+					drawer.close();
+					friendlist.setVisible(true);
+				}
+			});
+
+			SortedList<User> sortedData = new SortedList<>(filteredData);
+
+			sortedData.comparatorProperty().bind(newFriendlist.comparatorProperty());
+
+			newFriendlist.setItems(sortedData);
+
+			newFriendlist.getSelectionModel().select(0);
+		} catch (IOException e2) {
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Filtern der Nutzerliste!", (Stage) friendlist.getScene().getWindow(), e2);
+		}
 	}
 
 	/**
@@ -178,12 +312,12 @@ public class FreundeslisteController {
 			Scene scene = new Scene(mainAnchor);
 			popupstage.setScene(scene);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Popup-Fensters!", (Stage) friendlist.getScene().getWindow(), e);
 		}
 	}
 
 	/**
-	 * ï¿½ffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
+	 * Öffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
 	 * Freund klickt
 	 * 
 	 * @param event
@@ -210,16 +344,12 @@ public class FreundeslisteController {
 		popup.show(friendlist, event.getX(), event.getY());
 	}
 
+	/**
+	 * Getter: popupstage
+	 * @return
+	 */
 	public static Stage getPopupstage() {
 		return popupstage;
 	}
-	
-//	public static TableView<User> getFriends() {
-//		return friendlist;
-//	}
-	
-//	public static TableView<User> getUnFriends() {
-//		return unfriendlist;
-//	}
-	
+
 }

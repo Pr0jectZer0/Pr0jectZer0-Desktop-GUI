@@ -36,12 +36,12 @@ public class Users {
 			User[] users = getUsers().toArray(new User[0]);
 			User[] friends = Friends.getFriends().toArray(new User[0]);
 			for (int i = 0; i < users.length; i++) {
-				boolean found = true;
+				boolean found = false;
 				for (int j = 0; j < friends.length; j++) {
-					if (users[i] == friends[j])
+					if (users[i].getId() == friends[j].getId()) {
+						found = true;
 						break;
-					else
-						found = false;
+					}
 				}
 				if (!found)
 					noFriends.add(users[i]);
