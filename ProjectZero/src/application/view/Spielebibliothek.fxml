@@ -13,7 +13,7 @@
 
 <AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.SpielebibliothekController">
    <children>
-      <HBox alignment="CENTER_LEFT" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+      <HBox alignment="CENTER_LEFT" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="40.0">
          <children>
             <VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
                <children>
