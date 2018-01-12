@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
+import application.Main;
 import application.api.Friends;
 import application.api.Users;
 import application.model.ErrorWindow;
@@ -36,9 +37,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
@@ -50,7 +53,7 @@ import javafx.util.Callback;
  */
 public class FreundeslisteController {
 	@FXML
-	private TableView<User> friendlist;
+	public TableView<User> friendlist;
 	private TableView<User> newFriendlist;
 	@FXML
 	private TableColumn<User, String> nameCol;
@@ -183,7 +186,7 @@ public class FreundeslisteController {
 		newFriendlist.getColumns().addAll(nameCol2, idCol2);
 		nameCol2.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		idCol2.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-
+		
 		JFXHamburger hamburger = new JFXHamburger();
 
 		AnchorPane newFreundesliste = new AnchorPane();
@@ -252,7 +255,8 @@ public class FreundeslisteController {
 			FilteredList<User> filteredData = new FilteredList<>(Users.getNoFriends(), p -> true);
 
 			friend.textProperty().addListener((observable, oldValue, newValue) -> {
-				if (friend.getText().length() >= 1) {
+				newFriendlist.getSelectionModel().selectFirst();
+				if (friend.getText().length() >= 1) {		
 					drawer.setSidePane(newFreundesliste);
 					HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
 					transition.setRate(-1);
