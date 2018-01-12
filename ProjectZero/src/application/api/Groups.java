@@ -1,6 +1,7 @@
 package application.api;
 
 import java.io.IOException;
+import java.util.List;
 
 import application.model.Group;
 import application.model.HttpWebRequest;
@@ -12,7 +13,7 @@ public class Groups
 		String[][] parameter = {{"name",name},{"beschreibung",description}};
 		try
 		{
-			HttpWebRequest.sendPostRequest("/group?token=" + application.api.User.getLoginToken(), parameter);
+			HttpWebRequest.sendPostRequest("group?token=" + application.api.User.getLoginToken(), parameter);
 			return GroupCreateState.Success;
 		}
 		catch(IOException e)
@@ -25,15 +26,30 @@ public class Groups
 	{
 		try
 		{
-			HttpWebRequest.sendGetRequest("/group/"+id+"?token=" + application.api.User.getLoginToken());
+			System.out.println(HttpWebRequest.sendGetRequest("group/"+id/*+"?token=" + application.api.User.getLoginToken()*/));
 			//TO DOOOO
 			return null;
 		}
 		catch(IOException e)
 		{
-			//TO DOOOOO
+			e.printStackTrace();
+			//TO DOOOO
 			return null;
 		}
+	}
+	public static List<Group> getAllGroups()
+	{
+		try
+		{
+			System.out.println(HttpWebRequest.sendGetRequest("groups"));
+			return null;
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	
