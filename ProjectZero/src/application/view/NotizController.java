@@ -34,4 +34,6 @@ public class NotizController {
 	JFXButton btnSelectNote;
 	@FXML
 	JFXButton btnNewNote;
+	@FXML
+	JFXButton btnSaveNote;
 }

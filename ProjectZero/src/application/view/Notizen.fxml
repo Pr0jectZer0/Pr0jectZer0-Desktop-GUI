@@ -13,41 +13,45 @@
 
 <AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="720.0" prefWidth="1280.0">
+      <HBox prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="720.0" prefWidth="200.0">
+            <VBox prefHeight="720.0" prefWidth="200.0" HBox.hgrow="NEVER">
                <children>
-                  <TableView fx:id="noteList" prefHeight="685.0" prefWidth="200.0" styleClass="noheader">
+                  <JFXButton fx:id="btnNewNote" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" text="Neue Notiz erstellen" textFill="#c5c3c3">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <TableView fx:id="noteList" prefHeight="685.0" prefWidth="200.0" styleClass="noheader" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="noteNameCol" maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" text="noteName" />
                       <TableColumn fx:id="noteIdCol" minWidth="0.0" prefWidth="0.0" text="noteId" />
                     </columns>
                   </TableView>
-                  <JFXButton fx:id="btnSelectNote" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 0.0 10.0 10.0;" text="Notiz auswählen" textFill="#c5c3c3">
+                  <JFXButton fx:id="btnSelectNote" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 0.0 10.0 10.0;" text="Notiz auswählen" textFill="#c5c3c3" VBox.vgrow="NEVER">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </JFXButton>
                </children></VBox>
-            <VBox prefHeight="200.0" prefWidth="880.0">
+            <VBox prefHeight="200.0" prefWidth="880.0" HBox.hgrow="ALWAYS">
                <children>
                   <HBox prefHeight="42.0" prefWidth="880.0">
                      <children>
-                        <TextArea fx:id="selectedNoteTitle" prefHeight="39.0" prefWidth="682.0" />
-                        <JFXButton fx:id="btnNewNote" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 10.0 0.0 0.0;" text="Neue Notiz erstellen" textFill="#c5c3c3">
+                        <TextArea fx:id="selectedNoteTitle" prefHeight="39.0" prefWidth="682.0" HBox.hgrow="ALWAYS" />
+                        <JFXButton fx:id="btnSaveNote" prefHeight="48.0" prefWidth="199.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 10.0 0.0 0.0;" text="Spiechern" textFill="#c5c3c3">
                            <font>
                               <Font size="18.0" />
-                           </font>
-                        </JFXButton>
+                           </font></JFXButton>
                      </children>
                   </HBox>
-                  <TextArea fx:id="selectedNoteText" prefHeight="698.0" prefWidth="880.0" />
+                  <TextArea fx:id="selectedNoteText" prefHeight="698.0" prefWidth="880.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <VBox alignment="TOP_RIGHT" prefHeight="720.0" prefWidth="200.0">
+            <VBox alignment="TOP_RIGHT" prefHeight="720.0" prefWidth="200.0" HBox.hgrow="NEVER">
                <children>
-                  <JFXTextField fx:id="memberAdd" promptText="       Mitglied hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" />
-                  <TableView fx:id="memberList" prefHeight="720.0" prefWidth="200.0" styleClass="noheader">
+                  <JFXTextField fx:id="memberAdd" promptText="       Mitglied hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" VBox.vgrow="NEVER" />
+                  <TableView fx:id="memberList" prefHeight="720.0" prefWidth="200.0" styleClass="noheader" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="memberNameCol" maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" text="memberName" />
                       <TableColumn fx:id="memberIdCol" minWidth="0.0" prefWidth="0.0" text="memberId" />
@@ -56,6 +60,6 @@
                </children></VBox>
          </children>
       </HBox>
-      <FontAwesomeIconView glyphName="USER_PLUS" layoutY="707.2857141494751" size="16" AnchorPane.leftAnchor="1090.0" AnchorPane.topAnchor="10.0" />
+      <FontAwesomeIconView glyphName="USER_PLUS" layoutY="707.2857141494751" size="16" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>
