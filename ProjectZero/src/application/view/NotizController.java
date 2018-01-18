@@ -2,7 +2,7 @@ package application.view;
 
 import com.jfoenix.controls.JFXButton;
 
-import application.api.Note;
+import application.api.Notes;
 import application.api.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -16,12 +16,12 @@ public class NotizController {
 	TextArea selectedNoteTitle;
 	
 	@FXML
-	TableColumn<Note, String> noteNameCol;
+	TableColumn<Notes, String> noteNameCol;
 	@FXML
-	TableColumn<Note, Integer> noteIdCol;
+	TableColumn<Notes, Integer> noteIdCol;
 	
 	@FXML
-	TableView<Note> noteList;
+	TableView<Notes> noteList;
 	@FXML
 	TableView<User> memberList;
 	

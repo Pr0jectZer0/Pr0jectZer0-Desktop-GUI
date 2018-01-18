@@ -34,6 +34,7 @@ import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
 import com.pusher.client.util.HttpAuthorizer;
 
+import application.api.Groups;
 import application.api.TimeCompare;
 import application.api.User;
 import application.model.HttpWebRequest;
@@ -212,7 +213,7 @@ public class ChatController
 				DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime dateTime = LocalDateTime.from(f.parse(date));
 				Calendar c2 = Calendar.getInstance();
-				System.out.println(dateTime.getYear() + "" +dateTime.getMonthValue() + "" +dateTime.getDayOfMonth());
+				//System.out.println(dateTime.getYear() + "" +dateTime.getMonthValue() + "" +dateTime.getDayOfMonth());
 				// c2.set(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth(),dateTime.getHour(),dateTime.getMinute(),dateTime.getSecond());
 				c2.set(Calendar.YEAR, dateTime.getYear());
 				c2.set(Calendar.MONTH, dateTime.getMonthValue()-1);
@@ -230,9 +231,12 @@ public class ChatController
 				else
 
 				{
-					System.out.println("zu früh");
+					//System.out.println("zu früh");
 				}
 			}
+			Groups.createGroup("Supergruppe", "Echt super Gruppe");
+			Groups.getAllGroups();
+			Groups.getGroupByID(1);
 			return mess;
 		}
 		catch (IOException e)
