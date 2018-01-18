@@ -19,7 +19,7 @@ public class ChatroomController
 	@FXML
 	private HBox hbox;
 	@FXML
-	private VBox vbox;
+	private HBox vbox;
 	@FXML
 	private JFXButton btnfertig;
 	@FXML
