@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.NotizController">
    <children>
       <HBox prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="720.0" prefWidth="200.0" HBox.hgrow="NEVER">
                <children>
-                  <JFXButton fx:id="btnNewNote" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" text="Neue Notiz erstellen" textFill="#c5c3c3">
+                  <JFXButton fx:id="btnNewNote" onAction="#newNoteAction" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" text="Neue Notiz erstellen" textFill="#c5c3c3">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -28,7 +28,7 @@
                       <TableColumn fx:id="noteIdCol" minWidth="0.0" prefWidth="0.0" text="noteId" />
                     </columns>
                   </TableView>
-                  <JFXButton fx:id="btnSelectNote" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 0.0 10.0 10.0;" text="Notiz auswählen" textFill="#c5c3c3" VBox.vgrow="NEVER">
+                  <JFXButton fx:id="btnSelectNote" onAction="#selectNoteAction" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 0.0 10.0 10.0;" text="Notiz auswählen" textFill="#c5c3c3" VBox.vgrow="NEVER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -38,14 +38,14 @@
                <children>
                   <HBox prefHeight="42.0" prefWidth="880.0">
                      <children>
-                        <TextArea fx:id="selectedNoteTitle" prefHeight="39.0" prefWidth="682.0" HBox.hgrow="ALWAYS" />
-                        <JFXButton fx:id="btnSaveNote" prefHeight="48.0" prefWidth="199.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 10.0 0.0 0.0;" text="Spiechern" textFill="#c5c3c3">
+                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="42.0" prefWidth="703.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE" />
+                        <JFXButton fx:id="btnSaveNote" onAction="#saveNoteAction" prefHeight="48.0" prefWidth="199.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 10.0 10.0;" text="Speichern" textFill="#c5c3c3">
                            <font>
                               <Font size="18.0" />
                            </font></JFXButton>
                      </children>
                   </HBox>
-                  <TextArea fx:id="selectedNoteText" prefHeight="698.0" prefWidth="880.0" VBox.vgrow="ALWAYS" />
+                  <JFXTextArea fx:id="selectedNoteText" prefHeight="710.0" prefWidth="880.0" style="-fx-background-color: #3f424b;" unFocusColor="WHITE" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <VBox alignment="TOP_RIGHT" prefHeight="720.0" prefWidth="200.0" HBox.hgrow="NEVER">
