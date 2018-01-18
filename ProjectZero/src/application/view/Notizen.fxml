@@ -38,7 +38,10 @@
                <children>
                   <HBox prefHeight="42.0" prefWidth="880.0">
                      <children>
-                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="42.0" prefWidth="703.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE" />
+                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="42.0" prefWidth="703.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font></JFXTextArea>
                         <JFXButton fx:id="btnSaveNote" onAction="#saveNoteAction" prefHeight="48.0" prefWidth="199.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 10.0 10.0;" text="Speichern" textFill="#c5c3c3">
                            <font>
                               <Font size="18.0" />
