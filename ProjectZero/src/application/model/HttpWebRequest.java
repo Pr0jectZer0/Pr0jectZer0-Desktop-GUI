@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -100,31 +101,32 @@ public class HttpWebRequest {
 			response.append(inputLine);
 		}
 		in.close();
+		httpCon.disconnect();
 		return response.toString();
 	}
 	
 	public static String sendPutRequest(String urlPath, String[][] parameter) throws IOException {
 		URL urlLink = new URL(url + urlPath);
-		HttpsURLConnection httpsURLConnection = (HttpsURLConnection) urlLink.openConnection();
-		httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		httpsURLConnection.setRequestMethod("PUT");
-		httpsURLConnection.setDoInput(true);
-		httpsURLConnection.setDoOutput(true);
-		DataOutputStream dataOutputStream = new DataOutputStream(httpsURLConnection.getOutputStream());
+		HttpURLConnection httpCon = (HttpURLConnection)urlLink.openConnection();
+		httpCon.setDoOutput(true);
+		httpCon.setRequestMethod("PUT");
+		httpCon.connect();
+		OutputStreamWriter out = new OutputStreamWriter(httpCon.getOutputStream());
 		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
 		for (int i = 1; i < parameter.length; i++) {
 			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
 		}
-		dataOutputStream.writeChars(urlParameters);
-		dataOutputStream.flush();
-		dataOutputStream.close();
-		BufferedReader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));		String inputLine;
+		out.write(urlParameters);
+		out.flush();
+		BufferedReader in = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+		String inputLine;
 		StringBuffer response = new StringBuffer();
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
 		in.close();
-		httpsURLConnection.disconnect();
+		out.close();
+		httpCon.disconnect();
 		return response.toString();
 		
 		
