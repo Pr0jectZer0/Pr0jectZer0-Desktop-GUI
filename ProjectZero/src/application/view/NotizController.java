@@ -74,14 +74,14 @@ public class NotizController {
 	
 	@FXML
 	private void newNoteAction() {
-		if (currentNoteId >= -1) {
-			
-		}else {
+		if ((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
 			currentNoteId = -1;
 			selectedNoteTitle.setText("Unbenannte Notiz");
 			selectedNoteText.setText("");
 			currentNoteTitle = "Unbenannte Notiz";
 			currentNoteText = "";
+		}else {
+			System.out.println("Test!");
 		}
 	}
 	@FXML
@@ -95,6 +95,7 @@ public class NotizController {
 					currentNoteId = -3;
 					currentNoteTitle = tempNote.getTitle();
 					currentNoteText = tempNote.getText();
+					noteList.getItems().add(tempNote);
 				} catch (Exception e) {
 					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
 				}
@@ -103,6 +104,7 @@ public class NotizController {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
 				try {
 					Note tempNote = notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
+					noteList.getItems().add(tempNote);
 					currentNoteId = -3;
 					currentNoteTitle = tempNote.getTitle();
 					currentNoteText = tempNote.getText();
@@ -111,19 +113,20 @@ public class NotizController {
 				}
 			}
 		}
-		initNoteList();
+		//initNoteList();
+		noteList.refresh();
 	}
 	@FXML
 	private void selectNoteAction() {
-		if(currentNoteId >= -1) {
-			
-		}else {
+		if((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
 			Note tempNote = noteList.getSelectionModel().getSelectedItem();
 			currentNoteId = tempNote.getID();
 			selectedNoteTitle.setText(tempNote.getTitle());
 			selectedNoteText.setText(tempNote.getText());
 			currentNoteTitle = tempNote.getTitle();
 			currentNoteText = tempNote.getText();
+		}else {
+			
 		}
 	}
 }
