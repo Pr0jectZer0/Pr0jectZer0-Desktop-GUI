@@ -20,12 +20,14 @@ public final class User {
 
 	public static LoginState login(String eMail, String password) {
 		if (eMail == null || eMail.isEmpty() || password == null || password.isEmpty()) {
+			loginToken = null;
 			return LoginState.ServerError;
 		}
 		try {
 			String[][] parameter = { { "email", eMail }, { "password", password } };
 			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
 			if (response.contains("error") || response.contains("Laravel")) {
+				loginToken = null;
 				return LoginState.WrongData;
 			}
 			else if (response.contains("token")) {
@@ -33,10 +35,13 @@ public final class User {
 				return LoginState.Success;
 			}
 		} catch (IOException e) {
+			loginToken = null;
 			return LoginState.WrongData;
 		} catch (JSONException e) {
+			loginToken = null;
 			return LoginState.WrongData;
 		}
+		loginToken = null;
 		return LoginState.ServerError;
 	}
 

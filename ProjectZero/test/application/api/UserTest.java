@@ -3,6 +3,7 @@ package application.api;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,7 +11,14 @@ public class UserTest {
 	
 	@Test
 	public void getLoginTokenTestBeforeLogin() {
+		User.login(null, null);
 		assertNull(User.getLoginToken());
+	}
+	
+	@Test
+	public void getLoginTokenLoggedIn() {
+		User.login("peter@peter.com", "Peter123");
+		assertNotNull(User.getLoginToken());
 	}
 	
 	@Test
@@ -33,6 +41,10 @@ public class UserTest {
 		assertEquals(User.login("peter@peter.com", "FALSCHESPW"), User.LoginState.WrongData);
 	}
 	
+	@Test
+	public void loginValid() {
+		assertEquals(User.login("peter@peter.com", "Peter123"), User.LoginState.Success);
+	}
 	@Test
 	public void registerEmpty() {
 		assertEquals(User.register("", "", ""), User.RegisterState.WrongData);
@@ -63,4 +75,6 @@ public class UserTest {
 	public void deleteUser() {
 		assertFalse(User.delete(-1));
 	}
+	
+
 }
