@@ -20,7 +20,7 @@ public final class User {
 
 	public static LoginState login(String eMail, String password) {
 		if (eMail == null || eMail.isEmpty() || password == null || password.isEmpty()) {
-			return LoginState.WrongData;
+			return LoginState.ServerError;
 		}
 		try {
 			String[][] parameter = { { "email", eMail }, { "password", password } };
@@ -49,7 +49,7 @@ public final class User {
 				return RegisterState.Success;
 			}
 			else { // Redirecting ¯\_(ツ)_/¯
-				return RegisterState.EmailAlreadyUsed;
+				return RegisterState.WrongData;
 			}
 		} catch (Exception e) {
 			return RegisterState.ServerError;
@@ -57,7 +57,7 @@ public final class User {
 	}
 
 	public enum RegisterState {
-		Success, UsernameNotAvailable, EmailAlreadyUsed, ServerError,
+		Success, WrongData, ServerError,
 	}
 
 	public enum LoginState {

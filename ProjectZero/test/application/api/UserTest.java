@@ -31,4 +31,9 @@ public class UserTest {
 	public void loginTestInvalidPassword() {
 		assertEquals(User.login("peter@peter.com", "FALSCHESPW"), User.LoginState.WrongData);
 	}
+	
+	@Test
+	public void registerEmpty() {
+		assertEquals(User.register("", "", ""), User.RegisterState.WrongData);
+	}
 }
