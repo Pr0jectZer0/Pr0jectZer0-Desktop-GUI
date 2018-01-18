@@ -24,4 +24,18 @@ public class ErrorMsg {
 		hBox.getChildren().addAll(icon, label);
 		vBox.getChildren().add(hBox);
 	}
+	
+	public static void newError(String msg, VBox vBox) {
+		HBox hBox = new HBox();
+		hBox.setSpacing(5);
+		hBox.setAlignment(Pos.CENTER_LEFT);
+		OctIconView icon = new OctIconView(OctIcon.ALERT);
+		icon.setSize("14");
+		Label label = new Label();
+		label.setText(msg);
+		label.getStyleClass().clear();
+		label.getStyleClass().add("labelerror");
+		hBox.getChildren().addAll(icon, label);
+		vBox.getChildren().add(hBox);
+	}
 }

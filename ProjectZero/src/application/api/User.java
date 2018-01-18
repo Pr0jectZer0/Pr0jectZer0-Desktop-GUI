@@ -25,7 +25,6 @@ public final class User {
 		try {
 			String[][] parameter = { { "email", eMail }, { "password", password } };
 			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
-			System.out.println(eMail + response);
 			if (response.contains("error") || response.contains("Laravel")) {
 				return LoginState.WrongData;
 			}
@@ -42,10 +41,13 @@ public final class User {
 	}
 
 	public static RegisterState register(String username, String eMail, String password) {
+		if (username == null || username.isEmpty() || eMail == null || eMail.isEmpty() || password == null || password.isEmpty())
+			return RegisterState.WrongData;
 		String[][] parameter = { { "email", eMail }, { "name", username }, { "password", password } };
 		try {
 			String response = HttpWebRequest.sendPostRequest("user/", parameter);
-			if (response.contains("id")) {
+			if (response.contains("\"id\": ")) {
+				System.out.println(response);
 				return RegisterState.Success;
 			}
 			else { // Redirecting ¯\_(ツ)_/¯
@@ -64,9 +66,15 @@ public final class User {
 		Success, WrongData, ServerError,
 	}
 
-	public static boolean delete(int userID) throws IOException {
-		String response = HttpWebRequest.sendDeleteRequest("user/" + Integer.toString(userID));
-		return !response.contains("token");
-		// TODO: always returns "token not provided"
+	public static boolean delete(int userID) {
+		if (userID < 0)
+			return false;
+		try {
+			String response = HttpWebRequest.sendDeleteRequest("user/" + Integer.toString(userID) + "?token=" + loginToken);
+			return !response.contains("token");
+		} catch(IOException e) {
+			return false;
+		}
+		// TODO: Backend route is not working properly
 	}
 }

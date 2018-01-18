@@ -2,19 +2,12 @@ package application.view;
 
 import java.io.IOException;
 
-import org.json.JSONObject;
-
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import application.Main;
-import application.api.User.LoginState;
 import application.model.ErrorMsg;
 import application.model.ErrorWindow;
-import application.model.HttpWebRequest;
-import application.model.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
