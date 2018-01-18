@@ -2,6 +2,7 @@ package application.api;
 
 import java.io.IOException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import application.model.HttpWebRequest;
@@ -18,16 +19,24 @@ public final class User {
 	}
 
 	public static LoginState login(String eMail, String password) {
+		if (eMail == null || eMail.isEmpty() || password == null || password.isEmpty()) {
+			return LoginState.WrongData;
+		}
 		try {
 			String[][] parameter = { { "email", eMail }, { "password", password } };
-			JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("user/login", parameter));
-			if (response.toString().contains("token")) {
-				loginToken = response.getString("token");
-				return LoginState.Success;
-			} else if (response.toString().contains("error"))
+			String response = HttpWebRequest.sendPostRequest("user/login", parameter);
+			System.out.println(eMail + response);
+			if (response.contains("error") || response.contains("Laravel")) {
 				return LoginState.WrongData;
+			}
+			else if (response.contains("token")) {
+				loginToken = new JSONObject(response).getString("token");
+				return LoginState.Success;
+			}
 		} catch (IOException e) {
-			return LoginState.ServerError;
+			return LoginState.WrongData;
+		} catch (JSONException e) {
+			return LoginState.WrongData;
 		}
 		return LoginState.ServerError;
 	}
@@ -36,11 +45,12 @@ public final class User {
 		String[][] parameter = { { "email", eMail }, { "name", username }, { "password", password } };
 		try {
 			String response = HttpWebRequest.sendPostRequest("user/", parameter);
-			if (response.contains("id"))
+			if (response.contains("id")) {
 				return RegisterState.Success;
-			else // Redirecting ¯\_(ツ)_/¯
-				return RegisterState.EmailAlreadyUsed; // +
-														// RegisterState.UsernameNotAvailable;
+			}
+			else { // Redirecting ¯\_(ツ)_/¯
+				return RegisterState.EmailAlreadyUsed;
+			}
 		} catch (Exception e) {
 			return RegisterState.ServerError;
 		}
