@@ -104,6 +104,31 @@ public class HttpWebRequest {
 	}
 	
 	public static String sendPutRequest(String urlPath, String[][] parameter) throws IOException {
+		URL urlLink = new URL(url + urlPath);
+		HttpsURLConnection httpsURLConnection = (HttpsURLConnection) urlLink.openConnection();
+		httpsURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		httpsURLConnection.setRequestMethod("PUT");
+		httpsURLConnection.setDoInput(true);
+		httpsURLConnection.setDoOutput(true);
+		DataOutputStream dataOutputStream = new DataOutputStream(httpsURLConnection.getOutputStream());
+		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
+		for (int i = 1; i < parameter.length; i++) {
+			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
+		}
+		dataOutputStream.writeChars(urlParameters);
+		dataOutputStream.flush();
+		dataOutputStream.close();
+		BufferedReader in = new BufferedReader(new InputStreamReader(httpsURLConnection.getInputStream()));		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		httpsURLConnection.disconnect();
+		return response.toString();
+		
+		
+		/*
 		URL obj = new URL(url + urlPath);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 		con.setRequestMethod("PUT");
@@ -125,6 +150,6 @@ public class HttpWebRequest {
 			response.append(inputLine);
 		}
 		in.close();
-		return response.toString();
+		return response.toString();*/
 	}
 }
