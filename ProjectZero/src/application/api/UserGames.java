@@ -43,7 +43,7 @@ public class UserGames {
 		//TODO: check for sucess or failure
 	}
 	
-	public static ObservableList<Game> getGames(String token) throws JSONException, IOException {
+	public static ObservableList<Game> getGames() throws JSONException, IOException {
 		if (games == null) {
 			games = FXCollections.observableArrayList();
 			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + User.getLoginToken()));
