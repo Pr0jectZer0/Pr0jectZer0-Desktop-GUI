@@ -53,7 +53,8 @@ public class Notes {
 	
 	public Note changeNote(String title, String text, int id) throws JSONException, IOException {
 		String[][] parameter = {{"titel", title}, {"text", text}};
-		JSONObject response = new JSONObject(HttpWebRequest.sendPutRequest("note?token=" + application.api.User.getLoginToken(), parameter));
+		JSONObject response = new JSONObject(HttpWebRequest.sendPutRequest("note/" + id + "?token=" + application.api.User.getLoginToken(), parameter));
+		System.out.println(response);
 		int userID = response.getInt("id_user");
 		int idgot = response.getInt("id");
 		String titleGot = response.getString("titel");
