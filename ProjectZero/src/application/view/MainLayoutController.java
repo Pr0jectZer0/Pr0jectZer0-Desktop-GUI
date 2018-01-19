@@ -6,6 +6,7 @@ import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -19,6 +20,8 @@ public class MainLayoutController {
 	private JFXDrawer drawer;
 	@FXML
 	private JFXHamburger hamburger;
+	@FXML
+	private Label benachrichtigungenCount;
 
 	@FXML
 	private void initialize() {
@@ -42,6 +45,16 @@ public class MainLayoutController {
 			} else
 				drawer.open();
 		});
+	}
+	
+	public void setBenachrichtigungenCount(int counter) {
+		this.benachrichtigungenCount.setText(Integer.toString(counter));
+		
+		if (counter > 0) {
+			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #9C2B27;");
+		} else {
+			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #B2B2B2;");
+		}
 	}
 
 }
