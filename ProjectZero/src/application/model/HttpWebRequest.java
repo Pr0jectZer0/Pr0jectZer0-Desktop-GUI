@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,7 +12,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Hilfsklasse für HTTP-Request
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class HttpWebRequest {
 	private static final String USER_AGENT = "Mozilla/5.0", url = "https://pr0jectzer0.ml/api/";
@@ -43,12 +42,32 @@ public class HttpWebRequest {
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
-
 		while ((inputLine = in.readLine()) != null) {
 			response.append(inputLine);
 		}
 		in.close();
-
+		return response.toString();
+	}
+	
+	public static String sendPostRequest(String urlPath) throws IOException{
+		URL obj = new URL(url + urlPath);
+		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", USER_AGENT);
+		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+		String urlParameters = "";
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
 		return response.toString();
 	}
 
@@ -73,7 +92,6 @@ public class HttpWebRequest {
 		httpCon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 		httpCon.setRequestMethod("DELETE");
 		httpCon.connect();
-		
 		BufferedReader in = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
@@ -82,7 +100,31 @@ public class HttpWebRequest {
 			response.append(inputLine);
 		}
 		in.close();
-
+		return response.toString();
+	}
+	
+	public static String sendPutRequest(String urlPath, String[][] parameter) throws IOException {
+		URL obj = new URL(url + urlPath);
+		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		con.setRequestMethod("PUT");
+		con.setRequestProperty("User-Agent", USER_AGENT);
+		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
+		for (int i = 1; i < parameter.length; i++) {
+			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
+		}
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
 		return response.toString();
 	}
 }

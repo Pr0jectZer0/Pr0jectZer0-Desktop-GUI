@@ -1,5 +1,6 @@
 package application.view;
 
+import java.awt.RenderingHints.Key;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,12 +35,15 @@ import com.pusher.client.connection.ConnectionState;
 import com.pusher.client.connection.ConnectionStateChange;
 import com.pusher.client.util.HttpAuthorizer;
 
+import application.api.Groups;
 import application.api.TimeCompare;
 import application.api.User;
 import application.model.HttpWebRequest;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class ChatController
 {
@@ -62,7 +66,8 @@ public class ChatController
 
 		try
 		{
-			chatroom = HttpWebRequest.sendGetRequest("chatroom/" + 4 + "?token=" + User.getLoginToken());
+			int personid = FreundeslisteController.getFreundeslistecontroller().friendlist.getSelectionModel().getSelectedItem().getId();
+			chatroom = HttpWebRequest.sendGetRequest("chatroom/" + personid + "?token=" + User.getLoginToken());
 			JsonParser jp = new JsonParser();
 			JsonObject jo = (JsonObject) jp.parse(chatroom);
 			chatroomid = jo.get("chatroom").toString();
@@ -160,6 +165,32 @@ public class ChatController
 			}
 
 		});
+		btnsenden.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+
+
+			@Override
+			public void handle(KeyEvent event)
+			{
+				if(event.getCode() == KeyCode.ENTER)
+				{
+					if (tfschreiben.getText() != null && !tfschreiben.getText().equals(""))
+					{
+						para[0][1] = tfschreiben.getText();
+						try
+						{
+							System.out.println(HttpWebRequest.sendPostRequest(
+									"chatroom/" + chatroomid + "/messages" + "?token=" + User.getLoginToken(), para));
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				}
+				
+			}
+		});
 
 	}
 
@@ -212,7 +243,7 @@ public class ChatController
 				DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime dateTime = LocalDateTime.from(f.parse(date));
 				Calendar c2 = Calendar.getInstance();
-				System.out.println(dateTime.getYear() + "" +dateTime.getMonthValue() + "" +dateTime.getDayOfMonth());
+				//System.out.println(dateTime.getYear() + "" +dateTime.getMonthValue() + "" +dateTime.getDayOfMonth());
 				// c2.set(dateTime.getYear(),dateTime.getMonthValue(),dateTime.getDayOfMonth(),dateTime.getHour(),dateTime.getMinute(),dateTime.getSecond());
 				c2.set(Calendar.YEAR, dateTime.getYear());
 				c2.set(Calendar.MONTH, dateTime.getMonthValue()-1);
@@ -230,9 +261,12 @@ public class ChatController
 				else
 
 				{
-					System.out.println("zu früh");
+					//System.out.println("zu früh");
 				}
 			}
+			Groups.createGroup("Supergruppe", "Echt super Gruppe");
+			Groups.getAllGroups();
+			Groups.getGroupByID(1);
 			return mess;
 		}
 		catch (IOException e)

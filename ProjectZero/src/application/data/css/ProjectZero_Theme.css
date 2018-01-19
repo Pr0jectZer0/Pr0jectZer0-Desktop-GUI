@@ -57,6 +57,12 @@
  	-fx-background-insets: 0.0;
  	-fx-padding: 0.0em; 
 }
+.list-view .list-cell:even {
+-fx-background-color: #666a70;
+}
+.list-view .list-cell:odd {
+-fx-background-color: #4f5257;
+}
  
 .button {
  	-fx-fill: -fx-primarytext;

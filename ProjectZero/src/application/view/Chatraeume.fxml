@@ -1,15 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="720.0" minWidth="1280.0" stylesheets="@../data/css/ProjectZero_Theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ChatroomController">
    <children>
-      <VBox alignment="CENTER" layoutX="-141.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <HBox prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Die Chaträume befinden sich im Aufbau..." />
+            <JFXListView fx:id="listgroup" editable="true" prefHeight="720.0" prefWidth="290.0" style="-fx-background-color: #444b59;" HBox.hgrow="NEVER" />
+            <StackPane prefHeight="720.0" prefWidth="1008.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox fx:id="vbox" prefHeight="100.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <VBox prefHeight="720.0" prefWidth="1438.0">
+                           <children>
+                              <JFXTextArea prefHeight="570.0" prefWidth="610.0" VBox.vgrow="ALWAYS" />
+                              <HBox prefHeight="151.0" prefWidth="1002.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <VBox prefHeight="171.0" prefWidth="795.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Region prefHeight="35.0" prefWidth="795.0" />
+                                          <JFXTextArea prefHeight="159.0" prefWidth="780.0" />
+                                       </children>
+                                    </VBox>
+                                    <JFXButton prefHeight="723.0" prefWidth="359.0" style="-fx-background-color: #9C2B27;" text="Senden" HBox.hgrow="NEVER" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Region prefHeight="720.0" prefWidth="1031.0" HBox.hgrow="NEVER" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="hbox" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="333.0">
+                           <children>
+                              <Region prefHeight="399.0" prefWidth="333.0" />
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="335.0" text="Freunde" />
+                              <HBox prefHeight="850.0" prefWidth="333.0">
+                                 <children>
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                    <JFXListView prefHeight="481.0" prefWidth="309.0" style="-fx-background-color: #444b59;" />
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="451.0" prefWidth="333.0">
+                                 <children>
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                    <JFXButton prefHeight="33.0" prefWidth="317.0" style="-fx-background-color: #9C2B27;" text="Hinzufügen" />
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="333.0">
+                           <children>
+                              <Region prefHeight="399.0" prefWidth="333.0" />
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="335.0" text="Gruppen" />
+                              <HBox prefHeight="850.0" prefWidth="333.0">
+                                 <children>
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                    <JFXListView prefHeight="481.0" prefWidth="309.0" style="-fx-background-color: #444b59;" />
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="451.0" prefWidth="333.0">
+                                 <children>
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                    <JFXButton prefHeight="33.0" prefWidth="317.0" style="-fx-background-color: #9C2B27;" text="Hinzufügen" />
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="200.0" prefWidth="333.0">
+                           <children>
+                              <Region prefHeight="399.0" prefWidth="333.0" />
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="335.0" text="Hinzugefügte" />
+                              <HBox prefHeight="850.0" prefWidth="333.0">
+                                 <children>
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                    <JFXListView prefHeight="481.0" prefWidth="309.0" style="-fx-background-color: #444b59;" />
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="451.0" prefWidth="333.0">
+                                 <children>
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                    <JFXButton fx:id="btnfertig" prefHeight="33.0" prefWidth="317.0" style="-fx-background-color: #0db518;" text="Fertig" underline="true" />
+                                    <Region prefHeight="200.0" prefWidth="200.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Region prefHeight="720.0" prefWidth="342.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </StackPane>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>
