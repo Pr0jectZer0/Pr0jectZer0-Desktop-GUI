@@ -4,10 +4,13 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
+import application.api.Friends;
+import application.api.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * Main-Controller-Klasse
@@ -19,15 +22,18 @@ public class MainLayoutController {
 	private JFXDrawer drawer;
 	@FXML
 	private JFXHamburger hamburger;
-
+	
+	private AnchorPane freundesliste = null;
 	@FXML
 	private void initialize() {
 		initFreundesliste();
+		System.out.println(User.getLoginToken());
 	}
 
 	private void initFreundesliste() {
+		
 		try {
-			AnchorPane freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
+		    freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
 			drawer.setSidePane(freundesliste);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,8 +45,14 @@ public class MainLayoutController {
 			transition.play();
 			if (drawer.isShown()) {
 				drawer.close();
+			//	drawer.setVisible(false);
+			//	freundesliste.setVisible(false);
+			//	hamburger.setVisible(false);
 			} else
 				drawer.open();
+			//	drawer.setVisible(true);
+			//	freundesliste.setVisible(true);
+			//	hamburger.setVisible(true);
 		});
 	}
 

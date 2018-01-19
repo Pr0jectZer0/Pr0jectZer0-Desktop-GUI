@@ -1,5 +1,6 @@
 package application.view;
 
+import java.awt.RenderingHints.Key;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +42,8 @@ import application.model.HttpWebRequest;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class ChatController
 {
@@ -63,7 +66,8 @@ public class ChatController
 
 		try
 		{
-			chatroom = HttpWebRequest.sendGetRequest("chatroom/" + 4 + "?token=" + User.getLoginToken());
+			int personid = FreundeslisteController.getFreundeslistecontroller().friendlist.getSelectionModel().getSelectedItem().getId();
+			chatroom = HttpWebRequest.sendGetRequest("chatroom/" + personid + "?token=" + User.getLoginToken());
 			JsonParser jp = new JsonParser();
 			JsonObject jo = (JsonObject) jp.parse(chatroom);
 			chatroomid = jo.get("chatroom").toString();
@@ -160,6 +164,32 @@ public class ChatController
 
 			}
 
+		});
+		btnsenden.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+
+
+			@Override
+			public void handle(KeyEvent event)
+			{
+				if(event.getCode() == KeyCode.ENTER)
+				{
+					if (tfschreiben.getText() != null && !tfschreiben.getText().equals(""))
+					{
+						para[0][1] = tfschreiben.getText();
+						try
+						{
+							System.out.println(HttpWebRequest.sendPostRequest(
+									"chatroom/" + chatroomid + "/messages" + "?token=" + User.getLoginToken(), para));
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				}
+				
+			}
 		});
 
 	}
