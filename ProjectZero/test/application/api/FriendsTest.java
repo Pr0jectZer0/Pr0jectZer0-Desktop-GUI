@@ -2,7 +2,6 @@ package application.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -16,6 +15,8 @@ import application.api.Friends.FriendDeleteState;
 
 public class FriendsTest {
 	
+	private static int friendID = 14;
+	
 	@Before
 	public void setUp() {
 		User.login("peter@peter.com", "Peter123");
@@ -23,50 +24,34 @@ public class FriendsTest {
 	
 	@Test
 	public void testAddFriendValid() {
-		Friends.delete(14);
-		Friends.FriendAddState a = Friends.add(14);
+		Friends.delete(friendID);
+		Friends.FriendAddState a = Friends.add(friendID);
 		assertEquals(a, Friends.FriendAddState.Success);
 	}
 	
 	@Test
 	public void testAddAlreadyFriends() {
-		Friends.add(14);
+		Friends.add(friendID);
 		assertEquals(FriendAddState.AlreadyFriends, Friends.add(14));
 	}
 	
 	@Test
 	public void testDeleteValid() {
-		Friends.add(14);
-		assertEquals(Friends.delete(14), FriendDeleteState.Success);
+		Friends.add(friendID);
+		assertEquals(Friends.delete(friendID), FriendDeleteState.Success);
 	}
 	
 	@Test
 	public void testDeleteNotFriends() {
-		Friends.delete(14);
-		assertEquals(Friends.delete(14), FriendDeleteState.NotFriends);
+		Friends.delete(friendID);
+		assertEquals(Friends.delete(friendID), FriendDeleteState.NotFriends);
 	}
 	
 	@Test
 	public void testGetFriends() {
+		Friends.add(friendID);
 		try {
-			assertNotNull(Friends.getFriends().get(0));
-		} catch (JSONException | IOException e) {
-			fail(e.getMessage());
-		}
-	}
-	
-	@Test
-	public void testGetFriendsAdded() {
-		Friends.add(14);
-		try {
-			boolean found = false;
-			for (application.model.User f : Friends.getFriends()) {
-				if (f.getId() == 14) {
-					found = true;
-					break;
-				}
-			}
-			assertTrue(found);
+			assertNotNull(Friends.getFriends());
 		} catch (JSONException | IOException e) {
 			fail(e.getMessage());
 		}
