@@ -70,7 +70,7 @@ public class Notes {
 		try {
 			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("note/" + id + "?token=" + application.api.User.getLoginToken()));
 			String message = response.getString("message");
-			return message.equals("Notiz wurde gelöscht.");
+			return message.equals("Notiz wurde gelÃ¶scht.");
 		} catch (JSONException e) {
 			return false;
 		} catch (IOException e) {
