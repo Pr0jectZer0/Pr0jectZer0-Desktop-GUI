@@ -3,9 +3,8 @@ package application.view;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import application.api.User;
 import application.model.ErrorMsg;
-import application.model.ErrorWindow;
-import application.model.HttpWebRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -73,20 +72,22 @@ public class RegistrierungController {
 			wrongRegister = true;
 		}
 		if (wrongRegister == false) {
-			String[][] parameter = { { "email", tFEmail.getText() }, { "name", tFUsername.getText() },
-					{ "password", tFPw.getText() } };
-			try {
-				HttpWebRequest.sendPostRequest("user/", parameter);
-				loginController.getRegisterStage().close();
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.initOwner(loginController.getRegisterStage());
-				alert.setTitle("Erfolgreich registriert!");
-				alert.setHeaderText("Sie haben sich erfolgreich registriert!");
-				alert.setContentText("Sie können sich nun einloggen.");
-				alert.showAndWait();
-			} catch (Exception e) {
-				ErrorWindow.newErrorWindow("Es gab ein Fehler beim Registrieren!", loginController.getRegisterStage(),
-						e);
+			switch(User.register(tFUsername.getText(), tFEmail.getText(), tFPw.getText())) {
+				case Success:
+					loginController.getRegisterStage().close();
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.initOwner(loginController.getRegisterStage());
+					alert.setTitle("Erfolgreich registriert!");
+					alert.setHeaderText("Sie haben sich erfolgreich registriert!");
+					alert.setContentText("Sie können sich nun einloggen.");
+					alert.showAndWait();
+					break;
+				case ServerError:
+					ErrorMsg.newError("Es gab ein Serverfehler beim Registrieren!", vBoxErrorMsg);
+					break;
+				case WrongData:
+					ErrorMsg.newError("Die eingegebenen Daten entsprechen nicht unseren Richtlinien!", vBoxErrorMsg);
+					break;
 			}
 		}
 	}
