@@ -106,16 +106,16 @@ public class HttpWebRequest {
 	}
 	
 	public static String sendPutRequest(String urlPath, String[][] parameter) throws IOException {
-		URL urlLink = new URL(url + urlPath);
+		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
+		for (int i = 1; i < parameter.length; i++) {
+			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
+		}
+		URL urlLink = new URL(url + urlPath + "&" + urlParameters);
 		HttpURLConnection httpCon = (HttpURLConnection)urlLink.openConnection();
 		httpCon.setDoOutput(true);
 		httpCon.setRequestMethod("PUT");
 		httpCon.connect();
 		OutputStreamWriter out = new OutputStreamWriter(httpCon.getOutputStream());
-		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
-		for (int i = 1; i < parameter.length; i++) {
-			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
-		}
 		out.write(urlParameters);
 		out.flush();
 		BufferedReader in = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));

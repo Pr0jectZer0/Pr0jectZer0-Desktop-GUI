@@ -59,7 +59,7 @@ public class NotesTest {
 			int id = Notes.createNote("JUNIT_TEST_CHANGE", "JUNIT_TEST_CHANGE").getID();
 			Note n = Notes.changeNote("JUNIT_TEST_CHANGED", "JUNIT_TEST_CHANGED", id);
 			Notes.deleteNote(id);
-			assertEquals(n.getText(), "JUNIT_TEST_CHANGED"); //TODO: PUT REQUEST DOESNT WORK!
+			assertEquals(n.getText(), "JUNIT_TEST_CHANGED");
 		} catch (Exception e) {
 			fail(e.getMessage());
 			
