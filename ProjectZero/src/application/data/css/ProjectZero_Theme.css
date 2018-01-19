@@ -190,3 +190,8 @@
     -fx-font-style: italic;
     -fx-fill: -fx-primary;
 }
+
+.scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+}
