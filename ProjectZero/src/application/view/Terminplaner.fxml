@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
@@ -48,6 +49,11 @@
                             </TitledPane>
                           </panes>
                         </Accordion>
+                        <JFXButton styleClass="login-button" text="Termin erstellen" textFill="#b2b2b2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -56,7 +62,7 @@
                </children></VBox>
             <VBox maxHeight="600.0" minWidth="340.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
                <children>
-                  <Label text="Datum: xx.xx.xxxx" />
+                  <Label fx:id="date" text="Datum:" />
                </children>
                <padding>
                   <Insets left="10.0" right="10.0" top="10.0" />

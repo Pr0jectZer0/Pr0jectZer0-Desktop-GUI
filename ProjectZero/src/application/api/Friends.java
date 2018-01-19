@@ -24,6 +24,7 @@ public class Friends {
 			return FriendAddState.Success;
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return FriendAddState.ServerError;
 		}
 	}

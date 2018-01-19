@@ -7,11 +7,14 @@ import com.sun.javafx.scene.control.skin.DatePickerSkin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class TerminplanerController {
 	@FXML
 	private VBox calendarBox;
+	@FXML
+	private Label date;
 	
 	@FXML
 	private void initialize() {
@@ -22,5 +25,11 @@ public class TerminplanerController {
 //		dp.setMinHeight();
 		DatePickerContent popupContent = (DatePickerContent) calenderSkin.getPopupContent();
 		calendarBox.getChildren().add(0, popupContent);
+		
+		date.setText("Datum: " + dp.getValue());		
+		dp.valueProperty().addListener((observable, oldValue, newValue) -> {
+			date.setText("Datum: " + dp.getValue());
+		});
+
 	}
 }
