@@ -1,17 +1,16 @@
 package application.api;
 
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import application.model.HttpWebRequest;
+import application.model.Message;
+import application.model.User;
 
 public class Chat {
 	
@@ -19,31 +18,34 @@ public class Chat {
 	
 	public static int getChatroomID(int userID) {
 		try {
-			return new JSONObject(HttpWebRequest.sendGetRequest("chatroom/" + userID + "?token=" + User.getLoginToken())).getInt("chatroom");
+			return new JSONObject(HttpWebRequest.sendGetRequest("chatroom/" + userID + "?token=" + application.api.User.getLoginToken())).getInt("chatroom");
 		} catch (JSONException | IOException e) {
 			return -1;
 		}
 	}
-	public static String[][] getMessages(String chatID)
+	public static List<Message> getMessages(int chatID)
 	{
-			String name = "";
-			String mess = "";
-			//System.out.println(HttpWebRequest
-			//		.sendGetRequest("chatroom/" + chatID + "/messages" + "?token=" + User.getLoginToken()));
-			// message = (JsonObject) new JsonParser().parse(HttpWebRequest
-			//		.sendGetRequest("chatroom/" + chatID + "/messages" + "?token=" + User.getLoginToken()));
-			//JsonArray messages = (JsonArray) message.get("message");
-			//Iterator<JsonElement> iterator = messages.iterator();
-			//while (iterator.hasNext())
-			//{
-			//	JsonObject messobj = (JsonObject) iterator.next();
-			//	JsonObject userobj = (JsonObject) messobj.get("user");
-			//	name = userobj.get("name").toString();
-			//	mess += name.replace("\"", "") + ": " + messobj.get("message").toString().replace("\"", "") + "\n";
-
-			//}
-			//return mess;
-		return new String[][] { { "pr0jectzer0.ml/api/chatroom/" + chatID + "?token=" + User.getLoginToken() } };
+		if (chatID < 0)
+			return null;
+		try {
+			String response = HttpWebRequest.sendGetRequest("chatroom/" + chatID + "/messages?token=" + application.api.User.getLoginToken());
+			JSONArray messages = new JSONObject(response).getJSONArray("message");
+			List<Message> messageList = new ArrayList<Message>();
+			for (int i = 0; i < messages.length(); i++) {
+				JSONObject curMessage = messages.getJSONObject(i);
+				int id = curMessage.getInt("id");
+				String message = curMessage.getString("message");
+				String date = curMessage.getString("updated_at");
+				JSONObject userJSON = curMessage.getJSONObject("user");
+				int userID = userJSON.getInt("id");
+				String userName = userJSON.getString("name");
+				User user = new User(userName, userID);
+				messageList.add(new Message(message, id, user, date));
+			}
+			return messageList;
+		} catch (IOException | JSONException e) {
+			return null;
+		}
 	}
 	
 	public static boolean sendMessage(int chatID, String message)
@@ -52,7 +54,7 @@ public class Chat {
 			return false;
 		String [][] parameter = { { "message", message } };
 		try {
-			String response = HttpWebRequest.sendPostRequest("chatroom/" + chatID + "/messages?token=" + User.getLoginToken(), parameter);
+			String response = HttpWebRequest.sendPostRequest("chatroom/" + chatID + "/messages?token=" + application.api.User.getLoginToken(), parameter);
 			return response.contains("Nachricht wurde gesendet.");
 		} catch (IOException e) {
 			return false;

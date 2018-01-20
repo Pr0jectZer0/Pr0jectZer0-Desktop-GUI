@@ -9,7 +9,7 @@ public class Message {
 	
 	public Message(String message, int id, User sender, String date)
 	{
-		this.setMessage(message);
+		this.message = message;
 		this.id = id;
 		this.sender = sender;
 		this.date = date;
