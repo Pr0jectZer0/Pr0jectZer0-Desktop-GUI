@@ -104,6 +104,9 @@ public class FreundeslisteController {
 					public void updateItem(String item, boolean empty) {
 						if (item != null) {
 							imageView.setImage(new Image("application/data/images/friend.png"));
+							if (friendlist.getSelectionModel().isEmpty()) {
+								friendlist.getSelectionModel().selectFirst();
+							}
 							setText(item + " (#" + friendlist.getSelectionModel().getSelectedItem().getId() + ")");
 							friendlist.getSelectionModel().selectNext();
 						}
@@ -194,12 +197,14 @@ public class FreundeslisteController {
 		AnchorPane newFreundesliste = new AnchorPane();
 		newFreundesliste.setMinHeight(546);
 		newFreundesliste.setMinWidth(250);
+		newFreundesliste.setMaxWidth(250);
 		newFreundesliste.setStyle(newFreundesliste.getStyle() + "-fx-background-color:  #2A2E37;");
 		newFreundesliste.getStylesheets().add("application/data/css/ProjectZero_Theme.css");
 		newFreundesliste.setEffect(shadow);
 		newFriendlist.getStyleClass().add("noheader");
 		newFriendlist.setMinHeight(465);
 		newFriendlist.setMinWidth(250);
+		newFriendlist.maxWidth(250);
 		newFriendlist.setFixedCellSize(31);
 
 		JFXButton button = new JFXButton("Hinzuf�gen");

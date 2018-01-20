@@ -4,13 +4,11 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
-import application.api.Friends;
-import application.api.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 /**
  * Main-Controller-Klasse
@@ -22,18 +20,17 @@ public class MainLayoutController {
 	private JFXDrawer drawer;
 	@FXML
 	private JFXHamburger hamburger;
-	
-	private AnchorPane freundesliste = null;
+	@FXML
+	private Label benachrichtigungenCount;
+
 	@FXML
 	private void initialize() {
 		initFreundesliste();
-		System.out.println(User.getLoginToken());
 	}
 
 	private void initFreundesliste() {
-		
 		try {
-		    freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
+			AnchorPane freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
 			drawer.setSidePane(freundesliste);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,15 +42,19 @@ public class MainLayoutController {
 			transition.play();
 			if (drawer.isShown()) {
 				drawer.close();
-			//	drawer.setVisible(false);
-			//	freundesliste.setVisible(false);
-			//	hamburger.setVisible(false);
 			} else
 				drawer.open();
-			//	drawer.setVisible(true);
-			//	freundesliste.setVisible(true);
-			//	hamburger.setVisible(true);
 		});
+	}
+	
+	public void setBenachrichtigungenCount(int counter) {
+		this.benachrichtigungenCount.setText(Integer.toString(counter));
+		
+		if (counter > 0) {
+			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #9C2B27;");
+		} else {
+			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #B2B2B2;");
+		}
 	}
 
 }
