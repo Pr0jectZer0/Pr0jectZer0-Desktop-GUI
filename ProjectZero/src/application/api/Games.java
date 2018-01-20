@@ -19,7 +19,7 @@ public class Games {
 	
 	public static List<application.model.Publisher> getPublishers() throws JSONException, IOException {
 		List<application.model.Publisher> publisherList = new ArrayList<application.model.Publisher>();
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("publisher"));
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("publisher?token=" + User.getLoginToken()));
 		JSONArray publisherArr = response.getJSONArray("publisher");
 		int amountGames = publisherArr.length();
 		for (int i = 0; i < amountGames; i++) {
@@ -33,7 +33,7 @@ public class Games {
 	
 	public static List<application.model.Genre> getGenres() throws JSONException, IOException {
 		List<application.model.Genre> genreList = new ArrayList<application.model.Genre>();
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("genre"));
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("genre?token=" + User.getLoginToken()));
 		JSONArray genreArr = response.getJSONArray("Genre");
 		int amountGames = genreArr.length();
 		for (int i = 0; i < amountGames; i++) {
@@ -47,7 +47,7 @@ public class Games {
 	
 	public static List<application.model.Game> getGames() throws JSONException, IOException {
 		List<application.model.Game> gameList = new ArrayList<application.model.Game>();
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("games"));
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("games?token=" + User.getLoginToken()));
 		JSONArray gameArr = response.getJSONArray("games");
 		int amountGames = gameArr.length();
 		for (int i = 0; i < amountGames; i++) {
@@ -73,7 +73,7 @@ public class Games {
 		if (genreID <= 0 || publisherID <= 0 || name == null || name.isEmpty() || description == null || description.isEmpty())
 			return -1;
 		String[][] parameters = new String[][] { { "id_genre", Integer.toString(genreID) }, {"id_publisher", Integer.toString(publisherID) }, {"name", name}, {"beschreibung", description} };
-		String response = HttpWebRequest.sendPostRequest("game", parameters);
+		String response = HttpWebRequest.sendPostRequest("game?token=" + User.getLoginToken(), parameters);
 		JSONObject game = new JSONObject(response);
 		return game.getInt("id");
 	}
@@ -88,7 +88,7 @@ public class Games {
 	public static boolean deleteGame(int gameID) throws JSONException, IOException {
 		if (gameID < 0)
 			return false;
-		String response = HttpWebRequest.sendDeleteRequest("game/" + Integer.toString(gameID));
+		String response = HttpWebRequest.sendDeleteRequest("game/" + Integer.toString(gameID) + "?token=" + User.getLoginToken());
 		if (response.contains("Spiel wurde gel\\u00f6scht."))
 			return true;
 		return false;

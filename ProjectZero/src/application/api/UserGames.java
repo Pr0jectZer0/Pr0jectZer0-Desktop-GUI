@@ -18,29 +18,34 @@ public class UserGames {
 	private UserGames() {}
 	
 	/**
-	 * not finished
+	 * 
 	 * @param id
 	 * @return
 	 * @throws IOException
 	 */
 	public static boolean add(int id) throws IOException {
-		String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
+		if (id < 0)
+			return false;
+		String[][] parameter = { { "id", Integer.toString(id) } };
+		System.out.println("user/game/add?token=" + User.getLoginToken());
 		String response = HttpWebRequest.sendPostRequest("user/game/add?token=" + User.getLoginToken(), parameter);
-		return response.contains("success");
-		//TODO: check for sucess or failure
+		System.out.println(response);
+		return response.contains("Spiel wurde User Liste hinzugefügt.");
 	}
 	
 	/**
-	 * not finished
+	 * 
 	 * @param id
 	 * @return
 	 * @throws IOException 
 	 */
 	public static boolean delete(int id) throws IOException {
-		String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
-		String response = HttpWebRequest.sendPostRequest("user/game/remove?token=" + User.getLoginToken(), parameter);
-		return response.contains("success");
-		//TODO: check for sucess or failure
+		if (id < 0)
+			return false;
+		System.out.println("user/game/remove/" + id + "?token=" + User.getLoginToken());
+		String response = HttpWebRequest.sendDeleteRequest("user/game/remove/" + id + "?token=" + User.getLoginToken());
+		System.out.println(response);
+		return response.contains("Spiel wurde aus Liste entfernt.");
 	}
 	
 	public static ObservableList<Game> getGames() throws JSONException, IOException {
@@ -54,6 +59,5 @@ public class UserGames {
 			}
 		}
 		return games;
-		//TODO: not tested
 	}
 }

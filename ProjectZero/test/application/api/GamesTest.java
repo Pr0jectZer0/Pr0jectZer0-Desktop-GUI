@@ -104,4 +104,22 @@ public class GamesTest {
 			fail(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void addGame() {
+		try {
+			int id = Games.addGame(1, 1, name, description);
+			boolean found = false;
+			for (Game game : Games.getGames()) {
+				if (game.getId() == id) {
+					found = true;
+					break;
+				}
+			}
+			assertTrue(found);
+			Games.deleteGame(id);
+		} catch (JSONException | IOException e) {
+			fail(e.getMessage());
+		}
+	}
 }
