@@ -62,7 +62,6 @@ public class Friends {
 	
 	public enum FriendDeleteState {
 		Success,
-		UserNotFound,
 		NotFriends,
 		ServerError,
 	}
