@@ -47,7 +47,7 @@ public class Games {
 	
 	public static List<application.model.Game> getGames() throws JSONException, IOException {
 		List<application.model.Game> gameList = new ArrayList<application.model.Game>();
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + User.getLoginToken()));
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("games"));
 		JSONArray gameArr = response.getJSONArray("games");
 		int amountGames = gameArr.length();
 		for (int i = 0; i < amountGames; i++) {
@@ -62,30 +62,35 @@ public class Games {
 	
 	/**
 	 * 
-	 * @param id_genre
-	 * @param id_publisher
+	 * @param genreID
+	 * @param publisherID
 	 * @param name
 	 * @param description
 	 * @return the new id of the added game
 	 * @throws IOException 
 	 */
-	public int addGame(int id_genre, int id_publisher, String name, String description) throws IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("game", new String[][] { { "id_genre", Integer.toString(id_genre) }, {"id_publisher", Integer.toString(id_publisher) }, {"name", name}, {"beschreibung", description} }));
-		return response.getInt("id");
+	public static int addGame(int genreID, int publisherID, String name, String description) throws IOException {
+		if (genreID <= 0 || publisherID <= 0 || name == null || name.isEmpty() || description == null || description.isEmpty())
+			return -1;
+		String[][] parameters = new String[][] { { "id_genre", Integer.toString(genreID) }, {"id_publisher", Integer.toString(publisherID) }, {"name", name}, {"beschreibung", description} };
+		String response = HttpWebRequest.sendPostRequest("game", parameters);
+		JSONObject game = new JSONObject(response);
+		return game.getInt("id");
 	}
 	
 	/**
-	 * API isn't working ?!
+	 * 
 	 * @param game_id
 	 * @return
 	 * @throws JSONException
 	 * @throws IOException
 	 */
-	public boolean deleteGame(int game_id) throws JSONException, IOException {
-		String response = HttpWebRequest.sendDeleteRequest("game/" + Integer.toString(game_id));
-		if (response.contains("laravel"))
+	public static boolean deleteGame(int gameID) throws JSONException, IOException {
+		if (gameID < 0)
+			return false;
+		String response = HttpWebRequest.sendDeleteRequest("game/" + Integer.toString(gameID));
+		if (response.contains("Spiel wurde gel\\u00f6scht."))
 			return true;
 		return false;
-		//TODO: fix this
 	}
 }
