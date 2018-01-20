@@ -15,6 +15,8 @@ import application.model.Game;
 
 public class UserGamesTest {
 
+	private static String name = "UNIT_TEST_GAME",
+			description = "UNIT_TEST_GAME";
 	@Before
 	public void setUp() {
 		User.login("peter@peter.com", "Peter123");
@@ -50,9 +52,9 @@ public class UserGamesTest {
 	@Test
 	public void addGame() {
 		try {
-			int id = Games.addGame(1, 1, "UNIT_TEST_GAME_", "UNIT_TEST_GAME_");
-			//assertTrue(UserGames.add(1));
-			//UserGames.delete(1);
+			int id = Games.addGame(1, 1, name, description);
+			assertTrue(UserGames.add(id));
+			UserGames.delete(id);
 			Games.deleteGame(id);
 		} catch (IOException e) {
 			fail(e.getMessage());
@@ -62,9 +64,9 @@ public class UserGamesTest {
 	@Test
 	public void deleteGame() {
 		try {
-			int id = Games.addGame(1, 1, "UNIT_TEST_GAME", "UNIT_TEST_GAME");
-			UserGames.add(1);
-			assertTrue(UserGames.delete(1));
+			int id = Games.addGame(1, 1, name, description);
+			UserGames.add(id);
+			assertTrue(UserGames.delete(id));
 			Games.deleteGame(id);
 		} catch (IOException e) {
 			fail(e.getMessage());
@@ -74,7 +76,8 @@ public class UserGamesTest {
 	@Test
 	public void getGamesAdded() {
 		try {
-			int id = Games.addGame(1, 1, "UNIT_TEST_GAME", "UNIT_TEST_GAME");
+			int id = Games.addGame(1, 1, name, description);
+			UserGames.getGames().add(new Game(name, description,id));
 			UserGames.add(id);
 			boolean found = false;
 			for (Game g : UserGames.getGames()) {

@@ -26,11 +26,9 @@ public class UserGames {
 	public static boolean add(int id) throws IOException {
 		if (id < 0)
 			return false;
-		String[][] parameter = { { "id", Integer.toString(id) } };
-		System.out.println("user/game/add?token=" + User.getLoginToken());
+		String[][] parameter = {{ "id", Integer.toString(id) }};
 		String response = HttpWebRequest.sendPostRequest("user/game/add?token=" + User.getLoginToken(), parameter);
-		System.out.println(response);
-		return response.contains("Spiel wurde User Liste hinzugefügt.");
+		return response.contains("Spiel wurde User Liste hinzugef\\u00fcgt.");
 	}
 	
 	/**
@@ -42,9 +40,7 @@ public class UserGames {
 	public static boolean delete(int id) throws IOException {
 		if (id < 0)
 			return false;
-		System.out.println("user/game/remove/" + id + "?token=" + User.getLoginToken());
 		String response = HttpWebRequest.sendDeleteRequest("user/game/remove/" + id + "?token=" + User.getLoginToken());
-		System.out.println(response);
 		return response.contains("Spiel wurde aus Liste entfernt.");
 	}
 	
