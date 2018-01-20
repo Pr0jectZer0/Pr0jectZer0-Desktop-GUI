@@ -21,7 +21,7 @@ public class Users {
 	public static ObservableList<application.model.User> getUsers() throws JSONException, IOException {
 		if (users == null) {
 			users = FXCollections.observableArrayList();
-			JSONObject userObj = new JSONObject(HttpWebRequest.sendGetRequest("users"));
+			JSONObject userObj = new JSONObject(HttpWebRequest.sendGetRequest("users?token=" + application.api.User.getLoginToken()));
 			JSONArray userArr = userObj.getJSONArray("users");
 			for (int i = 0; i < userArr.length(); i++) {
 				JSONObject curUser = userArr.getJSONObject(i);
