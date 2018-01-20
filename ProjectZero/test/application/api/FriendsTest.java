@@ -25,14 +25,13 @@ public class FriendsTest {
 	@Test
 	public void testAddFriendValid() {
 		Friends.delete(friendID);
-		Friends.FriendAddState a = Friends.add(friendID);
-		assertEquals(a, Friends.FriendAddState.Success);
+		assertEquals(Friends.add(friendID), Friends.FriendAddState.Success);
 	}
 	
 	@Test
 	public void testAddAlreadyFriends() {
 		Friends.add(friendID);
-		assertEquals(FriendAddState.AlreadyFriends, Friends.add(14));
+		assertEquals(Friends.add(friendID), FriendAddState.AlreadyFriends);
 	}
 	
 	@Test
