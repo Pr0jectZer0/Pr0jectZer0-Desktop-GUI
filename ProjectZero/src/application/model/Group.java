@@ -18,6 +18,12 @@ public class Group
 		this.admin = admin;
 	}
 	
+	public Group(String name, String description, int id) {
+		this.name = name;
+		this.description = description;
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -19,26 +19,22 @@ public class Groups
 {
 	private static ObservableList<Group> allGroups = null;
 	private static ObservableList<Group> userGroups = null;
-	private static int userID = -1;
 	
 	/**
 	 * 
 	 * @param name of the group
 	 * @param description of the group
 	 * @return the created group or null on ServerError
+	 * @throws IOException 
+	 * @throws JSONException 
 	 */
-	public static Group createGroup(String name, String description)
+	public static Group createGroup(String name, String description) throws JSONException, IOException
 	{
-		String[][] parameter = {{"name", name}, {"beschreibung", description}};
-		try
-		{
-			JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group?token=" + application.api.User.getLoginToken(), parameter));
-			return getGroupByID(response.getInt("id"));
-		}
-		catch(IOException e)
-		{
+		if (name == null || name.isEmpty() || description == null || description.isEmpty())
 			return null;
-		}
+		String[][] parameter = {{"name", name}, {"beschreibung", description}};
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group?token=" + application.api.User.getLoginToken(), parameter));
+		return getGroupByID(response.getInt("id"));
 	}
 	
 	/**
@@ -49,6 +45,8 @@ public class Groups
 	 */
 	public static Group getGroupByID(int id) throws IOException
 	{
+		if (id < 0)
+			return null;
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + id +"?token=" + application.api.User.getLoginToken()));
 		JSONObject group = response.getJSONObject("group");
 		int id_got = group.getInt("id");
@@ -61,8 +59,7 @@ public class Groups
 			JSONObject curUser = userArr.getJSONObject(j);
 			int userID = curUser.getInt("id_user");
 			String rolle = curUser.getString("rolle");
-			//TODO: Create Function getUserByID and get the user name with that ? used role as placeholder
-			User user = new User(rolle, userID);
+			User user = Users.getUserByID(userID);
 			if (rolle.equals("admin")) {
 				admin = user;
 			}
@@ -87,27 +84,10 @@ public class Groups
 			for (int i = 0; i < groupAmount; i++) {
 				//get group info
 				JSONObject curGroup = groupArr.getJSONObject(i);
-				if (userID == -1)
-					userID = curGroup.getInt("id_user");
 				String name = curGroup.getString("name");
 				String description = curGroup.getString("beschreibung");
 				int id = curGroup.getInt("id");
-				User admin = null;
-				//get member info
-				JSONArray userArr = curGroup.getJSONArray("users");
-				List<User> userList = new ArrayList<User>();
-				for (int j = 0; j < userArr.length(); j++) {
-					JSONObject curUser = userArr.getJSONObject(j);
-					int userID = curUser.getInt("id_user");
-					String rolle = curUser.getString("rolle");
-					//TODO: Create Function getUserByID and get the user name with that ? used role as placeholder
-					User user = new User(rolle, userID);
-					if (rolle.equals("admin")) {
-						admin = user;
-					}
-					userList.add(user);
-				}
-				allGroups.add(new Group(name, description, id, userList, admin));	
+				allGroups.add(new Group(name, description, id));	
 			}
 		}
 		return allGroups;
@@ -115,60 +95,71 @@ public class Groups
 	
 	/**
 	 * @return all groups where the current user is member or admin
+	 * @throws IOException 
+	 * @throws JSONException 
 	 */
-	public static ObservableList<Group> getUserGroups() {
-		if (userGroups == null && userID != -1) {
+	public static ObservableList<Group> getUserGroups() throws JSONException, IOException {
+		if (userGroups == null) {
 			userGroups = FXCollections.observableArrayList();
-			for (int i = 0; i < allGroups.size(); i++) {
-				Group curGroup = allGroups.get(i);
-				for (User user : curGroup.getMembers()) {
-					if (user.getId() == userID) {
-						userGroups.add(curGroup);
-					}
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/groups?token=" + application.api.User.getLoginToken()));
+			JSONArray groupArr = response.getJSONArray("groups");
+			for (int i = 0; i < groupArr.length(); i++) {
+				JSONObject curGroup = groupArr.getJSONObject(i);
+				int id = curGroup.getInt("id");
+				String name = curGroup.getString("name");
+				String description = curGroup.getString("beschreibung");
+				JSONArray userArr = curGroup.getJSONArray("users");
+				List<User> userList = new ArrayList<User>();
+				User admin = null;
+				for (int j = 0; j < userArr.length(); j++) {
+					JSONObject curUser = userArr.getJSONObject(j);
+					int userID = curUser.getInt("id_user");
+					String rolle = curUser.getString("rolle");
+					JSONObject userObj = curUser.getJSONObject("user");
+					String userName = userObj.getString("name");
+					User user = new User(userName, userID);
+					if (rolle.equals("admin"))
+						admin = user;
+					userList.add(user);
 				}
+				userGroups.add(new Group(name, description, id, userList, admin));
 			}
 		}
 		return userGroups;
 	}
 	
-	public boolean addFromGroup(int id) throws JSONException, IOException {
-		//String[][] parameter = {{"id", id + ""}, {"", ""}};
-		//JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + id + "/add_user", parameter));
-		//TODO: not working yet
-		return false;
+	public static boolean addUserToGroup(int userID, int groupID) throws JSONException, IOException {
+		if (userID < 0 || groupID <= 0)
+			return false;
+		String[][] parameter = {{"id", userID + ""}};
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + groupID + "/add_user?token=" + application.api.User.getLoginToken(), parameter));
+		return response.getString("message").equals("User wurde in Gruppe hinzugefügt.");
 	}
 	
-	public boolean deleteFromGroup(int id) {
-		//JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + id + "/remove_user", parameter));
-		//TODO: not working yet
-		return false;
+	public static boolean deleteUserFromGroup(int userID, int groupID) throws JSONException, IOException {
+		if (userID < 0 || groupID <= 0)
+			return false;
+		String[][] parameter = {{"id", userID + "" }};
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + groupID + "/remove_user?token=" + application.api.User.getLoginToken(), parameter));
+		return response.getString("message").equals("User wurde aus Gruppe entfenrt.");
 	}
 	
-	public boolean acceptGroup(int id) throws JSONException, IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + id + "/accept"));
-		//TODO: not working yet
+	public boolean acceptGroup(int groupID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/accept?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
 	
-	public boolean declineGroup(int id) throws JSONException, IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + id + "/decline"));
-		//TODO: not working yet
+	public boolean declineGroup(int groupID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/decline?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
 	
-	/**
-	 * 
-	 * @return current users userID or -1
-	 */
-	public static int getUserID() {
-		return userID;
-	}
-	
-	public boolean deleteGroup(int id) {
+	public static boolean deleteGroup(int id) {
+		if (id < 0)
+			return false;
 		try {
-			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("group/" +id));
-			//TODO: not tested
-			return true;
+			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("group/" +id + "?token=" + application.api.User.getLoginToken()));
+			return response.getString("message").equals("Gruppe wurde gelöscht.");
 		} catch (JSONException e) {
 			return false;
 		} catch (IOException e) {
@@ -176,19 +167,27 @@ public class Groups
 		}
 	}
 	
-	public boolean addGroupNote(int groupID, int noteID) {
+	public static boolean addGroupNote(int groupID, int noteID) {
+		if (groupID < 0 || noteID < 0)
+			return false;
 		try {
-			String response = HttpWebRequest.sendGetRequest("group/" + groupID + "/attach/note/" + noteID);
-			return response.contains("id");
+			String response = HttpWebRequest.sendGetRequest("group/" + groupID + "/attach/note/" + noteID + "?token=" + application.api.User.getLoginToken());
+			return response.equals("{\"message\":\"Notiz wurde Gruppe hinzugef\\u00fcgt.\"}");
 		} catch (IOException e) {
+			e.printStackTrace();
 			return false;
 		}
-		//TODO: not tested
 	}
 	
-	public List<Note> getGroupNotes(int groupID) throws JSONException, IOException {
+	public static List<Note> getGroupNotes(int groupID) throws JSONException, IOException {
+		if (groupID <= 0) {
+			return null;
+		}
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/notes"));
+		if (response.has("message") && response.getString("message").equals("Gruppe wurde nicht gefunden oder besitzt keine Notizen.")) {
+			return null;
+		}	
+		//TODO: BACKEND-Route doesnt work, adding notes or getting tehm is not possible
 		return null;
-		//TODO: finish function
 	}
 }
