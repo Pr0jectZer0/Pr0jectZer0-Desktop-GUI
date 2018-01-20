@@ -1,6 +1,5 @@
 package application.view;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,9 +34,8 @@ public class ChatController
 	private JFXTextArea tfschreiben;
 	@FXML
 	private JFXButton btnsenden;
-	int chatroomID;
-	Pusher pusher;
-	Calendar now = Calendar.getInstance();
+	private int chatroomID;
+	private Pusher pusher;
 
 	@FXML
 	private void initialize()
@@ -59,17 +57,14 @@ public class ChatController
 			public void onError(String arg0, String arg1, Exception e)
 			{
 				System.out.println(e.getMessage());
-
 			}
 
 			@Override
 			public void onConnectionStateChange(ConnectionStateChange state)
 			{
 				System.out.println(state.getCurrentState());
-
 			}
 		}, ConnectionState.ALL);
-
 		PrivateChannel channel = pusher.subscribePrivate("private-chat." + chatroomID);
 		Connection con = pusher.getConnection();
 		System.out.println(con.getState());
@@ -81,7 +76,6 @@ public class ChatController
 		}
 		channel.bind("App\\Events\\MessageSent", new PrivateChannelEventListener()
 		{
-
 			@Override
 			public void onSubscriptionSucceeded(String arg0)
 			{
@@ -100,7 +94,6 @@ public class ChatController
 			{
 				System.out.println("Failure: " + e.getMessage());
 			}
-
 		});
 
 		btnsenden.setOnMouseClicked(new EventHandler<Event>()
@@ -113,9 +106,7 @@ public class ChatController
 					String message = tfschreiben.getText();
 					Chat.sendMessage(chatroomID, message);
 				}
-
 			}
-
 		});
 		btnsenden.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
@@ -130,10 +121,8 @@ public class ChatController
 						Chat.sendMessage(chatroomID, message);
 					}
 				}
-				
 			}
 		});
-
 	}
 
 	public String getMessages()
