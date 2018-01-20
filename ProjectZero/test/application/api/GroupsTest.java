@@ -18,7 +18,8 @@ import application.model.Group;
 public class GroupsTest {
 
 	private static String name = "JUNIT_TEST",
-			description = "JUNIT_TEST";
+			description = "JUNIT_TEST",
+			message = "JUNIT_TEST_NACHRICHT";
 	private static int userID = 14;
 	@Before
 	public void setUp() {
@@ -191,4 +192,27 @@ public class GroupsTest {
 		}
 	}
 	*/
+	
+	@Test
+	public void sendGroupMessage() {
+		try {
+			int groupID = Groups.createGroup(name, description).getID();
+			assertTrue(Groups.sendGroupMessage(groupID, message));
+			Groups.deleteGroup(groupID);
+		} catch (JSONException | IOException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void getGroupMessages() {
+		try {
+			int groupID = Groups.createGroup(name, description).getID();
+			Groups.sendGroupMessage(groupID, message);
+			assertEquals(message, Groups.getGroupMessages(groupID).get(0).getMessage());
+			Groups.deleteGroup(groupID);
+		} catch (JSONException | IOException e) {
+			fail(e.getMessage());
+		}
+	}
 }

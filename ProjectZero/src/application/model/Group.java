@@ -43,13 +43,4 @@ public class Group
 	public User getAdmin() {
 		return admin;
 	}
-	
-	/**
-	 * direct join group as current User 
-	 * @return true for success
-	 */
-	public boolean join() {
-		return false;
-		//application.api.Groups.joinGroupByID(id);
-	}
 }

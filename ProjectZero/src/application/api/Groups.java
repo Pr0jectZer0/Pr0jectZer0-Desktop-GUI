@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import application.model.Group;
 import application.model.HttpWebRequest;
+import application.model.Message;
 import application.model.Note;
 import application.model.User;
 import javafx.collections.FXCollections;
@@ -189,5 +190,34 @@ public class Groups
 		}	
 		//TODO: BACKEND-Route doesnt work, adding notes or getting tehm is not possible
 		return null;
+	}
+	
+	public static List<Message> getGroupMessages(int groupID) throws JSONException, IOException {
+		if (groupID <= 0) {
+			return null;
+		}
+		List<Message> messageList = new ArrayList<Message>();
+		JSONArray messages = new JSONObject(HttpWebRequest.sendGetRequest("groupchat/" + groupID + "/messages?token=" + application.api.User.getLoginToken())).getJSONArray("message");
+		for (int i = 0; i < messages.length(); i++) {
+			JSONObject curMessage = messages.getJSONObject(i);
+			String message = curMessage.getString("message");
+			int id = curMessage.getInt("id");
+			String date = curMessage.getString("updated_at");
+			int userID = curMessage.getInt("user_id");
+			JSONObject userObj = curMessage.getJSONObject("user");
+			String userName = userObj.getString("name");
+			User user = new User(userName, userID);
+			messageList.add(new Message(message, id, user, date));
+		}
+		return messageList;
+	}
+	
+	public static boolean sendGroupMessage(int groupID, String message) throws JSONException, IOException {
+		if (groupID <= 0 || message == null || message.isEmpty()) {
+			return false;
+		}
+		String[][] parameters = {{ "message", message } };
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("groupchat/" + groupID + "/messages?token=" + application.api.User.getLoginToken(), parameters));
+		return response.getString("message").equals("Nachricht wurde gesendet.");
 	}
 }
