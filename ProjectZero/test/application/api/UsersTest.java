@@ -1,5 +1,6 @@
 package application.api;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -19,18 +20,23 @@ public class UsersTest {
 	@Test
 	public void getAllUsers() {
 		try {
-			assertNotNull(Users.getUsers().get(0));
+			assertNotNull(Users.getUsers());
 		} catch (JSONException | IOException e) {
-			fail();
+			fail(e.getMessage());
 		}
 	}
 	
 	@Test
 	public void getNoFriends() {
 		try {
-			assertNotNull(Users.getNoFriends().get(0));
+			assertNotNull(Users.getNoFriends());
 		} catch (JSONException | IOException e) {
-			fail();
+			fail(e.getMessage());
 		}
+	}
+	
+	@Test
+	public void getUserByID() {
+		assertEquals(Users.getUserByID(21).getName(), "PeterPeter");
 	}
 }
