@@ -70,11 +70,28 @@ public class Notes {
 		try {
 			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("note/" + id + "?token=" + application.api.User.getLoginToken()));
 			String message = response.getString("message");
-			return message.equals("Notiz wurde gelÃ¶scht.");
+			return message.equals("Notiz wurde gelöscht.");
 		} catch (JSONException e) {
 			return false;
 		} catch (IOException e) {
 			return false;
 		}
+	}
+	
+	public static boolean addUserToNote(int noteID, int userID) throws JSONException, IOException {
+		if (userID < 0 || noteID < 0) {
+			return false;
+		}
+		String[][] parameter = {{ "id", Integer.toString(userID) }};
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note/" + noteID + "/add_user?token=" + User.getLoginToken(), parameter));
+		return response.getString("message").equals("Notiz anfrage wurde an User gesendet.");
+	}
+	
+	public static boolean deleteUserFromNote(int noteID, int userID) throws JSONException, IOException {
+		if (userID < 0 || noteID < 0) {
+			return false;
+		}
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note/" + noteID + "/remove_user?token=" + User.getLoginToken() + "&id=" + userID));
+		return response.getString("message").equals("User wurde aus Notiz entfernt.");
 	}
 }

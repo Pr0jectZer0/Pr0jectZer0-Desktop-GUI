@@ -68,6 +68,7 @@ public class UserTest {
 	
 	@Test
 	public void registerValidAgain() {
+		User.register("AAAAAAAAAAAAAAAAAAAAA", "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA");
 		assertEquals(User.register("AAAAAAAAAAAAAAAAAAAAA", "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA"), User.RegisterState.WrongData);
 	}
 	
@@ -75,6 +76,4 @@ public class UserTest {
 	public void deleteUser() {
 		assertFalse(User.delete(-1));
 	}
-	
-
 }
