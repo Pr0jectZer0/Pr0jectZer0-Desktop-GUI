@@ -225,7 +225,7 @@ public class GruppenController
 		}
 	}
 
-	private void updategroups()
+	public void updategroups()
 	{
 		gruppen.getItems().clear();
 		try
