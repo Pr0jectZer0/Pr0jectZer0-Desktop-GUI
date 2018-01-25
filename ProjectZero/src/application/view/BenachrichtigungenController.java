@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import application.api.Friends;
 import application.api.Groups;
 import application.model.FriendRequest;
+import application.model.Group;
 import application.model.GroupRequest;
 import application.model.User;
 import javafx.collections.ObservableList;
@@ -120,7 +121,7 @@ public class BenachrichtigungenController {
 						@Override
 						public void handle(MouseEvent event)
 						{
-							acceptGroupRequest(curGR.getGroup().getID(), vBox);
+							acceptGroupRequest(curGR.getGroup(), vBox);
 							try {
 								Groups.getUserGroups().add(curGR.getGroup());
 							} catch (JSONException | IOException e) {
@@ -165,10 +166,12 @@ public class BenachrichtigungenController {
 		}
 	}
 	
-	private void acceptGroupRequest(int groupID, VBox vBox) {
+	private void acceptGroupRequest(Group group, VBox vBox) {
 		try {
-			if (Groups.acceptGroupRequest(groupID)) {
+			if (Groups.acceptGroupRequest(group.getID())) {
 				benachrichtigungenBox.getChildren().remove(vBox);
+				Groups.getAllGroups().add(group);
+				GruppenController.getGruppenController().updategroups();
 			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
