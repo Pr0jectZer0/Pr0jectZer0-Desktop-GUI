@@ -1,14 +1,15 @@
 package application.view;
 
 import java.io.IOException;
+
 import org.json.JSONException;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
-import application.Main;
+import application.api.Friends;
 import application.api.Notes;
-import application.api.User;
+import application.model.User;
 import application.model.ErrorWindow;
 import application.model.Note;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -25,6 +26,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Controller-Klasse für die Notizenfunktion
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class NotizController {
 	@FXML
 	private JFXTextArea selectedNoteText;
@@ -78,8 +84,11 @@ public class NotizController {
 	private void initialize() {
 		notizcontroller = this;
 		initNoteList();
+		initMemberList();
 	}
-	
+	/**
+	 * Initialiesierung der Notizen-Liste
+	 */
 	private void initNoteList() {
 		try {
 			noteList.setItems(Notes.getNotesFromUser());
@@ -105,6 +114,19 @@ public class NotizController {
 		});
 	}
 	
+	private void initMemberList() {
+		try {
+			memberList.setItems(Friends.getFriends());
+		} catch (Exception e) {
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim laden der Freunde!", (Stage) noteList.getScene().getWindow(), e);
+		}
+		memberIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+		memberNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+	}
+	
+	/**
+	 * Methode, die ausgeführt wird, wenn btnNewNote genutzt wird.
+	 */
 	@FXML
 	private void newNoteAction() {
 		selectedNoteTitle.setText("Bitte Titel eingeben");
@@ -113,8 +135,12 @@ public class NotizController {
 		currentNoteText = "Bitte Text eingeben";
 		currentNoteId = -1;
 	}
+	/**
+	 * Methode, die ausgeführt wird, wenn btnSaveNote genutzt wird.
+	 */
 	@FXML
 	private void saveNoteAction() {
+		System.out.println(currentNote.getID());
 		if(currentNoteId < -1) {
 			
 		}else if(currentNoteId == -1) {
@@ -214,6 +240,17 @@ public class NotizController {
 	public void dontSave() {
 		selectedNoteTitle.setText(currentNoteTitle);
 		selectedNoteText.setText(currentNoteText);
+	}
+	@FXML
+	private void addMemberAction() {
+		if(currentNoteId > -1) {
+			User tempUser = memberList.getSelectionModel().getSelectedItem();
+			try {
+				Notes.addUserToNote(currentNote.getID(), tempUser.getId());
+			} catch (Exception e) {
+				ErrorWindow.newErrorWindow("Es gab ein Fehler beim hinzufügen des Mitglieds!", (Stage) noteList.getScene().getWindow(), e);
+			} 
+		}
 	}
 }
 
