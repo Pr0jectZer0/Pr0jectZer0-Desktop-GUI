@@ -18,13 +18,13 @@
             <JFXListView fx:id="gruppen" prefHeight="720.0" prefWidth="247.0" style="-fx-background-color: #444b59;" />
             <StackPane prefHeight="720.0" prefWidth="1036.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0" visible="false">
+                  <HBox fx:id="hbox" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <VBox prefHeight="720.0" prefWidth="257.0">
                            <children>
                               <Region prefHeight="321.0" prefWidth="257.0" />
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="264.0" text="Gruppenname" />
-                              <JFXTextField />
+                              <JFXTextField fx:id="tfname" />
                               <Region prefHeight="321.0" prefWidth="257.0" />
                            </children>
                         </VBox>
@@ -32,20 +32,20 @@
                            <children>
                               <Region prefHeight="387.0" prefWidth="257.0" />
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="264.0" text="Gruppenbeschreibung" />
-                              <JFXTextArea />
+                              <JFXTextArea fx:id="tabezeichnung" />
                               <Region prefHeight="321.0" prefWidth="257.0" />
                            </children>
                         </VBox>
                         <VBox prefHeight="720.0" prefWidth="257.0">
                            <children>
                               <Region prefHeight="387.0" prefWidth="257.0" />
-                              <JFXButton prefHeight="69.0" prefWidth="255.0" styleClass="login-button" text="Erstellen" textFill="#b2b2b2" />
+                              <JFXButton fx:id="btnerstellen" prefHeight="69.0" prefWidth="255.0" styleClass="login-button" text="Erstellen" textFill="#b2b2b2" />
                               <Region prefHeight="328.0" prefWidth="257.0" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="vbox" prefHeight="200.0" prefWidth="100.0" visible="false">
                      <children>
                         <Label fx:id="lblgruppe" prefHeight="50.0" prefWidth="396.0" text="GRUPPE:{einfügen}" />
                         <HBox prefHeight="671.0" prefWidth="1035.0">
