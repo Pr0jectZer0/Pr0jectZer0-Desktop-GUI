@@ -7,6 +7,8 @@ import org.json.JSONException;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
 import application.api.Friends;
 import application.api.Groups;
@@ -18,6 +20,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class GruppenController
 {
@@ -33,6 +37,16 @@ public class GruppenController
 	private JFXButton btndelete;
 	@FXML
 	private Label lblgruppe;
+	@FXML
+	private HBox hbox;
+	@FXML
+	private VBox vbox;
+	@FXML
+	private JFXTextField tfname;
+	@FXML
+	private JFXTextArea tabezeichnung;
+	@FXML
+	private JFXButton btnerstellen;
 
 	@FXML
 	private void initialize()
@@ -68,6 +82,31 @@ public class GruppenController
 				kickGroupMember();
 			}
 		});
+		btnerstellen.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent event)
+			{
+				if(tfname.getText() != "" && tabezeichnung.getText() != "")
+				{
+					try
+					{
+						Groups.createGroup(tfname.getText(), tabezeichnung.getText());
+					}
+					catch (JSONException e)
+					{
+						e.printStackTrace();
+					}
+					catch (IOException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				updategroups();
+				
+			}
+		});
 	}
 
 	private void updateGroupList()
@@ -76,6 +115,10 @@ public class GruppenController
 		listgruppenmitglieder.getItems().clear();
 		if (gruppen.getSelectionModel().getSelectedItem() != null)
 		{
+			if(!gruppen.getSelectionModel().getSelectedItem().istest())
+			{
+				hbox.setVisible(false);
+				vbox.setVisible(true);
 			try
 			{
 				List<User> friends = Friends.getFriends();
@@ -111,6 +154,12 @@ public class GruppenController
 			catch (IOException e)
 			{
 				e.printStackTrace();
+			}
+			}
+			else
+			{
+				hbox.setVisible(true);
+				vbox.setVisible(false);
 			}
 
 		}
@@ -176,9 +225,11 @@ public class GruppenController
 
 	private void updategroups()
 	{
+		gruppen.getItems().clear();
 		try
 		{
 			List<Group> gr = Groups.getUserGroups();
+			gruppen.getItems().add(new Lableid());
 			for (Group g : gr)
 			{
 				Lableid l = new Lableid(g.getID());

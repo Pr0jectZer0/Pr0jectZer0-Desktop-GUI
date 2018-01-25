@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import application.model.Group;
+import application.model.GroupRequest;
 import application.model.HttpWebRequest;
 import application.model.Message;
 import application.model.Note;
@@ -22,6 +23,7 @@ public class Groups
 	private Groups () {}
 	private static ObservableList<Group> allGroups = null;
 	private static ObservableList<Group> userGroups = null;
+	private static ObservableList<GroupRequest> groupRequests = null;
 	
 	/**
 	 * 
@@ -102,7 +104,7 @@ public class Groups
 	 * @throws JSONException 
 	 */
 	public static ObservableList<Group> getUserGroups() throws JSONException, IOException {
-		if (userGroups == null) {
+			userGroups = null;
 			userGroups = FXCollections.observableArrayList();
 			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/groups?token=" + application.api.User.getLoginToken()));
 			JSONArray groupArr = response.getJSONArray("groups");
@@ -126,7 +128,7 @@ public class Groups
 					userList.add(user);
 				}
 				userGroups.add(new Group(name, description, id, userList, admin));
-			}
+			
 		}
 		return userGroups;
 	}
@@ -136,7 +138,7 @@ public class Groups
 			return false;
 		String[][] parameter = {{"id", userID + ""}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + groupID + "/add_user?token=" + application.api.User.getLoginToken(), parameter));
-		return response.getString("message").equals("User wurde in Gruppe hinzugefügt.");
+		return response.getString("message").equals("User wurde in Gruppe hinzugefï¿½gt.");
 	}
 	
 	public static boolean deleteUserFromGroup(int userID, int groupID) throws JSONException, IOException {
@@ -147,13 +149,23 @@ public class Groups
 		return response.getString("message").equals("User wurde aus Gruppe entfenrt.");
 	}
 	
-	public boolean acceptGroup(int groupID) throws JSONException, IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/accept?token=" + application.api.User.getLoginToken()));
+	public static boolean acceptGroup(int groupID, int userID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/accept/userID" + "?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
 	
-	public boolean declineGroup(int groupID) throws JSONException, IOException {
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/decline?token=" + application.api.User.getLoginToken()));
+	public static boolean declineGroup(int groupID, int userID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/decline/" + userID + "?token=" + application.api.User.getLoginToken()));
+		return response.has("message");
+	}
+	
+	public static boolean acceptGroupRequest(int groupID) throws JSONException, IOException {
+		JSONObject reponse = new JSONObject(HttpWebRequest.sendGetRequest("user/group/" + groupID + "/decline?token=" + application.api.User.getLoginToken()));
+		return reponse.has("message");
+	}
+	
+	public static boolean declineGroupRequest(int groupID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/group/" + groupID + "/decline?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
 	
@@ -162,7 +174,7 @@ public class Groups
 			return false;
 		try {
 			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("group/" +id + "?token=" + application.api.User.getLoginToken()));
-			return response.getString("message").equals("Gruppe wurde gelöscht.");
+			return response.getString("message").equals("Gruppe wurde gelï¿½scht.");
 		} catch (JSONException e) {
 			return false;
 		} catch (IOException e) {
@@ -221,5 +233,28 @@ public class Groups
 		String[][] parameters = {{ "message", message } };
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("groupchat/" + groupID + "/messages?token=" + application.api.User.getLoginToken(), parameters));
 		return response.getString("message").equals("Nachricht wurde gesendet.");
+	}
+	
+	public static ObservableList<GroupRequest> getGroupRequests() throws JSONException, IOException {
+		if (groupRequests == null) {
+			groupRequests = FXCollections.observableArrayList();
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/groups/requests?token=" + application.api.User.getLoginToken()));
+			if (response.has("message")) {
+				return groupRequests;
+			}
+			JSONArray grouprequestsArr = response.getJSONArray("groups");
+			for (int i = 0; i < grouprequestsArr.length(); i++) {
+				JSONObject curGroupRequest = grouprequestsArr.getJSONObject(i);
+				int requestID = curGroupRequest.getInt("id");
+				JSONObject curGroup = curGroupRequest.getJSONObject("group");
+				int groupID = curGroup.getInt("id");
+				String groupName = curGroup.getString("name");
+				String groupDescription = curGroup.getString("beschreibung");
+				Group group = new Group(groupName, groupDescription, groupID);
+				GroupRequest request = new GroupRequest(requestID, group);
+				groupRequests.add(request);
+			}
+		}
+		return groupRequests;
 	}
 }
