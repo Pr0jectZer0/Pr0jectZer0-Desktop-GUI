@@ -1,9 +1,5 @@
 package application.view;
 
-import java.io.IOException;
-
-import org.json.JSONException;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 
@@ -16,7 +12,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class NotizController {
@@ -97,7 +92,7 @@ public class NotizController {
 				} catch (Exception e) {
 					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
 				}
-			}
+			}	
 		}else {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
 				try {
