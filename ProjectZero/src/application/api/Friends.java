@@ -24,6 +24,9 @@ public class Friends {
 			return FriendAddState.Success;
 		}
 		catch (Exception e) {
+			if (e.getMessage().contains("Server returned HTTP response code: 400")) {
+				return FriendAddState.AlreadyFriends;
+			}
 			e.printStackTrace();
 			return FriendAddState.ServerError;
 		}
@@ -40,7 +43,6 @@ public class Friends {
 	
 	public enum FriendAddState {
 		Success,
-		UserNotFound,
 		AlreadyFriends,
 		ServerError,
 	}

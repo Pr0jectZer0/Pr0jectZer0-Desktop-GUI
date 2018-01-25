@@ -133,7 +133,7 @@ public class ChatController
 		String output = "";
 		for (int i = 0; i < messages.size(); i++) {
 			Message curMessage = messages.get(i);
-			output += curMessage.getSender().getName() + ": " + curMessage.getMessage();
+			output += curMessage.getSender().getName() + ": " + curMessage.getMessage() + System.lineSeparator();
 		}
 		return output;
 	}
