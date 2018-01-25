@@ -12,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Notes {
+	
+	private Notes() {} 
 
 	private static ObservableList<Note> userNotes = null;
 	public static ObservableList<Note> getNotesFromUser() throws JSONException, IOException {

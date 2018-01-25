@@ -18,6 +18,8 @@ import javafx.collections.ObservableList;
 
 public class Groups
 {
+	
+	private Groups () {}
 	private static ObservableList<Group> allGroups = null;
 	private static ObservableList<Group> userGroups = null;
 	
