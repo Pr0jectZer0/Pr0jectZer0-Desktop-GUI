@@ -31,6 +31,5 @@ public class Lableid extends Label
 	public boolean istest()
 	{
 		return istest;
-	}
-	
+	}	
 }
