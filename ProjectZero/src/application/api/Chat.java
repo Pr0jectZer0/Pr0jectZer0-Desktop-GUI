@@ -48,6 +48,31 @@ public class Chat {
 		}
 	}
 	
+	public static List<Message> getGroupMessages(int chatID)
+	{
+		if (chatID < 0)
+			return null;
+		try {
+			String response = HttpWebRequest.sendGetRequest("groupchat/" + chatID + "/messages?token=" + application.api.User.getLoginToken());
+			JSONArray messages = new JSONObject(response).getJSONArray("message");
+			List<Message> messageList = new ArrayList<Message>();
+			for (int i = 0; i < messages.length(); i++) {
+				JSONObject curMessage = messages.getJSONObject(i);
+				int id = curMessage.getInt("id");
+				String message = curMessage.getString("message");
+				String date = curMessage.getString("updated_at");
+				JSONObject userJSON = curMessage.getJSONObject("user");
+				int userID = userJSON.getInt("id");
+				String userName = userJSON.getString("name");
+				User user = new User(userName, userID);
+				messageList.add(new Message(message, id, user, date));
+			}
+			return messageList;
+		} catch (IOException | JSONException e) {
+			return null;
+		}
+	}
+	
 	public static boolean sendMessage(int chatID, String message)
 	{
 		if (message == null || message.isEmpty())
@@ -55,6 +80,18 @@ public class Chat {
 		String [][] parameter = { { "message", message } };
 		try {
 			String response = HttpWebRequest.sendPostRequest("chatroom/" + chatID + "/messages?token=" + application.api.User.getLoginToken(), parameter);
+			return response.contains("Nachricht wurde gesendet.");
+		} catch (IOException e) {
+			return false;
+		}
+	}
+	public static boolean sendGroupMessage(int chatID, String message)
+	{
+		if (message == null || message.isEmpty())
+			return false;
+		String [][] parameter = { { "message", message } };
+		try {
+			String response = HttpWebRequest.sendPostRequest("groupchat/" + chatID + "/messages?token=" + application.api.User.getLoginToken(), parameter);
 			return response.contains("Nachricht wurde gesendet.");
 		} catch (IOException e) {
 			return false;

@@ -23,7 +23,7 @@ public class BenachrichtigungenController {
 
 	@FXML
 	private void initialize() {
-		initBenachrichtigungen();
+	initBenachrichtigungen();
 	}
 
 	private void initBenachrichtigungen() {
@@ -34,18 +34,16 @@ public class BenachrichtigungenController {
 					Label label = new Label();
 					label.setText("Freundschaftsanfrage von " + benachrichtigungen.get(i).getUserName() + "(Id: "
 							+ benachrichtigungen.get(i).getUserId() + "):");
-	
 					JFXButton accept = new JFXButton("Akzeptieren");
 					JFXButton decline = new JFXButton("Ablehnen");
 					accept.getStyleClass().add("login-button");
 					accept.setStyle(accept.getStyle() + "-fx-text-fill: #B2B2B2;");
 					decline.getStyleClass().add("login-button");
 					decline.setStyle(decline.getStyle() + "-fx-text-fill: #B2B2B2;");
-	
 					DropShadow shadow = new DropShadow();
 					shadow.setBlurType(BlurType.TWO_PASS_BOX);
 					shadow.setColor(Color.RED);
-					
+			
 					HBox hBox = new HBox();
 					hBox.setEffect(shadow);
 					hBox.setSpacing(20);
@@ -62,8 +60,7 @@ public class BenachrichtigungenController {
 				}
 			}
 		} catch (IOException | JSONException e) {
-			e.printStackTrace();
-		}
-
+       e.printStackTrace();
+    }
 	}
 }

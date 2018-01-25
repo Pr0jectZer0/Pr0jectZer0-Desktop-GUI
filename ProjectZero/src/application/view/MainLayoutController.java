@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
 
 import application.api.Friends;
+import application.api.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -27,6 +28,7 @@ public class MainLayoutController {
 	@FXML
 	private void initialize() {
 		initFreundesliste();
+		System.out.println(User.getLoginToken());
 	}
 
 	private void initFreundesliste() {
