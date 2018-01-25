@@ -135,6 +135,6 @@ public class Termin {
 	
 	public static void declineRequest(int requestID) throws JSONException, IOException {
 		//TODO: finish
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("date/" + requestID + "/accept?token=" + User.getLoginToken()));
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("date/" + requestID + "/decline?token=" + User.getLoginToken()));
 	}
 }
