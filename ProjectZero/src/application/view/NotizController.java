@@ -130,6 +130,7 @@ public class NotizController {
 				} catch (Exception e) {
 					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
 				}
+			}
 
 		}else {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
@@ -146,7 +147,6 @@ public class NotizController {
 					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der Notiz!", (Stage) noteList.getScene().getWindow(), e);
 				}
 				}
-		}
 		}
 		noteList.refresh();
 				
