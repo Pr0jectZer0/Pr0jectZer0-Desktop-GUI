@@ -20,48 +20,34 @@ public class Friends {
 	public static FriendAddState add(int id) {
 		try {
 			String[][] parameter = { { "id", Integer.toString(id) } };
-			String response = HttpWebRequest.sendPostRequest("friend/add?token=" + application.api.User.getLoginToken(), parameter);
-			if (response.contains("User bereits befreundet.")) {
-				return FriendAddState.AlreadyFriends;
-			} else if (response.contains("User sind jetzt befreundet.")) {
-				return FriendAddState.Success;
-			} else {
-				return FriendAddState.ServerError;
-			}
+			HttpWebRequest.sendPostRequest("friend/add?token=" + application.api.User.getLoginToken(), parameter);
+			return FriendAddState.Success;
 		}
 		catch (Exception e) {
-			if (e.getMessage().contains("Server returned HTTP response code: 400")) {
-				return FriendAddState.AlreadyFriends;
-			}
+			e.printStackTrace();
 			return FriendAddState.ServerError;
 		}
 	}
 	
 	public static FriendDeleteState delete(int id) {
 		try {
-			String response = HttpWebRequest.sendDeleteRequest("friend/remove/" + Integer.toString(id) + "?token=" + application.api.User.getLoginToken());
-			if (response.contains("User nicht befreundet")) {
-				return FriendDeleteState.NotFriends;
-			}
+			HttpWebRequest.sendDeleteRequest("friend/remove/" + Integer.toString(id) + "?token=" + application.api.User.getLoginToken());
 			return FriendDeleteState.Success;
 		} catch (IOException e) {
-			if (e.getMessage().contains("Server returned HTTP response code: 400")) {
-				return FriendDeleteState.NotFriends;
-			} else if (e.getMessage().contains("Server returned HTTP response code: 500")) {
-				return FriendDeleteState.Success;
-			}
 			return FriendDeleteState.ServerError;
 		}
 	}
 	
 	public enum FriendAddState {
 		Success,
+		UserNotFound,
 		AlreadyFriends,
 		ServerError,
 	}
 	
 	public enum FriendDeleteState {
 		Success,
+		UserNotFound,
 		NotFriends,
 		ServerError,
 	}
