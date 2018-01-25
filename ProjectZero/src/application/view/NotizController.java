@@ -109,105 +109,83 @@ public class NotizController {
 	private void newNoteAction() {
 		selectedNoteTitle.setText("Bitte Titel eingeben");
 		selectedNoteText.setText("Bitte Text eingeben");
+		currentNoteTitle = "Bitte Titel eingeben";
+		currentNoteText = "Bitte Text eingeben";
 		currentNoteId = -1;
 	}
 	@FXML
 	private void saveNoteAction() {
-/*
 		if(currentNoteId < -1) {
 			
 		}else if(currentNoteId == -1) {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
 				try {
 					Note tempNote = Notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
-					currentNoteId = -3;
-					currentNoteTitle = tempNote.getTitle();
-					currentNoteText = tempNote.getText();
-					noteList.getItems().add(tempNote);
+					if(tempNote != null) {
+						currentNoteId = -3;
+						currentNoteTitle = tempNote.getTitle();
+						currentNoteText = tempNote.getText();
+						noteList.getItems().add(tempNote);
+					}
 				} catch (Exception e) {
 					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
-*/
-		if (currentNoteId == -1) {
-			try {
-				Note newNote = Notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
-				if (newNote != null) {
-					noteList.getItems().add(newNote);
 				}
-			} catch (IOException | JSONException e) {
-				ErrorWindow.newErrorWindow("Es gab einen Fehler beim Speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
-			}
-/*
+
 		}else {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
 				try {
 					Note tempNote = Notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
-					noteList.getItems().set(noteList.getItems().indexOf(currentNote), tempNote);
-					currentNote = tempNote;
-					currentNoteId = -3;
-					currentNoteTitle = tempNote.getTitle();
-					currentNoteText = tempNote.getText();
+					if(tempNote != null) {
+						noteList.getItems().set(noteList.getItems().indexOf(currentNote), tempNote);
+						currentNote = tempNote;
+						currentNoteId = -3;
+						currentNoteTitle = tempNote.getTitle();
+						currentNoteText = tempNote.getText();
+					}
 				} catch (Exception e) {
 					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der Notiz!", (Stage) noteList.getScene().getWindow(), e);
- */
-		
-		} else {
-			try {
-				Note updatedNote = Notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
-				if (updatedNote != null) {
-					for (int i = 0; i < noteList.getItems().size(); i++) {
-						if (noteList.getItems().get(i).getID() == currentNoteId) {
-							noteList.getItems().remove(i);
-							noteList.getItems().add(updatedNote);
-							break;
-						}
-					}
-					selectedNoteText.setText("");
-					selectedNoteTitle.setText("");
-					currentNoteId = -1;
 				}
-			} catch(JSONException | IOException e) {
-				ErrorWindow.newErrorWindow("Es gab einen Fehler beim Verändern der Notiz!", (Stage) noteList.getScene().getWindow(), e);
-			}
+				}
+		}
 		}
 		noteList.refresh();
+				
 	}
 	@FXML
 	private void selectNoteAction() {
-		/*if((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
+		if((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
 			Note tempNote = noteList.getSelectionModel().getSelectedItem();
-			currentNote = tempNote;
-			currentNoteId = tempNote.getID();
-			selectedNoteTitle.setText(tempNote.getTitle());
-			selectedNoteText.setText(tempNote.getText());
-			currentNoteTitle = tempNote.getTitle();
-			currentNoteText = tempNote.getText();
+			if (tempNote != null){
+				currentNote = tempNote;
+				currentNoteId = tempNote.getID();
+				selectedNoteTitle.setText(tempNote.getTitle());
+				selectedNoteText.setText(tempNote.getText());
+				currentNoteTitle = tempNote.getTitle();
+				currentNoteText = tempNote.getText();
+			}
 		}else {
 			loadConfirmationPopup();
 		}
 	}
-*/		Note selectedNote = noteList.getSelectionModel().getSelectedItem();
-			if (selectedNote != null){
-				currentNoteId = selectedNote.getID();
-				selectedNoteText.setText(selectedNote.getText());
-				selectedNoteTitle.setText(selectedNote.getTitle());
-			}
-	}
+		
 	@FXML
 	private void deleteNoteAction() {
 		if(currentNoteId == -1) {
-			selectedNoteTitle.setText("Unbenannte Notiz");
-			selectedNoteText.setText("");
-			currentNoteTitle = "Unbenannte Notiz";
-			currentNoteText = "";
+			selectedNoteTitle.setText("Bitte Titel eingeben");
+			selectedNoteText.setText("Bitte Text eingeben");
+			currentNoteTitle = "Bitte Titel eingeben";
+			currentNoteText = "Bitte Text eingeben";
 			currentNoteId = -1;
 		}else if(currentNoteId == -3 || currentNoteId > -1) {
 			Notes.deleteNote(currentNote.getID());
-			selectedNoteTitle.setText("Unbenannte Notiz");
-			selectedNoteText.setText("");
-			currentNoteTitle = "Unbenannte Notiz";
-			currentNoteText = "";
+			noteList.getItems().remove(noteList.getItems().indexOf(currentNote));
+			selectedNoteTitle.setText("Bitte Titel eingeben");
+			selectedNoteText.setText("Bitte Text eingeben");
+			currentNoteTitle = "Bitte Titel eingeben";
+			currentNoteText = "Bitte Text eingeben";
 			currentNoteId = -1;
 		}
+		noteList.refresh();
 	}
 	private void loadConfirmationPopup() {
 		try {
