@@ -19,7 +19,7 @@ public class Friends {
 
 	public static FriendAddState add(int id) {
 		try {
-			String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
+			String[][] parameter = { { "id", Integer.toString(id) } };
 			HttpWebRequest.sendPostRequest("friend/add?token=" + application.api.User.getLoginToken(), parameter);
 			return FriendAddState.Success;
 		}
