@@ -62,7 +62,9 @@ public class Friends {
 			friends = FXCollections.observableArrayList();
 			for (int i = 0; i < friendAmount; i++) {
 				JSONObject curFriend = friendArr.getJSONObject(i);
-				friends.add(new application.model.User(curFriend.getString("name"), curFriend.getInt("id")));
+				if (curFriend.has("name")) {
+					friends.add(new application.model.User(curFriend.getString("name"), curFriend.getInt("id")));
+				}
 			}
 		}
 		return friends;

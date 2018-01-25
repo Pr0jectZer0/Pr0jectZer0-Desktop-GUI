@@ -18,7 +18,7 @@ public class FriendsTest {
 	
 	@Before
 	public void setUp() {
-		User.login("peter@peter.com", "Peter123");
+		User.login(DummyData.userEmail, DummyData.userPW);
 	}
 	
 	@Test
