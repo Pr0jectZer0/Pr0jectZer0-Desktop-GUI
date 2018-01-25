@@ -27,4 +27,12 @@ public class Note {
 	public int getID() {
 		return id;
 	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public void setText(String text) {
+		this.text = text;
+	}
 }

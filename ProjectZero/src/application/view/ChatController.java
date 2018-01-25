@@ -104,6 +104,7 @@ public class ChatController
 				if (tfschreiben.getText() != null && !tfschreiben.getText().equals(""))
 				{
 					String message = tfschreiben.getText();
+					tfschreiben.setText("");
 					Chat.sendMessage(chatroomID, message);
 				}
 			}
@@ -118,6 +119,7 @@ public class ChatController
 					if (tfschreiben.getText() != null && !tfschreiben.getText().isEmpty())
 					{
 						String message = tfschreiben.getText();
+						tfschreiben.setText("");
 						Chat.sendMessage(chatroomID, message);
 					}
 				}

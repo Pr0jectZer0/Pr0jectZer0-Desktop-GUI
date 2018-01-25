@@ -28,7 +28,7 @@
                       <TableColumn fx:id="noteIdCol" minWidth="0.0" prefWidth="0.0" text="noteId" />
                     </columns>
                   </TableView>
-                  <JFXButton fx:id="btnSelectNote" onAction="#selectNoteAction" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 0.0 10.0 10.0;" text="Notiz auswählen" textFill="#c5c3c3" VBox.vgrow="NEVER">
+                  <JFXButton onAction="#deleteNoteAction" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 0.0 0.0 10.0 10.0;" text="Notiz löschen" textFill="#c5c3c3" VBox.vgrow="NEVER">
                      <font>
                         <Font size="18.0" />
                      </font>
