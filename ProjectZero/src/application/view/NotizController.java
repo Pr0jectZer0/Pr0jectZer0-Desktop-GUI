@@ -47,8 +47,6 @@ public class NotizController {
 	@FXML
 	JFXButton btnSaveNote;
 	
-	Notes notes = new Notes();
-	
 	//-3 = Notiz offen und gespeichert, -2 = noch keine Notiz geöffnet, -1 = neue Notiz offen NICHT gespeichert, rest = ID der Notiz (NICHT gespeichert)
 	int currentNoteId = -2;
 	String currentNoteTitle;
@@ -64,7 +62,7 @@ public class NotizController {
 	
 	private void initNoteList() {
 		try {
-			noteList.setItems(notes.getNotesFromUser());
+			noteList.setItems(Notes.getNotesFromUser());
 		} catch (Exception e) {
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Notizen!", (Stage) noteList.getScene().getWindow(), e);
 		}
@@ -91,7 +89,7 @@ public class NotizController {
 		}else if(currentNoteId == -1) {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
 				try {
-					Note tempNote = notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
+					Note tempNote = Notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
 					currentNoteId = -3;
 					currentNoteTitle = tempNote.getTitle();
 					currentNoteText = tempNote.getText();
@@ -103,7 +101,7 @@ public class NotizController {
 		}else {
 			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
 				try {
-					Note tempNote = notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
+					Note tempNote = Notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
 					noteList.getItems().add(tempNote);
 					currentNoteId = -3;
 					currentNoteTitle = tempNote.getTitle();
