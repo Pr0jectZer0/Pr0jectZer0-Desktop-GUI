@@ -15,7 +15,7 @@ public class Lableid extends Label
 	public Lableid()
 	{
 		istest = true;
-		setText("Neu hinzufÃ¼gen");
+		setText("Neu hinzufügen");
 		setStyle("-fx-text-fill: #0db518");
 	}
 
@@ -26,7 +26,7 @@ public class Lableid extends Label
 
 	public void setGroupid(int groupid)
 	{
-		groupid = groupid;
+		this.groupid = groupid;
 	}
 	public boolean istest()
 	{
