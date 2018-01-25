@@ -13,10 +13,54 @@ public final class User {
 	}
 
 	private static String loginToken;
+	private static int userID = -1;
+	private static String userName = null,
+							userEmail = null;
 
 	public static String getLoginToken() {
 		return loginToken;
 	}
+	
+	public static int getUserID() throws JSONException, IOException {
+		if (userID == -1) {
+			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user")).getJSONObject("user");
+			int id = Response.getInt("id");
+			String name = Response.getString("name");
+			String email = Response.getString("email");
+			userID = id;
+			userName = name;
+			userEmail = email;
+		}
+		return userID;
+	}
+	
+	public static String getUserName() throws JSONException, IOException {
+		if (userName == null) {
+			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user")).getJSONObject("user");
+			int id = Response.getInt("id");
+			String name = Response.getString("name");
+			String email = Response.getString("email");
+			userID = id;
+			userName = name;
+			userEmail = email;
+		}
+		return userName;
+	}
+
+	
+	public static String getUserEmail() throws JSONException, IOException {
+		if (userEmail == null) {
+			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user")).getJSONObject("user");
+			int id = Response.getInt("id");
+			String name = Response.getString("name");
+			String email = Response.getString("email");
+			userID = id;
+			userName = name;
+			userEmail = email;
+		}
+		return userEmail;
+	}
+
 
 	public static LoginState login(String eMail, String password) {
 		if (eMail == null || eMail.isEmpty() || password == null || password.isEmpty()) {
