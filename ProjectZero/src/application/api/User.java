@@ -46,16 +46,15 @@ public final class User {
 	}
 
 	public static RegisterState register(String username, String eMail, String password) {
-		if (username == null || username.isEmpty() || eMail == null || eMail.isEmpty() || password == null || password.isEmpty())
+		if (username == null || username.isEmpty() || eMail == null || eMail.isEmpty() || password == null || password.isEmpty() || password.length() < 6)
 			return RegisterState.WrongData;
 		String[][] parameter = { { "email", eMail }, { "name", username }, { "password", password } };
 		try {
 			String response = HttpWebRequest.sendPostRequest("user/", parameter);
-			if (response.contains("\"id\": ")) {
-				System.out.println(response);
+			if (response.contains(username) && response.contains(eMail)) {
 				return RegisterState.Success;
 			}
-			else { // Redirecting ¯\_(ツ)_/¯
+			else { // Redirecting without Errordescription
 				return RegisterState.WrongData;
 			}
 		} catch (Exception e) {
