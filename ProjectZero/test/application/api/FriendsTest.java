@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import application.api.Friends.FriendAddState;
-import application.api.Friends.FriendDeleteState;
 
 public class FriendsTest {
 	
@@ -32,18 +31,6 @@ public class FriendsTest {
 	public void testAddAlreadyFriends() {
 		Friends.add(friendID);
 		assertEquals(Friends.add(friendID), FriendAddState.AlreadyFriends);
-	}
-	
-	@Test
-	public void testDeleteValid() {
-		Friends.add(friendID);
-		assertEquals(Friends.delete(friendID), FriendDeleteState.Success);
-	}
-	
-	@Test
-	public void testDeleteNotFriends() {
-		Friends.delete(friendID);
-		assertEquals(Friends.delete(friendID), FriendDeleteState.NotFriends);
 	}
 	
 	@Test
