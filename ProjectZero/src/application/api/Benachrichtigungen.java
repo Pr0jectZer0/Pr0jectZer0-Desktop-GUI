@@ -35,5 +35,4 @@ public class Benachrichtigungen {
 		}
 		return benachrichtigungen;
 	}
-
 }

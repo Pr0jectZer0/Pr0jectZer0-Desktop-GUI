@@ -1,8 +1,6 @@
 package application.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,18 +14,21 @@ import javafx.collections.ObservableList;
 public class Users {
 	
 	private static ObservableList<User> noFriends = null; 
+	private static ObservableList<User> users = null;
 	
 	private Users() {}
 	
-	public static List<application.model.User> getUsers() throws JSONException, IOException {
-		List<application.model.User> userList = new ArrayList<application.model.User>();
-		JSONObject userObj = new JSONObject(HttpWebRequest.sendGetRequest("users"));
-		JSONArray userArr = userObj.getJSONArray("users");
-		for (int i = 0; i < userArr.length(); i++) {
-			JSONObject curUser = userArr.getJSONObject(i);
-			userList.add(new User(curUser.getString("name"), curUser.getInt("id")));
+	public static ObservableList<application.model.User> getUsers() throws JSONException, IOException {
+		if (users == null) {
+			users = FXCollections.observableArrayList();
+			JSONObject userObj = new JSONObject(HttpWebRequest.sendGetRequest("users?token=" + application.api.User.getLoginToken()));
+			JSONArray userArr = userObj.getJSONArray("users");
+			for (int i = 0; i < userArr.length(); i++) {
+				JSONObject curUser = userArr.getJSONObject(i);
+				users.add(new User(curUser.getString("name"), curUser.getInt("id")));
+			}
 		}
-		return userList;
+		return users;
 	}
 	
 	public static ObservableList<User> getNoFriends() throws JSONException, IOException {
@@ -48,5 +49,18 @@ public class Users {
 			}
 		}
 		return noFriends;
+	}
+	
+	public static User getUserByID(int id) {
+		try {
+			for (User user : getUsers()) {
+				if (user.getId() == id) {
+					return user;
+				}
+			}
+		} catch (JSONException |IOException e) {
+			return null;
+		}
+		return null;
 	}
 }

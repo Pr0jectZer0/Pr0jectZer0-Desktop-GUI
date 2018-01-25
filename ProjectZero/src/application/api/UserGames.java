@@ -18,32 +18,33 @@ public class UserGames {
 	private UserGames() {}
 	
 	/**
-	 * not finished
+	 * 
 	 * @param id
 	 * @return
 	 * @throws IOException
 	 */
 	public static boolean add(int id) throws IOException {
-		String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
+		if (id < 0)
+			return false;
+		String[][] parameter = {{ "id", Integer.toString(id) }};
 		String response = HttpWebRequest.sendPostRequest("user/game/add?token=" + User.getLoginToken(), parameter);
-		return response.contains("success");
-		//TODO: check for sucess or failure
+		return response.contains("Spiel wurde User Liste hinzugef\\u00fcgt.");
 	}
 	
 	/**
-	 * not finished
+	 * 
 	 * @param id
 	 * @return
 	 * @throws IOException 
 	 */
 	public static boolean delete(int id) throws IOException {
-		String[][] parameter = { { "", "" }, { "id", Integer.toString(id) } };
-		String response = HttpWebRequest.sendPostRequest("user/game/remove?token=" + User.getLoginToken(), parameter);
-		return response.contains("success");
-		//TODO: check for sucess or failure
+		if (id < 0)
+			return false;
+		String response = HttpWebRequest.sendDeleteRequest("user/game/remove/" + id + "?token=" + User.getLoginToken());
+		return response.contains("Spiel wurde aus Liste entfernt.");
 	}
 	
-	public static ObservableList<Game> getGames(String token) throws JSONException, IOException {
+	public static ObservableList<Game> getGames() throws JSONException, IOException {
 		if (games == null) {
 			games = FXCollections.observableArrayList();
 			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/game/list?token=" + User.getLoginToken()));
@@ -54,6 +55,5 @@ public class UserGames {
 			}
 		}
 		return games;
-		//TODO: not tested
 	}
 }

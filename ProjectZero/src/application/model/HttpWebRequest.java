@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -100,10 +101,36 @@ public class HttpWebRequest {
 			response.append(inputLine);
 		}
 		in.close();
+		httpCon.disconnect();
 		return response.toString();
 	}
 	
 	public static String sendPutRequest(String urlPath, String[][] parameter) throws IOException {
+		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
+		for (int i = 1; i < parameter.length; i++) {
+			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
+		}
+		URL urlLink = new URL(url + urlPath + "&" + urlParameters);
+		HttpURLConnection httpCon = (HttpURLConnection)urlLink.openConnection();
+		httpCon.setDoOutput(true);
+		httpCon.setRequestMethod("PUT");
+		httpCon.connect();
+		OutputStreamWriter out = new OutputStreamWriter(httpCon.getOutputStream());
+		out.write(urlParameters);
+		out.flush();
+		BufferedReader in = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		out.close();
+		httpCon.disconnect();
+		return response.toString();
+		
+		
+		/*
 		URL obj = new URL(url + urlPath);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 		con.setRequestMethod("PUT");
@@ -125,6 +152,6 @@ public class HttpWebRequest {
 			response.append(inputLine);
 		}
 		in.close();
-		return response.toString();
+		return response.toString();*/
 	}
 }

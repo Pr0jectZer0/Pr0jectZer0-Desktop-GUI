@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 public class Notes {
 
 	private static ObservableList<Note> userNotes = null;
-	public ObservableList<Note> getNotesFromUser() throws JSONException, IOException {
+	public static ObservableList<Note> getNotesFromUser() throws JSONException, IOException {
 		if (userNotes == null) {
 			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("notes?token=" + application.api.User.getLoginToken()));
 			JSONArray noteArr = response.getJSONArray("notes");
@@ -31,7 +31,7 @@ public class Notes {
 		return userNotes;
 	}
 	
-	public Note createNote(String title, String text) throws JSONException, IOException {
+	public static Note createNote(String title, String text) throws JSONException, IOException {
 		String[][] parameter = {{"titel", title}, {"text", text}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note?token=" + application.api.User.getLoginToken(), parameter));
 		int userID = response.getInt("id_user");
@@ -41,8 +41,10 @@ public class Notes {
 		return new Note(titleGot, textGot, userID, id);
 	}
 	
-	public Note getNoteByID(int id) throws JSONException, IOException {
+	public static Note getNoteByID(int id) throws JSONException, IOException {
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("note/" + id + "?token=" + application.api.User.getLoginToken()));
+		if (response.has("message"))
+			throw new JSONException("Notiz-ID falsch!");
 		JSONObject note = response.getJSONObject("note");
 		int idgot = note.getInt("id");
 		int userID = note.getInt("id_user");
@@ -51,20 +53,22 @@ public class Notes {
 		return new Note(title, text, userID, idgot);
 	}
 	
-	public Note changeNote(String title, String text, int id) throws JSONException, IOException {
+	public static Note changeNote(String title, String text, int id) throws JSONException, IOException {
 		String[][] parameter = {{"titel", title}, {"text", text}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPutRequest("note/" + id + "?token=" + application.api.User.getLoginToken(), parameter));
-		System.out.println(response);
-		int userID = response.getInt("id_user");
-		int idgot = response.getInt("id");
-		String titleGot = response.getString("titel");
-		String textGot = response.getString("text");
+		if (response.has("message"))
+			throw new JSONException("Notiz-ID falsch!");
+		JSONObject note = response.getJSONObject("note");
+		int userID = note.getInt("id_user");
+		int idgot = note.getInt("id");
+		String titleGot = note.getString("titel");
+		String textGot = note.getString("text");
 		return new Note(titleGot, textGot, userID, idgot);
 	}
 	
-	public boolean deleteNote(int id) {
+	public static boolean deleteNote(int id) {
 		try {
-			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("note"));
+			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("note/" + id + "?token=" + application.api.User.getLoginToken()));
 			String message = response.getString("message");
 			return message.equals("Notiz wurde gelöscht.");
 		} catch (JSONException e) {
@@ -72,5 +76,22 @@ public class Notes {
 		} catch (IOException e) {
 			return false;
 		}
+	}
+	
+	public static boolean addUserToNote(int noteID, int userID) throws JSONException, IOException {
+		if (userID < 0 || noteID < 0) {
+			return false;
+		}
+		String[][] parameter = {{ "id", Integer.toString(userID) }};
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note/" + noteID + "/add_user?token=" + User.getLoginToken(), parameter));
+		return response.getString("message").equals("Notiz anfrage wurde an User gesendet.");
+	}
+	
+	public static boolean deleteUserFromNote(int noteID, int userID) throws JSONException, IOException {
+		if (userID < 0 || noteID < 0) {
+			return false;
+		}
+		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note/" + noteID + "/remove_user?token=" + User.getLoginToken() + "&id=" + userID));
+		return response.getString("message").equals("User wurde aus Notiz entfernt.");
 	}
 }

@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Benachrichtigungen {
+	
 	private final IntegerProperty id;
 	private final StringProperty userName;
 	private final IntegerProperty userId;
