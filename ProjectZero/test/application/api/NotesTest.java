@@ -19,10 +19,10 @@ public class NotesTest {
 	
 	private final String title = "JUNIT_TEST",
 							text = "JUNIT_TEST";
-	private final int userID = 14;
+	private final int userID = DummyData.user2ID;
 	@Before
 	public void setUp() {
-		User.login("peter@peter.com", "Peter123");
+		User.login(DummyData.userEmail, DummyData.userPW);
 	}
 	
 	@Test
@@ -37,8 +37,9 @@ public class NotesTest {
 	@Test
 	public void getNotesFromID() {
 		try {
-			int id = Notes.getNotesFromUser().get(0).getID();
+			int id = Notes.createNote(title, text).getID();
 			assertNotNull(Notes.getNoteByID(id));
+			Notes.deleteNote(id);
 		} catch (Exception e) {
 			fail(e.getMessage());
 		}
@@ -58,7 +59,6 @@ public class NotesTest {
 	@Test
 	public void changeNote() {
 		try {
-			
 			int id = Notes.createNote(title, text).getID();
 			Note n = Notes.changeNote("JUNIT_TEST_CHANGED", "JUNIT_TEST_CHANGED", id);
 			Notes.deleteNote(id);

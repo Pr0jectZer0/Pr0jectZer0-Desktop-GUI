@@ -31,6 +31,7 @@ public class UsersTest {
 		try {
 			assertNotNull(Users.getNoFriends());
 		} catch (JSONException | IOException e) {
+			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
