@@ -12,6 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Notes {
+	
+	private Notes() {} 
 
 	private static ObservableList<Note> userNotes = null;
 	public static ObservableList<Note> getNotesFromUser() throws JSONException, IOException {
@@ -32,6 +34,9 @@ public class Notes {
 	}
 	
 	public static Note createNote(String title, String text) throws JSONException, IOException {
+		if (title == null || text == null || title.isEmpty() || text.isEmpty()) {
+			return null;
+		}
 		String[][] parameter = {{"titel", title}, {"text", text}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note?token=" + application.api.User.getLoginToken(), parameter));
 		int userID = response.getInt("id_user");
@@ -42,6 +47,9 @@ public class Notes {
 	}
 	
 	public static Note getNoteByID(int id) throws JSONException, IOException {
+		if (id < 0) {
+			return null;
+		}
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("note/" + id + "?token=" + application.api.User.getLoginToken()));
 		if (response.has("message"))
 			throw new JSONException("Notiz-ID falsch!");
@@ -54,6 +62,9 @@ public class Notes {
 	}
 	
 	public static Note changeNote(String title, String text, int id) throws JSONException, IOException {
+		if (title == null || text == null || id < 0 || title.isEmpty() || text.isEmpty()) {
+			return null;
+		}
 		String[][] parameter = {{"titel", title}, {"text", text}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPutRequest("note/" + id + "?token=" + application.api.User.getLoginToken(), parameter));
 		if (response.has("message"))
@@ -67,6 +78,9 @@ public class Notes {
 	}
 	
 	public static boolean deleteNote(int id) {
+		if (id < 0) {
+			return false;
+		}
 		try {
 			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("note/" + id + "?token=" + application.api.User.getLoginToken()));
 			String message = response.getString("message");

@@ -2,6 +2,8 @@ package application.view;
 
 import java.io.IOException;
 
+import org.json.JSONException;
+
 import com.jfoenix.controls.JFXButton;
 
 import application.api.Benachrichtigungen;
@@ -27,25 +29,21 @@ public class BenachrichtigungenController {
 	private void initBenachrichtigungen() {
 		try {
 			ObservableList<application.model.Benachrichtigungen> benachrichtigungen = Benachrichtigungen.getBenachrichtigungen();
-			if(benachrichtigungen != null)
-			{
+			if (benachrichtigungen != null) {
 				for (int i = 0; i < benachrichtigungen.size(); i++) {
-
 					Label label = new Label();
 					label.setText("Freundschaftsanfrage von " + benachrichtigungen.get(i).getUserName() + "(Id: "
 							+ benachrichtigungen.get(i).getUserId() + "):");
-
 					JFXButton accept = new JFXButton("Akzeptieren");
 					JFXButton decline = new JFXButton("Ablehnen");
 					accept.getStyleClass().add("login-button");
 					accept.setStyle(accept.getStyle() + "-fx-text-fill: #B2B2B2;");
 					decline.getStyleClass().add("login-button");
 					decline.setStyle(decline.getStyle() + "-fx-text-fill: #B2B2B2;");
-
 					DropShadow shadow = new DropShadow();
 					shadow.setBlurType(BlurType.TWO_PASS_BOX);
 					shadow.setColor(Color.RED);
-					
+			
 					HBox hBox = new HBox();
 					hBox.setEffect(shadow);
 					hBox.setSpacing(20);
@@ -61,11 +59,8 @@ public class BenachrichtigungenController {
 					benachrichtigungenBox.getChildren().add(vBox);
 				}
 			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		} catch (IOException | JSONException e) {
+       e.printStackTrace();
+    }
 	}
 }

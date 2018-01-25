@@ -1,7 +1,6 @@
 package application.view;
 
 import java.io.IOException;
-
 import org.json.JSONException;
 
 import com.jfoenix.controls.JFXButton;
@@ -16,7 +15,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class NotizController {
@@ -47,15 +45,11 @@ public class NotizController {
 	@FXML
 	JFXButton btnSaveNote;
 	
-	Notes notes = new Notes();
-	
-	//-3 = Notiz offen und gespeichert, -2 = noch keine Notiz geöffnet, -1 = neue Notiz offen NICHT gespeichert, rest = ID der Notiz (NICHT gespeichert)
-	int currentNoteId = -2;
-	String currentNoteTitle;
-	String currentNoteText;
+	//-1 = neue Notiz, sonst ID der Notiz
+	private int currentNoteId = -1;
 	
 	/**
-	 * Initialisierungen
+	 * Initialisierung
 	 */
 	@FXML
 	private void initialize() {
@@ -64,9 +58,9 @@ public class NotizController {
 	
 	private void initNoteList() {
 		try {
-			noteList.setItems(notes.getNotesFromUser());
+			noteList.setItems(Notes.getNotesFromUser());
 		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Notizen!", (Stage) noteList.getScene().getWindow(), e);
+			ErrorWindow.newErrorWindow("Es gab einen Fehler beim Hinzufügen aller Notizen!", (Stage) noteList.getScene().getWindow(), e);
 		}
 		noteIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
 		noteNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
@@ -74,59 +68,51 @@ public class NotizController {
 	
 	@FXML
 	private void newNoteAction() {
-		if ((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
-			currentNoteId = -1;
-			selectedNoteTitle.setText("Unbenannte Notiz");
-			selectedNoteText.setText("");
-			currentNoteTitle = "Unbenannte Notiz";
-			currentNoteText = "";
-		}else {
-			System.out.println("Test!");
-		}
+		selectedNoteTitle.setText("Bitte Titel eingeben");
+		selectedNoteText.setText("Bitte Text eingeben");
+		currentNoteId = -1;
 	}
 	@FXML
 	private void saveNoteAction() {
-		if(currentNoteId < -1) {
-			
-		}else if(currentNoteId == -1) {
-			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
-				try {
-					Note tempNote = notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
-					currentNoteId = -3;
-					currentNoteTitle = tempNote.getTitle();
-					currentNoteText = tempNote.getText();
-					noteList.getItems().add(tempNote);
-				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
+		if (currentNoteId == -1) {
+			try {
+				Note newNote = Notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
+				if (newNote != null) {
+					noteList.getItems().add(newNote);
 				}
+			} catch (IOException | JSONException e) {
+				ErrorWindow.newErrorWindow("Es gab einen Fehler beim Speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
 			}
-		}else {
-			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
-				try {
-					Note tempNote = notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
-					noteList.getItems().add(tempNote);
-					currentNoteId = -3;
-					currentNoteTitle = tempNote.getTitle();
-					currentNoteText = tempNote.getText();
-				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der Notiz!", (Stage) noteList.getScene().getWindow(), e);
+		
+		} else {
+			try {
+				Note updatedNote = Notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
+				if (updatedNote != null) {
+					for (int i = 0; i < noteList.getItems().size(); i++) {
+						if (noteList.getItems().get(i).getID() == currentNoteId) {
+							noteList.getItems().remove(i);
+							noteList.getItems().add(updatedNote);
+							break;
+						}
+					}
+					selectedNoteText.setText("");
+					selectedNoteTitle.setText("");
+					currentNoteId = -1;
 				}
+			} catch(JSONException | IOException e) {
+				ErrorWindow.newErrorWindow("Es gab einen Fehler beim Verändern der Notiz!", (Stage) noteList.getScene().getWindow(), e);
 			}
 		}
-		//initNoteList();
 		noteList.refresh();
 	}
 	@FXML
 	private void selectNoteAction() {
-		if((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
-			Note tempNote = noteList.getSelectionModel().getSelectedItem();
-			currentNoteId = tempNote.getID();
-			selectedNoteTitle.setText(tempNote.getTitle());
-			selectedNoteText.setText(tempNote.getText());
-			currentNoteTitle = tempNote.getTitle();
-			currentNoteText = tempNote.getText();
-		}else {
-			
+		Note selectedNote = noteList.getSelectionModel().getSelectedItem();
+		if (selectedNote != null)
+		{
+			currentNoteId = selectedNote.getID();
+			selectedNoteText.setText(selectedNote.getText());
+			selectedNoteTitle.setText(selectedNote.getTitle());
 		}
 	}
 }
