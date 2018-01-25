@@ -21,16 +21,16 @@
                      <children>
                         <VBox prefHeight="720.0" prefWidth="1438.0">
                            <children>
-                              <JFXTextArea prefHeight="570.0" prefWidth="610.0" VBox.vgrow="ALWAYS" />
+                              <JFXTextArea fx:id="taanzeige" editable="false" prefHeight="570.0" prefWidth="610.0" VBox.vgrow="ALWAYS" />
                               <HBox prefHeight="151.0" prefWidth="1002.0" VBox.vgrow="NEVER">
                                  <children>
                                     <VBox prefHeight="171.0" prefWidth="795.0" HBox.hgrow="ALWAYS">
                                        <children>
                                           <Region prefHeight="35.0" prefWidth="795.0" />
-                                          <JFXTextArea prefHeight="159.0" prefWidth="780.0" />
+                                          <JFXTextArea fx:id="taeingabe" prefHeight="159.0" prefWidth="780.0" />
                                        </children>
                                     </VBox>
-                                    <JFXButton prefHeight="723.0" prefWidth="359.0" style="-fx-background-color: #9C2B27;" text="Senden" HBox.hgrow="NEVER" />
+                                    <JFXButton fx:id="btnsenden" prefHeight="723.0" prefWidth="359.0" style="-fx-background-color: #9C2B27;" text="Senden" HBox.hgrow="NEVER" />
                                  </children>
                               </HBox>
                            </children>
