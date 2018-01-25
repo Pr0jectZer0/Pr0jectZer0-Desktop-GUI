@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 public class Friends {
 
 	private static ObservableList<User> friends = null;
+	private static ObservableList<application.model.FriendRequest> friendRequests = null;
 	
 	private Friends() {}
 
@@ -61,12 +62,40 @@ public class Friends {
 			int friendAmount = friendArr.length();
 			friends = FXCollections.observableArrayList();
 			for (int i = 0; i < friendAmount; i++) {
-				JSONObject curFriend = friendArr.getJSONObject(i);
+				JSONObject curFriend = friendArr.getJSONObject(i).getJSONObject("friend_user");
 				if (curFriend.has("name")) {
 					friends.add(new application.model.User(curFriend.getString("name"), curFriend.getInt("id")));
 				}
 			}
 		}
 		return friends;
+	}
+	
+	public static boolean acceptRequest(int requestID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friend/" + requestID + "/accept?token=" + application.api.User.getLoginToken()));
+		return response.getString("message").equals("Freundschaftsanfrage wurde angenommen.");
+	}
+	
+	public static boolean declineRequest(int requestID) throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friend/" + requestID + "/decline?token=" + application.api.User.getLoginToken()));
+		System.out.println(response);
+		return response.getString("message").equals("Freundschaftsanfrage wurde abgelehnt.");
+	}
+	
+
+
+	public static ObservableList<application.model.FriendRequest> getFriendRequests() throws JSONException, IOException {
+		if (friendRequests == null) {
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("friend/requests?token=" + application.api.User.getLoginToken()));
+			if (response.has("requests") == true) {
+				JSONArray requests = response.getJSONArray("requests");
+				friendRequests = FXCollections.observableArrayList();
+				for (int i = 0; i < requests.length(); i++) {
+					JSONObject curRequest = requests.getJSONObject(i);
+					friendRequests.add(new application.model.FriendRequest(curRequest.getInt("id"), curRequest.getJSONObject("user").getString("name"), curRequest.getJSONObject("user").getInt("id")));
+				}
+			}
+		}
+		return friendRequests;
 	}
 }
