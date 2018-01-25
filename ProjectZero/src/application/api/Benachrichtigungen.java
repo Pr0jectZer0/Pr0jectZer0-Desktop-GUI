@@ -17,15 +17,20 @@ public class Benachrichtigungen {
 	private Benachrichtigungen() {
 	}
 
-	public static ObservableList<application.model.Benachrichtigungen> getBenachrichtigungen() throws JSONException, IOException {
+	public static ObservableList<application.model.Benachrichtigungen> getBenachrichtigungen()
+			throws JSONException, IOException {
 		if (benachrichtigungen == null) {
 			JSONObject response = new JSONObject(
 					HttpWebRequest.sendGetRequest("friend/requests?token=" + application.api.User.getLoginToken()));
-			JSONArray requests = response.getJSONArray("requests");
-			benachrichtigungen = FXCollections.observableArrayList();
-			for (int i = 0; i < requests.length(); i++) {
-				JSONObject curRequest = requests.getJSONObject(i);
-				benachrichtigungen.add(new application.model.Benachrichtigungen(curRequest.getInt("id"), curRequest.getJSONObject("user").getString("name"), curRequest.getJSONObject("user").getInt("id")));
+			if (response.has("requests") == true) {
+				JSONArray requests = response.getJSONArray("requests");
+				benachrichtigungen = FXCollections.observableArrayList();
+				for (int i = 0; i < requests.length(); i++) {
+					JSONObject curRequest = requests.getJSONObject(i);
+					benachrichtigungen.add(new application.model.Benachrichtigungen(curRequest.getInt("id"),
+							curRequest.getJSONObject("user").getString("name"),
+							curRequest.getJSONObject("user").getInt("id")));
+				}
 			}
 		}
 		return benachrichtigungen;
