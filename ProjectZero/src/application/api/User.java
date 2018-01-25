@@ -21,7 +21,7 @@ public final class User {
 	public static LoginState login(String eMail, String password) {
 		if (eMail == null || eMail.isEmpty() || password == null || password.isEmpty()) {
 			loginToken = null;
-			return LoginState.ServerError;
+			return LoginState.WrongData;
 		}
 		try {
 			String[][] parameter = { { "email", eMail }, { "password", password } };
