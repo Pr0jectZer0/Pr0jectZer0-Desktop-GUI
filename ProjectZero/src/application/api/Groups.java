@@ -160,7 +160,7 @@ public class Groups
 	}
 	
 	public static boolean acceptGroupRequest(int groupID) throws JSONException, IOException {
-		JSONObject reponse = new JSONObject(HttpWebRequest.sendGetRequest("user/group/" + groupID + "/decline?token=" + application.api.User.getLoginToken()));
+		JSONObject reponse = new JSONObject(HttpWebRequest.sendGetRequest("user/group/" + groupID + "/accept?token=" + application.api.User.getLoginToken()));
 		return reponse.has("message");
 	}
 	
