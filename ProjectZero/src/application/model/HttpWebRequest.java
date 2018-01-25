@@ -106,9 +106,9 @@ public class HttpWebRequest {
 	}
 	
 	public static String sendPutRequest(String urlPath, String[][] parameter) throws IOException {
-		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
+		String urlParameters = parameter[0][0] + "=" + parameter[0][1].replace("\n", "%0A");
 		for (int i = 1; i < parameter.length; i++) {
-			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
+			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1].replaceAll("\n", "%0A");
 		}
 		URL urlLink = new URL(url + urlPath + "&" + urlParameters);
 		HttpURLConnection httpCon = (HttpURLConnection)urlLink.openConnection();
@@ -128,30 +128,5 @@ public class HttpWebRequest {
 		out.close();
 		httpCon.disconnect();
 		return response.toString();
-		
-		
-		/*
-		URL obj = new URL(url + urlPath);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-		con.setRequestMethod("PUT");
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		String urlParameters = parameter[0][0] + "=" + parameter[0][1];
-		for (int i = 1; i < parameter.length; i++) {
-			urlParameters += "&" + parameter[i][0] + "=" + parameter[i][1];
-		}
-		con.setDoOutput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(urlParameters);
-		wr.flush();
-		wr.close();
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-		return response.toString();*/
 	}
 }

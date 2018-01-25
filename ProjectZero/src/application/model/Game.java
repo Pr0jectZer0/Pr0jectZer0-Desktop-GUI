@@ -55,4 +55,9 @@ public class Game {
 	public IntegerProperty idProperty() {
 		return id;
 	}
+	
+	@Override
+	public String toString() {
+		return name.get();
+	}
 }
