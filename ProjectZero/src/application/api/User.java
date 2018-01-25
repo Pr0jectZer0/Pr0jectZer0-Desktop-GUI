@@ -23,7 +23,7 @@ public final class User {
 	
 	public static int getUserID() throws JSONException, IOException {
 		if (userID == -1) {
-			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user")).getJSONObject("user");
+			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user"+ "?token=" + loginToken)).getJSONObject("user");
 			int id = Response.getInt("id");
 			String name = Response.getString("name");
 			String email = Response.getString("email");
@@ -50,7 +50,7 @@ public final class User {
 	
 	public static String getUserEmail() throws JSONException, IOException {
 		if (userEmail == null) {
-			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user")).getJSONObject("user");
+			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user"+ "?token=" + loginToken)).getJSONObject("user");
 			int id = Response.getInt("id");
 			String name = Response.getString("name");
 			String email = Response.getString("email");

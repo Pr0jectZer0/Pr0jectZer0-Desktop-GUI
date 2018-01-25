@@ -1,5 +1,9 @@
 package application.view;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
@@ -29,6 +33,20 @@ public class MainLayoutController {
 	private void initialize() {
 		initFreundesliste();
 		System.out.println(User.getLoginToken());
+		try
+		{
+			System.out.println(User.getUserID());
+		}
+		catch (JSONException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void initFreundesliste() {
