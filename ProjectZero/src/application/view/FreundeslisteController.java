@@ -120,7 +120,7 @@ public class FreundeslisteController {
 		friendlist.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY) {
+				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY && friendlist.getSelectionModel().getSelectedItem() != null) {
 					try {
 						popupstage.setX(event.getScreenX() - 1);
 						popupstage.setY(event.getScreenY() - 1);
