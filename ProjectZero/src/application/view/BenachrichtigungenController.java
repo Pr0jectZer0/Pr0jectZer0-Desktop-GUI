@@ -10,6 +10,7 @@ import application.api.Friends;
 import application.api.Groups;
 import application.model.FriendRequest;
 import application.model.GroupRequest;
+import application.model.User;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -69,7 +70,8 @@ public class BenachrichtigungenController {
 						@Override
 						public void handle(MouseEvent event)
 						{
-							acceptFriendRequest(curFR.getId(), vBox);
+							User user = new User(curFR.getUserName(), curFR.getUserId());
+							acceptFriendRequest(curFR.getId(), user, vBox);
 						}
 					});
 					btnDecline.setOnMouseClicked(new EventHandler<MouseEvent>()
@@ -119,6 +121,11 @@ public class BenachrichtigungenController {
 						public void handle(MouseEvent event)
 						{
 							acceptGroupRequest(curGR.getGroup().getID(), vBox);
+							try {
+								Groups.getUserGroups().add(curGR.getGroup());
+							} catch (JSONException | IOException e) {
+								e.printStackTrace();
+							}
 						}
 					});
 					btnDecline.setOnMouseClicked(new EventHandler<MouseEvent>()
@@ -136,10 +143,11 @@ public class BenachrichtigungenController {
 		}
 	}
 	
-	private void acceptFriendRequest(int id, VBox vBox) {
+	private void acceptFriendRequest(int id, User friend, VBox vBox) {
 		try {
 			if(Friends.acceptRequest(id)) {
 				benachrichtigungenBox.getChildren().remove(vBox);
+				Friends.getFriends().add(friend);
 			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
