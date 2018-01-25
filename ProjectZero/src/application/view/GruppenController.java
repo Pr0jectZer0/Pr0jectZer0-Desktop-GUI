@@ -47,10 +47,12 @@ public class GruppenController
 	private JFXTextArea tabezeichnung;
 	@FXML
 	private JFXButton btnerstellen;
+	private static GruppenController gc;
 
 	@FXML
 	private void initialize()
 	{
+		gc = this;
 		updategroups();
 		gruppen.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
@@ -245,6 +247,10 @@ public class GruppenController
 		{
 			e.printStackTrace();
 		}
+	}
+	public static GruppenController getGruppenController()
+	{
+		return gc;
 	}
 
 }
