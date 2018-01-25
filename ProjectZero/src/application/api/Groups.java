@@ -102,7 +102,7 @@ public class Groups
 	 * @throws JSONException 
 	 */
 	public static ObservableList<Group> getUserGroups() throws JSONException, IOException {
-		if (userGroups == null) {
+			userGroups = null;
 			userGroups = FXCollections.observableArrayList();
 			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("user/groups?token=" + application.api.User.getLoginToken()));
 			JSONArray groupArr = response.getJSONArray("groups");
@@ -126,7 +126,7 @@ public class Groups
 					userList.add(user);
 				}
 				userGroups.add(new Group(name, description, id, userList, admin));
-			}
+			
 		}
 		return userGroups;
 	}
@@ -136,7 +136,7 @@ public class Groups
 			return false;
 		String[][] parameter = {{"id", userID + ""}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + groupID + "/add_user?token=" + application.api.User.getLoginToken(), parameter));
-		return response.getString("message").equals("User wurde in Gruppe hinzugefügt.");
+		return response.getString("message").equals("User wurde in Gruppe hinzugefï¿½gt.");
 	}
 	
 	public static boolean deleteUserFromGroup(int userID, int groupID) throws JSONException, IOException {
@@ -162,7 +162,7 @@ public class Groups
 			return false;
 		try {
 			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("group/" +id + "?token=" + application.api.User.getLoginToken()));
-			return response.getString("message").equals("Gruppe wurde gelöscht.");
+			return response.getString("message").equals("Gruppe wurde gelï¿½scht.");
 		} catch (JSONException e) {
 			return false;
 		} catch (IOException e) {
