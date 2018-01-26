@@ -20,10 +20,10 @@ public class GroupsTest {
 	private static String name = "JUNIT_TEST",
 			description = "JUNIT_TEST",
 			message = "JUNIT_TEST_NACHRICHT";
-	private static int userID = 14;
+	private static int userID = DummyData.user2ID;
 	@Before
 	public void setUp() {
-		User.login("peter@peter.com", "Peter123");
+		User.login(DummyData.userEmail, DummyData.userPW);
 	}
 	
 	@Test

@@ -17,7 +17,7 @@ public class UserTest {
 	
 	@Test
 	public void getLoginTokenLoggedIn() {
-		User.login("peter@peter.com", "Peter123");
+		User.login(DummyData.userEmail, DummyData.userPW);
 		assertNotNull(User.getLoginToken());
 	}
 	
@@ -43,7 +43,7 @@ public class UserTest {
 	
 	@Test
 	public void loginValid() {
-		assertEquals(User.login("peter@peter.com", "Peter123"), User.LoginState.Success);
+		assertEquals(User.login(DummyData.userEmail, DummyData.userPW), User.LoginState.Success);
 	}
 	@Test
 	public void registerEmpty() {

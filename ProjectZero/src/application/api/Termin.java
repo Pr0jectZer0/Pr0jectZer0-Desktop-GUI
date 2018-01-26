@@ -106,7 +106,7 @@ public class Termin {
 	}
 	
 	public static List<application.model.Termin> getSharedTermine() throws JSONException, IOException {
-		JSONArray dates = new JSONObject(HttpWebRequest.sendGetRequest("dates?token=" + User.getLoginToken())).getJSONArray("dates");
+		JSONArray dates = new JSONObject(HttpWebRequest.sendGetRequest("dates/shared?token=" + User.getLoginToken())).getJSONArray("dates");
 		List<application.model.Termin> terminList = new ArrayList<application.model.Termin>();
 		for (int i = 0; i < dates.length(); i++) {
 			JSONObject curTermin = dates.getJSONObject(i);
