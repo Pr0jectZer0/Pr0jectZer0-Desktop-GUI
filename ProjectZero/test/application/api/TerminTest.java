@@ -23,7 +23,7 @@ public class TerminTest {
 	
 	@Before
 	public void setUp() {
-		User.login("peter@peter.com", "Peter123");
+		User.login(DummyData.userEmail, DummyData.userPW);
 	}
 	
 	@Test
@@ -103,15 +103,13 @@ public class TerminTest {
 	
 	@Test
 	public void updateTermin() {
-		/*	Backend route not working
 		try {
 			int id = Termin.createTermin(title, description, startDate, endDate).getID();
-			assertEquals(Termin.updateTermin(id, title, description, startDate, endDate).getTitle(), title);
+			assertEquals(Termin.updateTermin(id, title + "update", description, startDate, endDate).getTitle(), title + "update");
 			Termin.deleteTermin(id);
 		} catch (JSONException | IOException e) {
 			fail(e.getMessage());
 		}
-		*/
 	}
 	
 	@Test

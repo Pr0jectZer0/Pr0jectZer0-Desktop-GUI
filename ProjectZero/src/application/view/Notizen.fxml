@@ -2,12 +2,11 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -34,11 +33,11 @@
                      </font>
                   </JFXButton>
                </children></VBox>
-            <VBox prefHeight="200.0" prefWidth="880.0" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="720.0" prefWidth="645.0" HBox.hgrow="ALWAYS">
                <children>
                   <HBox prefHeight="42.0" prefWidth="880.0">
                      <children>
-                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="42.0" prefWidth="703.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE">
+                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="60.0" prefWidth="480.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE">
                            <font>
                               <Font size="24.0" />
                            </font></JFXTextArea>
@@ -53,16 +52,20 @@
             </VBox>
             <VBox alignment="TOP_RIGHT" prefHeight="720.0" prefWidth="200.0" HBox.hgrow="NEVER">
                <children>
-                  <JFXTextField fx:id="memberAdd" promptText="       Mitglied hinzufügen" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" VBox.vgrow="NEVER" />
-                  <TableView fx:id="memberList" prefHeight="720.0" prefWidth="200.0" styleClass="noheader" VBox.vgrow="ALWAYS">
+                  <JFXButton onAction="#addMemberAction" prefHeight="47.0" prefWidth="200.0" style="-fx-background-color: #9C2B27; -fx-background-radius: 10.0 10.0 0.0 0.0;" text="Mitglied hinzufügen" textFill="#c5c3c3">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <TableView fx:id="memberList" prefHeight="682.0" prefWidth="200.0" styleClass="noheader" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="memberNameCol" maxWidth="-1.0" minWidth="200.0" prefWidth="200.0" text="memberName" />
                       <TableColumn fx:id="memberIdCol" minWidth="0.0" prefWidth="0.0" text="memberId" />
                     </columns>
                   </TableView>
                </children></VBox>
+            <Region prefHeight="720.0" prefWidth="286.0" />
          </children>
       </HBox>
-      <FontAwesomeIconView glyphName="USER_PLUS" layoutY="707.2857141494751" size="16" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

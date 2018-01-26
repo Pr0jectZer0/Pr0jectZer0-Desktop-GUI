@@ -138,7 +138,7 @@ public class Groups
 			return false;
 		String[][] parameter = {{"id", userID + ""}};
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("group/" + groupID + "/add_user?token=" + application.api.User.getLoginToken(), parameter));
-		return response.getString("message").equals("User wurde in Gruppe hinzugefï¿½gt.");
+		return response.getString("message").equals("User wurde in Gruppe hinzugefügt.");
 	}
 	
 	public static boolean deleteUserFromGroup(int userID, int groupID) throws JSONException, IOException {
@@ -174,7 +174,7 @@ public class Groups
 			return false;
 		try {
 			JSONObject response = new JSONObject(HttpWebRequest.sendDeleteRequest("group/" +id + "?token=" + application.api.User.getLoginToken()));
-			return response.getString("message").equals("Gruppe wurde gelï¿½scht.");
+			return response.getString("message").equals("Gruppe wurde gelöscht.");
 		} catch (JSONException e) {
 			return false;
 		} catch (IOException e) {
@@ -186,9 +186,9 @@ public class Groups
 		if (groupID < 0 || noteID < 0)
 			return false;
 		try {
-			String response = HttpWebRequest.sendGetRequest("group/" + groupID + "/attach/note/" + noteID + "?token=" + application.api.User.getLoginToken());
-			return response.equals("{\"message\":\"Notiz wurde Gruppe hinzugef\\u00fcgt.\"}");
-		} catch (IOException e) {
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("group/" + groupID + "/attach/note/" + noteID + "?token=" + application.api.User.getLoginToken()));
+			return response.getString("message").equals("Notiz wurde Gruppe hinzugefügt.");
+		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 			return false;
 		}

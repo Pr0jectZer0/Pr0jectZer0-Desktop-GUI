@@ -6,9 +6,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -48,19 +45,7 @@
                               <content>
                                 <AnchorPane>
                                        <children>
-                                          <JFXTextField fx:id="filterUser" layoutX="21.200000762939453" layoutY="21.200000762939453" promptText="Freunde oder Gruppen suchen..." />
-                                          <ScrollPane layoutX="21.200000762939453" layoutY="79.19999694824219">
-                                             <content>
-                                                <TableView fx:id="userList">
-                                                  <columns>
-                                                    <TableColumn fx:id="userNameCol" prefWidth="75.0" text="User-Name" />
-                                                    <TableColumn fx:id="userIdCol" prefWidth="75.0" text="User-ID" />
-                                                      <TableColumn prefWidth="75.0" />
-                                                      <TableColumn prefWidth="75.0" />
-                                                  </columns>
-                                                </TableView>
-                                             </content>
-                                          </ScrollPane>
+                                          <JFXTextField fx:id="filterUser" layoutX="21.200000762939453" layoutY="21.200000762939453" promptText="Freunde oder Gruppen suchen..." AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -81,9 +66,14 @@
                      </padding>
                   </VBox>
                </children></VBox>
-            <VBox maxHeight="600.0" minWidth="340.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
+            <VBox maxHeight="600.0" minWidth="340.0" spacing="5.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
                <children>
-                  <Label fx:id="date" text="Datum:" />
+                  <Label fx:id="date" text="Datum:">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox fx:id="terminPlan" prefHeight="200.0" prefWidth="100.0" />
                </children>
                <padding>
                   <Insets left="10.0" right="10.0" top="10.0" />

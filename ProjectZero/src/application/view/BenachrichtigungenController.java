@@ -27,6 +27,7 @@ import javafx.scene.paint.Color;
 public class BenachrichtigungenController {
 	@FXML
 	private VBox benachrichtigungenBox;
+	public static int benachrichtigungCounter = 0;
 
 	@FXML
 	private void initialize() {
@@ -37,6 +38,7 @@ public class BenachrichtigungenController {
 		try {
 			ObservableList<FriendRequest> friendRequests = Friends.getFriendRequests();
 			if (friendRequests != null) {
+				benachrichtigungCounter = friendRequests.size();
 				for (int i = 0; i < friendRequests.size(); i++) {
 					FriendRequest curFR = friendRequests.get(i);
 					Label label = new Label();
@@ -71,8 +73,14 @@ public class BenachrichtigungenController {
 						@Override
 						public void handle(MouseEvent event)
 						{
+							benachrichtigungCounter = benachrichtigungCounter -1;
+							MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
+							if (benachrichtigungCounter>0) {
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+							}
 							User user = new User(curFR.getUserName(), curFR.getUserId());
 							acceptFriendRequest(curFR.getId(), user, vBox);
+							
 						}
 					});
 					btnDecline.setOnMouseClicked(new EventHandler<MouseEvent>()
@@ -80,6 +88,11 @@ public class BenachrichtigungenController {
 						@Override
 						public void handle(MouseEvent event)
 						{
+							benachrichtigungCounter = benachrichtigungCounter -1;
+							MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
+							if (benachrichtigungCounter>0) {
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+							}
 							declineFriendRequest(curFR.getId(), vBox);
 						}
 					});
@@ -87,6 +100,7 @@ public class BenachrichtigungenController {
 			}
 			ObservableList<GroupRequest> groupRequests = Groups.getGroupRequests();
 			if (groupRequests != null) {
+				benachrichtigungCounter = benachrichtigungCounter + groupRequests.size();
 				for (int i = 0; i < groupRequests.size(); i++) {
 					GroupRequest curGR = groupRequests.get(i);
 					Label label = new Label();
@@ -124,6 +138,11 @@ public class BenachrichtigungenController {
 							acceptGroupRequest(curGR.getGroup(), vBox);
 							try {
 								Groups.getUserGroups().add(curGR.getGroup());
+								benachrichtigungCounter = benachrichtigungCounter -1;
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
+								if (benachrichtigungCounter>0) {
+									MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+								}
 							} catch (JSONException | IOException e) {
 								e.printStackTrace();
 							}
@@ -134,6 +153,11 @@ public class BenachrichtigungenController {
 						@Override
 						public void handle(MouseEvent event)
 						{
+							benachrichtigungCounter = benachrichtigungCounter -1;
+							MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
+							if (benachrichtigungCounter>0) {
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+							}
 							declineGroupRequest(curGR.getGroup().getID(), vBox);
 						}
 					});
@@ -159,6 +183,7 @@ public class BenachrichtigungenController {
 		try {
 			if(Friends.declineRequest(id)) {
 				benachrichtigungenBox.getChildren().remove(vBox);
+				Friends.declineRequest(id);
 			}
 				
 		} catch (JSONException | IOException e) {
@@ -182,6 +207,7 @@ public class BenachrichtigungenController {
 		try {
 			if (Groups.declineGroupRequest(groupID)) {
 				benachrichtigungenBox.getChildren().remove(vBox);
+				Groups.declineGroupRequest(groupID);
 			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();

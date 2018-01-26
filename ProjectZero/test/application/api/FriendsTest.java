@@ -14,7 +14,7 @@ import application.api.Friends.FriendAddState;
 
 public class FriendsTest {
 	
-	private static int friendID = 14;
+	private static int friendID = DummyData.user2ID;
 	
 	@Before
 	public void setUp() {

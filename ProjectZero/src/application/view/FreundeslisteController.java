@@ -83,6 +83,7 @@ public class FreundeslisteController {
 		friendlist.setPlaceholder(new Label("Füge jetzt deine Freunde hinzu"));
 		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+		friendlist.setStyle(friendlist.getStyle() + "-fx-background-color:  derive(-fx-primary, 10.0%);");
 		
 		friend.getStyleClass().add("deleteTextField");
 

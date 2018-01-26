@@ -1,7 +1,13 @@
 package application.view;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONException;
+
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.transitions.hamburger.HamburgerBasicCloseTransition;
@@ -15,7 +21,12 @@ import application.model.User;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.DialogPane;
@@ -26,8 +37,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class TerminplanerController {
 	@FXML
@@ -43,13 +57,8 @@ public class TerminplanerController {
 	@FXML
 	private TextArea terminBeschreibung;
 	@FXML
-	private TableView<User> userList;
-	@FXML
-	private TableColumn<User, String> userNameCol;
-	@FXML
-	private TableColumn<User, Integer> userIdCol;
-	@FXML
-	private JFXTextField filterUser;
+	private VBox terminPlan;
+	private List<Integer> addedTermine = new ArrayList<Integer>();
 
 	@FXML
 	private void initialize() {
@@ -60,47 +69,138 @@ public class TerminplanerController {
 		DatePickerContent popupContent = (DatePickerContent) calenderSkin.getPopupContent();
 		calendarBox.getChildren().add(0, popupContent);
 
-		try {
-
-			userList.setPlaceholder(new Label("Noch keine Freunde hinzugefügt"));
-			userIdCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-			userNameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-
-			FilteredList<User> filteredData = new FilteredList<>(application.api.Friends.getFriends(), p -> true);
-
-			filterUser.textProperty().addListener((observable, oldValue, newValue) -> {
-					filteredData.setPredicate(user -> {
-						if (newValue == null || newValue.isEmpty()) {
-							return true;
-						}
-
-						String lowerCaseFilter = newValue.toLowerCase();
-						
-						if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
-							return true;
-						} else if (newValue.matches("[0-9]+")) {
-							if (user.getId() == Integer.parseInt(newValue)) {
-								return true;
-							}
-						}
-						return false;
-					});
-			});
-
-			SortedList<User> sortedData = new SortedList<>(filteredData);
-
-			sortedData.comparatorProperty().bind(userList.comparatorProperty());
-
-			userList.setItems(sortedData);
-			} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Initialisieren der User in Termin-Beschränkungen",
-					(Stage) date.getScene().getWindow(), e);
-		}
-
 		date.setText("Datum: " + dp.getValue());
 		dp.valueProperty().addListener((observable, oldValue, newValue) -> {
 			date.setText("Datum: " + dp.getValue());
 
+			terminPlan.getChildren().clear();
+
+			try {
+				for (int i = 0; i < Termin.getUserTermine().size(); i++) {
+					String[] s = Termin.getUserTermine().get(i).getStartDate().split(" ");
+					int id = Termin.getUserTermine().get(i).getID();
+					
+					if (dp.getValue().toString().equals(s[0])) {
+						addedTermine.add(Termin.getUserTermine().get(i).getID());
+						Label titel = new Label(Termin.getUserTermine().get(i).getTitle());
+						Label terminId = new Label(Integer.toString(Termin.getUserTermine().get(i).getID()));
+						terminId.setVisible(false);
+						Label beschreibung = new Label(Termin.getUserTermine().get(i).getDescription());
+						beschreibung.setStyle(beschreibung.getStyle() + "-fx-font-size: 12.0pt;");
+						JFXButton teilnehmer = new JFXButton("Teilnehmer (Id: " + id + ")");
+						teilnehmer.getStyleClass().add("login-button");
+						teilnehmer.setStyle(teilnehmer.getStyle() + "-fx-text-fill: #B2B2B2;");
+						teilnehmer.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent e) {
+								try {
+									Stage teilnehmerStage = new Stage();
+									FXMLLoader loader = new FXMLLoader();
+									loader.setLocation(getClass().getResource("Teilnehmerliste.fxml"));
+									String[] help = teilnehmer.getText().split(" ");
+									String idS = help[2].replace(")", "");
+									teilnehmerStage.setTitle("Pr0jectZer0 - Teilnehmerliste (" + idS + ")");
+									Image image = new Image("application/data/images/logo.png");
+									teilnehmerStage.getIcons().add(image);
+									AnchorPane mainAnchor = (AnchorPane) loader.load();
+									Scene scene = new Scene(mainAnchor);
+									teilnehmerStage.setScene(scene);
+									teilnehmerStage.showAndWait();
+								} catch (Exception e1) {
+									ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Teilnehmer-Fensters!", (Stage) titel.getScene().getWindow(), e1);
+								}
+							}
+						});
+						JFXButton loeschen = new JFXButton("Termin (" + id + ") Löschen");
+						loeschen.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent e) {
+								try {
+									String[] help = loeschen.getText().split(" ");
+									String terminId = help[1].replace("(", "");
+									terminId = terminId.replace(")", "");
+									Termin.deleteTermin(Integer.parseInt(terminId));
+									dp.setValue(dp.getValue());
+								} catch (Exception e1) {
+									ErrorWindow.newErrorWindow("Es gab ein Fehler beim Löschen eines Termins!", (Stage) titel.getScene().getWindow(), e1);
+								}
+							}
+						});
+						loeschen.getStyleClass().add("login-button");
+						loeschen.setStyle(loeschen.getStyle() + "-fx-text-fill: #B2B2B2;");
+
+						HBox hBox = new HBox();
+						hBox.setSpacing(10);
+						hBox.setAlignment(Pos.CENTER);
+						hBox.getChildren().addAll(teilnehmer, loeschen);
+
+						VBox vBox = new VBox();
+						vBox.setAlignment(Pos.CENTER);
+						vBox.getChildren().addAll(titel, beschreibung, hBox);
+						vBox.setStyle(vBox.getStyle() + "-fx-background-color: derive(#2A2E37, 30.0%)");
+
+						terminPlan.getChildren().add(vBox);
+
+					} 
+					for (int j = 0; j < Termin.getSharedTermine().size(); j++) {
+						String[] s2 = Termin.getSharedTermine().get(j).getStartDate().split(" ");
+
+						if (dp.getValue().toString().equals(s2[0]) && !addedTermine.contains(Termin.getSharedTermine().get(i).getID())) {
+							Label titel = new Label(Termin.getSharedTermine().get(j).getTitle());
+							Label beschreibung = new Label(Termin.getSharedTermine().get(j).getDescription());
+							beschreibung.setStyle(beschreibung.getStyle() + "-fx-font-size: 12.0pt;");
+							JFXButton teilnehmer = new JFXButton("Teilnehmer");
+							teilnehmer.getStyleClass().add("login-button");
+							teilnehmer.setStyle(teilnehmer.getStyle() + "-fx-text-fill: #B2B2B2;");
+							teilnehmer.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent e) {
+									try {
+										Stage teilnehmerStage = new Stage();
+										FXMLLoader loader = new FXMLLoader();
+										loader.setLocation(getClass().getResource("Teilnehmerliste.fxml"));
+										teilnehmerStage.setTitle("Pr0jectZer0 - Teilnehmerliste");
+										Image image = new Image("application/data/images/logo.png");
+										teilnehmerStage.getIcons().add(image);
+										AnchorPane mainAnchor = (AnchorPane) loader.load();
+										Scene scene = new Scene(mainAnchor);
+										teilnehmerStage.setScene(scene);
+										teilnehmerStage.showAndWait();
+									} catch (Exception e1) {
+										ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Teilnehmer-Fensters!", (Stage) titel.getScene().getWindow(), e1);
+									}
+								}
+							});
+							JFXButton loeschen = new JFXButton("Termin Löschen");
+							loeschen.setDisable(true);
+							loeschen.getStyleClass().add("login-button");
+							loeschen.setStyle(loeschen.getStyle() + "-fx-text-fill: #B2B2B2;");
+
+							HBox hBox = new HBox();
+							hBox.setSpacing(10);
+							hBox.setAlignment(Pos.CENTER);
+							hBox.getChildren().addAll(teilnehmer, loeschen);
+
+							VBox vBox = new VBox();
+							vBox.setAlignment(Pos.CENTER);
+							vBox.getChildren().addAll(titel, beschreibung, hBox);
+							vBox.setStyle(vBox.getStyle() + "-fx-background-color: derive(#2A2E37, 30.0%)");
+
+							terminPlan.getChildren().add(vBox);
+
+						} 
+					}
+					
+					if (addedTermine.isEmpty()) {
+						Label label = new Label("Keine Termine vorhanden");
+						terminPlan.getChildren().add(label);
+					}
+				}
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		});
 
 	}
