@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -32,11 +33,11 @@
                      </font>
                   </JFXButton>
                </children></VBox>
-            <VBox prefHeight="200.0" prefWidth="880.0" HBox.hgrow="ALWAYS">
+            <VBox prefHeight="720.0" prefWidth="645.0" HBox.hgrow="ALWAYS">
                <children>
                   <HBox prefHeight="42.0" prefWidth="880.0">
                      <children>
-                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="42.0" prefWidth="703.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE">
+                        <JFXTextArea fx:id="selectedNoteTitle" prefHeight="60.0" prefWidth="480.0" style="-fx-background-color: #52545d;" unFocusColor="WHITE">
                            <font>
                               <Font size="24.0" />
                            </font></JFXTextArea>
@@ -63,6 +64,7 @@
                     </columns>
                   </TableView>
                </children></VBox>
+            <Region prefHeight="720.0" prefWidth="286.0" />
          </children>
       </HBox>
    </children>
