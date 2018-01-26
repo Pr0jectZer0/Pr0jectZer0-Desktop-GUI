@@ -39,7 +39,7 @@ public class MainLayoutController {
 		if (BenachrichtigungenController.benachrichtigungCounter > 0) {
 			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #9C2B27;");
 		} else {
-			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #B2B2B2;");
+			benachrichtigungenCount.setStyle("");
 		}
 	}
 
