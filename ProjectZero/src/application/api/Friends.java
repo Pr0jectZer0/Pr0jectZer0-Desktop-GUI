@@ -33,25 +33,18 @@ public class Friends {
 		}
 	}
 	
-	public static FriendDeleteState delete(int id) {
+	public static boolean delete(int id) {
 		try {
 			HttpWebRequest.sendDeleteRequest("friend/remove/" + Integer.toString(id) + "?token=" + application.api.User.getLoginToken());
-			return FriendDeleteState.Success;
+			return true;
 		} catch (IOException e) {
-			return FriendDeleteState.ServerError;
+			return false;
 		}
 	}
 	
 	public enum FriendAddState {
 		Success,
 		AlreadyFriends,
-		ServerError,
-	}
-	
-	public enum FriendDeleteState {
-		Success,
-		UserNotFound,
-		NotFriends,
 		ServerError,
 	}
 	

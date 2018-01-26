@@ -1,6 +1,8 @@
 package application.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,5 +109,13 @@ public class Notes {
 		}
 		JSONObject response = new JSONObject(HttpWebRequest.sendPostRequest("note/" + noteID + "/remove_user?token=" + User.getLoginToken() + "&id=" + userID));
 		return response.getString("message").equals("User wurde aus Notiz entfernt.");
+	}
+	
+	public static List<Note> getNoteRequests() throws JSONException, IOException {
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("note/requests?token=" + User.getLoginToken()));
+		if (response.has("message") && response.getString("message").equals("Keine Notiz anfragen."))
+			return null;
+		List<Note> noteList = new ArrayList<Note>();	
+		return null;
 	}
 }
