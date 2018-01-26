@@ -77,6 +77,8 @@ public class BenachrichtigungenController {
 							MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
 							if (benachrichtigungCounter>0) {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+							} else {
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
 							}
 							User user = new User(curFR.getUserName(), curFR.getUserId());
 							acceptFriendRequest(curFR.getId(), user, vBox);
@@ -92,6 +94,8 @@ public class BenachrichtigungenController {
 							MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
 							if (benachrichtigungCounter>0) {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+							} else {
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
 							}
 							declineFriendRequest(curFR.getId(), vBox);
 						}
@@ -142,6 +146,8 @@ public class BenachrichtigungenController {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
 								if (benachrichtigungCounter>0) {
 									MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+								} else {
+									MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
 								}
 							} catch (JSONException | IOException e) {
 								e.printStackTrace();
@@ -157,6 +163,8 @@ public class BenachrichtigungenController {
 							MainLayoutController.getMainLayoutController().benachrichtigungenCount.setText(Integer.toString(benachrichtigungCounter));
 							if (benachrichtigungCounter>0) {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
+							} else {
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
 							}
 							declineGroupRequest(curGR.getGroup().getID(), vBox);
 						}
@@ -181,9 +189,9 @@ public class BenachrichtigungenController {
 	
 	private void declineFriendRequest(int id, VBox vBox) {
 		try {
+			System.out.println(id);
 			if(Friends.declineRequest(id)) {
 				benachrichtigungenBox.getChildren().remove(vBox);
-				Friends.declineRequest(id);
 			}
 				
 		} catch (JSONException | IOException e) {
@@ -207,7 +215,6 @@ public class BenachrichtigungenController {
 		try {
 			if (Groups.declineGroupRequest(groupID)) {
 				benachrichtigungenBox.getChildren().remove(vBox);
-				Groups.declineGroupRequest(groupID);
 			}
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();

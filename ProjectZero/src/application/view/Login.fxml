@@ -39,7 +39,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label focusTraversable="false" text="Hier kann eine kleine Beschreibung oder News stehen" textFill="#b2b2b2">
+                  <Label focusTraversable="false" text="Final-Release 26.01.2018" textFill="#b2b2b2">
                      <font>
                         <Font size="14.0" />
                      </font>
