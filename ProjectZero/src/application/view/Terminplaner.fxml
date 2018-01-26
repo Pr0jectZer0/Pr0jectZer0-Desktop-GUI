@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -18,13 +22,22 @@
    <children>
       <HBox alignment="CENTER" spacing="50.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="40.0">
          <children>
-            <VBox fx:id="calendarBox" alignment="CENTER" spacing="50.0">
+            <VBox fx:id="calendarBox" alignment="CENTER" spacing="20.0">
                <children>
                   <VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: derive(#2A2E37, 20.0%);">
                      <children>
-                        <Label style="-fx-font-size: 20;" text="Neuer Termin" />
-                        <TextField promptText="Name" />
-                        <TextArea maxHeight="100.0" promptText="Beschreibung">
+                        <Label style="-fx-font-size: 20;" text="Neuer Termin">
+                           <effect>
+                              <DropShadow blurType="TWO_PASS_BOX" color="#9c2b27" />
+                           </effect></Label>
+                        <HBox alignment="CENTER" spacing="40.0">
+                           <children>
+                              <JFXDatePicker fx:id="dateStart" defaultColor="#9c2b27" promptText="Von" />
+                              <JFXDatePicker fx:id="dateEnd" defaultColor="#9c2b27" promptText="Bis" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="terminName" promptText="Titel" />
+                        <TextArea fx:id="terminBeschreibung" maxHeight="100.0" promptText="Beschreibung">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -33,13 +46,21 @@
                           <panes>
                             <TitledPane animated="false" text="Beschränkung">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <AnchorPane>
                                        <children>
-                                          <VBox layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                                             <children>
-                                                <JFXTextField promptText="Freunde oder Gruppen suchen..." />
-                                             </children>
-                                          </VBox>
+                                          <JFXTextField fx:id="filterUser" layoutX="21.200000762939453" layoutY="21.200000762939453" promptText="Freunde oder Gruppen suchen..." />
+                                          <ScrollPane layoutX="21.200000762939453" layoutY="79.19999694824219">
+                                             <content>
+                                                <TableView fx:id="userList">
+                                                  <columns>
+                                                    <TableColumn fx:id="userNameCol" prefWidth="75.0" text="User-Name" />
+                                                    <TableColumn fx:id="userIdCol" prefWidth="75.0" text="User-ID" />
+                                                      <TableColumn prefWidth="75.0" />
+                                                      <TableColumn prefWidth="75.0" />
+                                                  </columns>
+                                                </TableView>
+                                             </content>
+                                          </ScrollPane>
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -49,7 +70,7 @@
                             </TitledPane>
                           </panes>
                         </Accordion>
-                        <JFXButton styleClass="login-button" text="Termin erstellen" textFill="#b2b2b2">
+                        <JFXButton onAction="#handleTerminErstellenAction" styleClass="login-button" text="Termin erstellen" textFill="#b2b2b2">
                            <font>
                               <Font size="14.0" />
                            </font>
