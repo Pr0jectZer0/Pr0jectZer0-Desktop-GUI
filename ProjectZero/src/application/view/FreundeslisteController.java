@@ -77,19 +77,20 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Fügt die Freunde in die Freundesliste und legt deren Funktionen fest
+	 * FÃ¼gt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
 	private void initFriends() {
-		friendlist.setPlaceholder(new Label("Füge jetzt deine Freunde hinzu"));
+		friendlist.setPlaceholder(new Label("FÃ¼ge jetzt deine Freunde hinzu"));
 		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+		friendlist.setStyle(friendlist.getStyle() + "-fx-background-color:  derive(-fx-primary, 10.0%);");
 		
 		friend.getStyleClass().add("deleteTextField");
 
 		try {
 			friendlist.setItems(Friends.getFriends());
 		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Freunde!", (Stage) friendlist.getScene().getWindow(), e);
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim HinzufÃ¼gen aller Freunde!", (Stage) friendlist.getScene().getWindow(), e);
 		}
 		
 		friendlist.getSelectionModel().selectFirst();
@@ -125,7 +126,7 @@ public class FreundeslisteController {
 						popupstage.hide();
 						popupstage.show();
 					} catch (Exception e) {
-						ErrorWindow.newErrorWindow("Es gab ein Fehler beim öffnen des Popup-Fensters der Freundesliste!", (Stage) friendlist.getScene().getWindow(), e);
+						ErrorWindow.newErrorWindow("Es gab ein Fehler beim Ã–ffnen des Popup-Fensters der Freundesliste!", (Stage) friendlist.getScene().getWindow(), e);
 					}
 
 				}
@@ -134,7 +135,7 @@ public class FreundeslisteController {
 	}
 
 	/**
-	 * Diese Methode öffnet die Freund-Hinzufügen-Funktionen
+	 * Diese Methode Ã¶ffnet die Freund-HinzufÃ¼gen-Funktionen
 	 */
 	@SuppressWarnings("unchecked")
 	private void initNewFriend() {
@@ -160,9 +161,9 @@ public class FreundeslisteController {
 								DialogPane dialogPane = alert.getDialogPane();
 								dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
 								dialogPane.getStyleClass().add("myDialog");
-								alert.setTitle("Freund hinzufügen");
+								alert.setTitle("Freund hinzufÃ¼gen");
 								alert.setHeaderText(null);
-								alert.setContentText(newFriend + " erfolgreich hinzugefügt!");
+								alert.setContentText(newFriend + " erfolgreich hinzugefÃ¼gt!");
 	
 								Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 								Stage owner = (Stage) newFriendlist.getScene().getWindow();
@@ -175,7 +176,7 @@ public class FreundeslisteController {
 								DialogPane dialogPane = alert.getDialogPane();
 								dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
 								dialogPane.getStyleClass().add("myDialog");
-								alert.setTitle("Freund hinzufügen");
+								alert.setTitle("Freund hinzufÃ¼gen");
 								alert.setHeaderText(null);
 								alert.setContentText(newFriend + " hat bereits eine Freundschaftsanfrage erhalten!");
 	
@@ -190,9 +191,9 @@ public class FreundeslisteController {
 								DialogPane dialogPane = alert.getDialogPane();
 								dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
 								dialogPane.getStyleClass().add("myDialog");
-								alert.setTitle("Freund hinzufügen");
+								alert.setTitle("Freund hinzufÃ¼gen");
 								alert.setHeaderText(null);
-								alert.setContentText("Es gabe einen Serverfehler beim hinzufügen von " + newFriend + "!");
+								alert.setContentText("Es gabe einen Serverfehler beim hinzufÃ¼gen von " + newFriend + "!");
 	
 								Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 								Stage owner = (Stage) newFriendlist.getScene().getWindow();
@@ -204,7 +205,7 @@ public class FreundeslisteController {
 						}
 					}
 				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freundes durch Maus-Doppelklick!", (Stage) friendlist.getScene().getWindow(), e);
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim HinzufÃ¼gen eines neuen Freundes durch Maus-Doppelklick!", (Stage) friendlist.getScene().getWindow(), e);
 				}
 			}
 		});
@@ -237,7 +238,7 @@ public class FreundeslisteController {
 		newFriendlist.maxWidth(250);
 		newFriendlist.setFixedCellSize(31);
 
-		JFXButton button = new JFXButton("Hinzufügen");
+		JFXButton button = new JFXButton("HinzufÃ¼gen");
 		button.setMinWidth(200);
 		button.getStyleClass().add("login-button");
 		button.setStyle(button.getStyle() + "-fx-text-fill: #B2B2B2;" + "-fx-font-size: 13.0pt;");
@@ -271,9 +272,9 @@ public class FreundeslisteController {
 						DialogPane dialogPane = alert.getDialogPane();
 						dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
 						dialogPane.getStyleClass().add("myDialog");
-						alert.setTitle("Freund hinzufügen");
+						alert.setTitle("Freund hinzufÃ¼gen");
 						alert.setHeaderText(null);
-						alert.setContentText(newFriend + " erfolgreich hinzugefügt!");
+						alert.setContentText(newFriend + " erfolgreich hinzugefÃ¼gt!");
 
 						Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 						Stage owner = (Stage) newFriendlist.getScene().getWindow();
@@ -283,7 +284,7 @@ public class FreundeslisteController {
 						alert.showAndWait();
 					}
 				} catch (Exception e1) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freunde", (Stage) friendlist.getScene().getWindow(), e1);
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim HinzufÃ¼gen eines neuen Freunde", (Stage) friendlist.getScene().getWindow(), e1);
 				}
 			}
 		});
@@ -353,12 +354,12 @@ public class FreundeslisteController {
 			Scene scene = new Scene(mainAnchor);
 			popupstage.setScene(scene);
 		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim öffnen des Popup-Fensters!", (Stage) friendlist.getScene().getWindow(), e);
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Ã–ffnen des Popup-Fensters!", (Stage) friendlist.getScene().getWindow(), e);
 		}
 	}
 
 	/**
-	 * Öffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
+	 * Ã–ffnet die Zusatzfunktion wenn man mit der rechten Maustaste auf einen
 	 * Freund klickt
 	 * 
 	 * @param event

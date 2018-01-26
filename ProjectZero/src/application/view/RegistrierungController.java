@@ -12,9 +12,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
 /**
- * Diese Klasse enth�lt die Controller und Methoden zur Registrierung
+ * Diese Klasse enthält die Controller und Methoden zur Registrierung
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class RegistrierungController {
 	@FXML
@@ -29,6 +29,91 @@ public class RegistrierungController {
 	private VBox vBoxErrorMsg;
 	private LoginController loginController;
 
+	/**
+	 * Initialisierungen
+	 */
+	@FXML
+	public void initialize() {
+		tFUsername.textProperty().addListener((observable, oldValue, newValue) -> {
+			String string = tFUsername.getText();
+			string = string.replace("!","t");
+			string = string.replace("§","");
+			string = string.replace("$","");
+			string = string.replace("%","");
+			string = string.replace("&","");
+			string = string.replace("/","");
+			string = string.replace("(","");
+			string = string.replace(")","");
+			string = string.replace("=","");
+			string = string.replace("?","");
+			string = string.replace("´","");
+			string = string.replace("`","");
+			string = string.replace("{","");
+			string = string.replace("}","");
+			string = string.replace("[","");
+			string = string.replace("]","");
+			string = string.replace("³","");
+			string = string.replace("²","");
+			string = string.replace("°","");
+			string = string.replace("^","");
+			string = string.replace("+","");
+			string = string.replace("*","");
+			string = string.replace("~","");
+			string = string.replace("'","");
+			string = string.replace("#","");
+			string = string.replace(".","");
+			string = string.replace(",","");
+			string = string.replace(";","");
+			string = string.replace(":","");
+			string = string.replace("-","");
+			string = string.replace("_","");
+			string = string.replace(">","");
+			string = string.replace("<","");
+			string = string.replace("|","");
+			tFUsername.setText(string);
+		});
+		
+		tFPw.textProperty().addListener((observable, oldValue, newValue) -> {
+			String string = tFPw.getText();
+			string = string.replace("-","");
+			string = string.replace("_","");
+			string = string.replace(">","");
+			string = string.replace("<","");
+			string = string.replace("|","");
+			string = string.replace("{","");
+			string = string.replace("}","");
+			string = string.replace("[","");
+			string = string.replace("]","");
+			string = string.replace("³","");
+			string = string.replace("²","");
+			string = string.replace("/","");
+			string = string.replace("(","");
+			string = string.replace(")","");
+			string = string.replace("§","");
+			tFPw.setText(string);
+		});
+		
+		tFPw2.textProperty().addListener((observable, oldValue, newValue) -> {
+			String string = tFPw2.getText();
+			string = string.replace("-","");
+			string = string.replace("_","");
+			string = string.replace(">","");
+			string = string.replace("<","");
+			string = string.replace("|","");
+			string = string.replace("{","");
+			string = string.replace("}","");
+			string = string.replace("[","");
+			string = string.replace("]","");
+			string = string.replace("³","");
+			string = string.replace("²","");
+			string = string.replace("/","");
+			string = string.replace("(","");
+			string = string.replace(")","");
+			string = string.replace("§","");
+			tFPw2.setText(string);
+		});
+	}
+	
 	/**
 	 * Diese Methode gibt eine Referenz zu den LoginController
 	 * 
@@ -50,11 +135,11 @@ public class RegistrierungController {
 		tFPw2.getStyleClass().remove("wrong-details");
 		boolean wrongRegister = false;
 		if (tFUsername.getText().equals("")) {
-			ErrorMsg.newError("Bitte geben Sie einen g�ltigen Benutzernamen an!", vBoxErrorMsg, tFUsername);
+			ErrorMsg.newError("Bitte geben Sie einen gültigen Benutzernamen an!", vBoxErrorMsg, tFUsername);
 			wrongRegister = true;
 		}
 		if (!tFEmail.getText().matches(".*@.*.[.].*")) {
-			ErrorMsg.newError("Bitte geben Sie eine g�ltige Email-Adresse an!", vBoxErrorMsg, tFEmail);
+			ErrorMsg.newError("Bitte geben Sie eine gültige Email-Adresse an!", vBoxErrorMsg, tFEmail);
 			wrongRegister = true;
 		}
 		if (tFPw.getText().equals("") || tFPw2.getText().equals("")) {
@@ -67,7 +152,7 @@ public class RegistrierungController {
 			wrongRegister = true;
 		}
 		if (!tFPw.getText().equals(tFPw2.getText())) {
-			ErrorMsg.newError("Die Passw�rter sind nicht gleich!", vBoxErrorMsg, tFPw);
+			ErrorMsg.newError("Die Passwörter sind nicht gleich!", vBoxErrorMsg, tFPw);
 			tFPw2.getStyleClass().add("wrong-details");
 			wrongRegister = true;
 		}
@@ -79,7 +164,7 @@ public class RegistrierungController {
 					alert.initOwner(loginController.getRegisterStage());
 					alert.setTitle("Erfolgreich registriert!");
 					alert.setHeaderText("Sie haben sich erfolgreich registriert!");
-					alert.setContentText("Sie k�nnen sich nun einloggen.");
+					alert.setContentText("Sie können sich nun einloggen.");
 					alert.showAndWait();
 					break;
 				case ServerError:

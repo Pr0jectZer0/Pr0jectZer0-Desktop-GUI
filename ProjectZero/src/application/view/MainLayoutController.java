@@ -27,25 +27,19 @@ public class MainLayoutController {
 	@FXML
 	private JFXHamburger hamburger;
 	@FXML
-	private Label benachrichtigungenCount;
+	public Label benachrichtigungenCount;
+	private static MainLayoutController mainLayoutController;
 
 	@FXML
 	private void initialize() {
 		initFreundesliste();
-		System.out.println(User.getLoginToken());
-		try
-		{
-			System.out.println(User.getUserID());
-		}
-		catch (JSONException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		mainLayoutController = this;
+		benachrichtigungenCount.setText(Integer.toString(BenachrichtigungenController.benachrichtigungCounter));
+		
+		if (BenachrichtigungenController.benachrichtigungCounter > 0) {
+			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #9C2B27;");
+		} else {
+			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #B2B2B2;");
 		}
 	}
 
@@ -67,15 +61,10 @@ public class MainLayoutController {
 				drawer.open();
 		});
 	}
-	
-	public void setBenachrichtigungenCount(int counter) {
-		this.benachrichtigungenCount.setText(Integer.toString(counter));
-		
-		if (counter > 0) {
-			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #9C2B27;");
-		} else {
-			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #B2B2B2;");
-		}
+
+	public static MainLayoutController getMainLayoutController()
+	{
+		return mainLayoutController;
 	}
 
 }
