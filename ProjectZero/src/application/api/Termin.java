@@ -51,7 +51,7 @@ public class Termin {
 			return null;
 		}
 		String[][] parameter = {{ "titel", title }, { "beschreibung", description}, {"start_datum", startDate}, {"end_datum", endDate} };
-		JSONObject response = new JSONObject(HttpWebRequest.sendPutRequest("date/" + id + "?token=" + User.getLoginToken(), parameter));
+		JSONObject response = new JSONObject(HttpWebRequest.sendPutRequest("date/" + id + "?token=" + User.getLoginToken(), parameter)).getJSONObject("date");
 		String titleGot = response.getString("titel");
 		String descriptionGot = response.getString("beschreibung");
 		String startDateGot = response.getString("start_datum");
