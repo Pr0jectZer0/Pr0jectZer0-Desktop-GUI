@@ -78,7 +78,7 @@ public class BenachrichtigungenController {
 							if (benachrichtigungCounter>0) {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
 							} else {
-								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle("");
 							}
 							User user = new User(curFR.getUserName(), curFR.getUserId());
 							acceptFriendRequest(curFR.getId(), user, vBox);
@@ -95,7 +95,7 @@ public class BenachrichtigungenController {
 							if (benachrichtigungCounter>0) {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
 							} else {
-								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle("");
 							}
 							declineFriendRequest(curFR.getId(), vBox);
 						}
@@ -147,7 +147,7 @@ public class BenachrichtigungenController {
 								if (benachrichtigungCounter>0) {
 									MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
 								} else {
-									MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
+									MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle("");
 								}
 							} catch (JSONException | IOException e) {
 								e.printStackTrace();
@@ -164,7 +164,7 @@ public class BenachrichtigungenController {
 							if (benachrichtigungCounter>0) {
 								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #9C2B27;");
 							} else {
-								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle(MainLayoutController.getMainLayoutController().benachrichtigungenCount.getStyle() + "-fx-text-fill: #B2B2B2;");
+								MainLayoutController.getMainLayoutController().benachrichtigungenCount.setStyle("");
 							}
 							declineGroupRequest(curGR.getGroup().getID(), vBox);
 						}
