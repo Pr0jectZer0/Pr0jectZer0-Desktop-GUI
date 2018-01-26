@@ -140,7 +140,6 @@ public class NotizController {
 	 */
 	@FXML
 	private void saveNoteAction() {
-		System.out.println(currentNote.getID());
 		if(currentNoteId < -1) {
 			
 		}else if(currentNoteId == -1) {
@@ -179,7 +178,7 @@ public class NotizController {
 	}
 	@FXML
 	private void selectNoteAction() {
-		if((currentNoteId <= -2)||((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
+		if(/*(currentNoteId <= -2)||*/((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
 			Note tempNote = noteList.getSelectionModel().getSelectedItem();
 			if (tempNote != null){
 				currentNote = tempNote;
