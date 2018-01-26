@@ -9,8 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import application.model.HttpWebRequest;
+import application.model.TerminRequest;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Termin {
+	
+	private static ObservableList<TerminRequest> terminRequests;
 	
 	private Termin() { }
 	
@@ -106,7 +111,11 @@ public class Termin {
 	}
 	
 	public static List<application.model.Termin> getSharedTermine() throws JSONException, IOException {
-		JSONArray dates = new JSONObject(HttpWebRequest.sendGetRequest("dates/shared?token=" + User.getLoginToken())).getJSONArray("dates");
+		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("dates/shared?token=" + User.getLoginToken()));
+		if (response.has("message") && response.getString("message").equals("Keine Termin.")) {
+			return null;
+		}
+		JSONArray dates = response.getJSONArray("dates");
 		List<application.model.Termin> terminList = new ArrayList<application.model.Termin>();
 		for (int i = 0; i < dates.length(); i++) {
 			JSONObject curTermin = dates.getJSONObject(i);
@@ -120,21 +129,35 @@ public class Termin {
 		return terminList;
 	}
 	
-	public static String getTerminRequests() throws JSONException, IOException {
-		//TODO: finish
-		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("date/requests?token=" + User.getLoginToken()));
-		if (response.has("message") && response.getString("message").equals("Keine Termin anfragen."))
-			return null;
-		return null;
+	public static ObservableList<TerminRequest> getTerminRequests() throws JSONException, IOException {
+		if (terminRequests == null) {
+			terminRequests = FXCollections.observableArrayList();
+			JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("date/requests?token=" + User.getLoginToken()));
+			if (response.has("message") && response.getString("message").equals("Keine Termin anfragen."))
+				return terminRequests;
+			JSONArray requests = response.getJSONArray("requests");
+			for (int i = 0; i < requests.length(); i++) {
+				JSONObject curRequest = requests.getJSONObject(i);
+				int requestID = curRequest.getInt("id");
+				String title = curRequest.getString("titel");
+				String description = curRequest.getString("beschreibung");
+				String startDate = curRequest.getString("start_datum");
+				String endDate = curRequest.getString("end_datum");
+				application.model.Termin termin = new application.model.Termin(startDate, endDate, title, description, -1); // WE HAVE NO ID :(
+				TerminRequest request = new TerminRequest(termin, requestID);
+				terminRequests.add(request);
+			}
+		}
+		return terminRequests;
 	}
 	
-	public static void acceptRequest(int requestID) throws JSONException, IOException {
-		//TODO: finish
+	public static boolean acceptRequest(int requestID) throws JSONException, IOException {
 		JSONObject reponse = new JSONObject(HttpWebRequest.sendGetRequest("date/" + requestID + "/accept?token=" + User.getLoginToken()));
+		return reponse.getString("message").equals("User ist jetzt Teilnehmer des Termins.");
 	}
 	
-	public static void declineRequest(int requestID) throws JSONException, IOException {
-		//TODO: finish
+	public static boolean declineRequest(int requestID) throws JSONException, IOException {
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest("date/" + requestID + "/decline?token=" + User.getLoginToken()));
+		return response.getString("message").equals("User ist jetzt kein Teilnehmer des Termins mehr.");
 	}
 }
