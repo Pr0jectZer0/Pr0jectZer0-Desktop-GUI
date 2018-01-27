@@ -4,7 +4,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+/**
+ * Das ist die Klasse, die die Daten von einer Freundesanfrage beinhaltet
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class FriendRequest
 {
 

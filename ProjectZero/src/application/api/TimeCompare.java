@@ -1,7 +1,11 @@
 package application.api;
 
 import java.util.Calendar;
-
+/**
+ * Das ist die Api-Klasse zum vergleichen von 2 Zeitobjekten
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class TimeCompare
 {
 	public static boolean before(Calendar c1, Calendar c2)

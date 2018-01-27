@@ -45,7 +45,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 /**
- * Diese Klasse verwaltet die Freundesliste
+ * Controller-Klasse für die Freundesliste
  * 
  * @author Dorsch, Deutsch, Penner, Kramer
  */

@@ -6,7 +6,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import application.model.HttpWebRequest;
-
+/**
+ * Das ist die Api-Klasse für die den Benutzer
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public final class User
 {
 

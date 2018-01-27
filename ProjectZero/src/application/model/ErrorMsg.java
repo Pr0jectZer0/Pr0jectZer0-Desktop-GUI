@@ -7,7 +7,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+/**
+ * Das ist die Klasse, die die Errornachricht erstellt falls was schief läuft
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class ErrorMsg
 {
 

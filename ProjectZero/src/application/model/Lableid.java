@@ -1,7 +1,11 @@
 package application.model;
 
 import javafx.scene.control.Label;
-
+/**
+ * Klasse die von Lable erbt um noch Informationen wie eine ID speichern zu können
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Lableid extends Label
 {
 	private int groupid;

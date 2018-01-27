@@ -1,5 +1,9 @@
 package application.model;
-
+/**
+ * Das ist die Klasse, die die Daten von einer Nachricht beinhaltet
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Message
 {
 

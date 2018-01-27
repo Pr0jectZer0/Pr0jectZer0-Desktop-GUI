@@ -23,7 +23,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
+/**
+ * Controller-Klasse für Benachrichtigungen
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class BenachrichtigungenController
 {
 	@FXML

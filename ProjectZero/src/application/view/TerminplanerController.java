@@ -42,7 +42,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
+/**
+ * Controller-Klasse für den Terminplaner
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class TerminplanerController
 {
 	@FXML

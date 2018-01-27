@@ -16,7 +16,11 @@ import application.model.Note;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/**
+ * Das ist die Api-Klasse für die Gruppen
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Groups
 {
 

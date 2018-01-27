@@ -10,7 +10,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-
+/**
+ * Das ist die Klasse, die das ErrorFenster darstellt falls was schief läuft
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class ErrorWindow
 {
 

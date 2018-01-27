@@ -10,7 +10,11 @@ import application.model.HttpWebRequest;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/**
+ * Das ist die Api-Klasse für die Freunde
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Friends
 {
 

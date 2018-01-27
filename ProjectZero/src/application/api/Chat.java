@@ -11,7 +11,11 @@ import org.json.JSONObject;
 import application.model.HttpWebRequest;
 import application.model.Message;
 import application.model.User;
-
+/**
+ * Das ist die Api-Klasse für den Chat
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Chat
 {
 

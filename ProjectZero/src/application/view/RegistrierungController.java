@@ -12,7 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 
 /**
- * Diese Klasse enthält die Controller und Methoden zur Registrierung
+ * Controller-Klasse für die Registrierung
  * 
  * @author Dorsch, Deutsch, Penner, Kramer
  */

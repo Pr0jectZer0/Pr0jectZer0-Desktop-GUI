@@ -12,7 +12,11 @@ import application.model.Game;
 import application.model.Genre;
 import application.model.HttpWebRequest;
 import application.model.Publisher;
-
+/**
+ * Das ist die Api-Klasse für die Spiele
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Games
 {
 

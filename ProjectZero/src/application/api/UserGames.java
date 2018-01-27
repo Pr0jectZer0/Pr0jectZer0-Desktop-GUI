@@ -10,7 +10,11 @@ import application.model.Game;
 import application.model.HttpWebRequest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/**
+ * Das ist die Api-Klasse für die Spiele des Benutzers
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class UserGames
 {
 

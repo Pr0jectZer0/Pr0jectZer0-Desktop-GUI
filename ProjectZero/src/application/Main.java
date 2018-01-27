@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * Diese Klasse startet das Login-Fenster
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class Main extends Application
 {

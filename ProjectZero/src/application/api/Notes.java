@@ -12,7 +12,11 @@ import application.model.HttpWebRequest;
 import application.model.Note;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/**
+ * Das ist die Api-Klasse für die Notizen
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Notes
 {
 

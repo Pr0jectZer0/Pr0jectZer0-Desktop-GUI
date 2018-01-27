@@ -22,7 +22,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
+/**
+ * Controller-Klasse für die Gruppen
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class GruppenController
 {
 	@FXML

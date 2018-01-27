@@ -1,7 +1,11 @@
 package application.model;
 
 import java.util.List;
-
+/**
+ * Das ist die Klasse, die die Daten von einer Gruppe beinhaltet
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Group
 {
 	private String name, description;

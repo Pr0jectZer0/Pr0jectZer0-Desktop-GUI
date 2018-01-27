@@ -12,7 +12,11 @@ import application.model.Game;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
+/**
+ * Controller-Klasse für die Spielebibliothek
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class SpielebibliothekController
 {
 	@FXML

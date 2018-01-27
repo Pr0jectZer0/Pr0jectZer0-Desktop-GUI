@@ -3,7 +3,11 @@ package application.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
+/**
+ * Controller-Klasse für das Popupfenster in Notizen
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class ConfirmPopupController
 {
 

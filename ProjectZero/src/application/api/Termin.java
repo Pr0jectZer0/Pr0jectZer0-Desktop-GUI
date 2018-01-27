@@ -12,7 +12,11 @@ import application.model.HttpWebRequest;
 import application.model.TerminRequest;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+/**
+ * Das ist die Api-Klasse für die Termine
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class Termin
 {
 

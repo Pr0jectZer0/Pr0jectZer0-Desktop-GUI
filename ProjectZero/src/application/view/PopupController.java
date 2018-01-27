@@ -14,7 +14,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
+/**
+ * Controller-Klasse für das Popup bei der Freundesliste
+ * 
+ * @author Dorsch, Deutsch, Penner, Kramer
+ */
 public class PopupController
 {
 	@FXML
