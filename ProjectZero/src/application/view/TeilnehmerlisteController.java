@@ -10,7 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
-public class TeilnehmerlisteController {
+public class TeilnehmerlisteController
+{
 	@FXML
 	private TableView<User> userlist;
 	@FXML
@@ -25,13 +26,15 @@ public class TeilnehmerlisteController {
 	private TableColumn<User, Integer> idCol2;
 
 	@FXML
-	private void initialize() {
+	private void initialize()
+	{
 		userlist.setPlaceholder(new Label("Keine User enthalten"));
 		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		nameCol.prefWidthProperty().bind(userlist.widthProperty().multiply(1.00));
 
-		for (int i = 0; i < FreundeslisteController.getFreundeslistecontroller().friendlist.getItems().size(); i++) {
+		for (int i = 0; i < FreundeslisteController.getFreundeslistecontroller().friendlist.getItems().size(); i++)
+		{
 			userlist.getItems()
 					.add(new User(
 							FreundeslisteController.getFreundeslistecontroller().friendlist.getItems().get(i).getName(),
@@ -46,9 +49,12 @@ public class TeilnehmerlisteController {
 	}
 
 	@FXML
-	private void add(ActionEvent event) {
-		try {
-			if (!userlist.getSelectionModel().isEmpty()) {
+	private void add(ActionEvent event)
+	{
+		try
+		{
+			if (!userlist.getSelectionModel().isEmpty())
+			{
 				teilnehmerlist.getItems().add(userlist.getSelectionModel().getSelectedItem());
 				Stage stage = (Stage) userlist.getScene().getWindow();
 				String[] help = stage.getTitle().split(" ");
@@ -59,16 +65,21 @@ public class TeilnehmerlisteController {
 				teilnehmerlist.refresh();
 				userlist.refresh();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim hinzufügen eines Users zu einem Termin",
 					(Stage) userlist.getScene().getWindow(), e);
 		}
 	}
 
 	@FXML
-	private void remove(ActionEvent event) {
-		try {
-			if (!teilnehmerlist.getSelectionModel().isEmpty()) {
+	private void remove(ActionEvent event)
+	{
+		try
+		{
+			if (!teilnehmerlist.getSelectionModel().isEmpty())
+			{
 				userlist.getItems().add(teilnehmerlist.getSelectionModel().getSelectedItem());
 				Stage stage = (Stage) userlist.getScene().getWindow();
 				String[] help = stage.getTitle().split(" ");
@@ -80,7 +91,9 @@ public class TeilnehmerlisteController {
 				teilnehmerlist.refresh();
 				userlist.refresh();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Entfernen eines Users eines Termins",
 					(Stage) userlist.getScene().getWindow(), e);
 		}

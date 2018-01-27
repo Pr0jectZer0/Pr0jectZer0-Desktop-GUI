@@ -21,7 +21,8 @@ import javafx.scene.layout.AnchorPane;
  * 
  * @author Dorsch, Paul, Deutsch, Penner, Kramer
  */
-public class MainLayoutController {
+public class MainLayoutController
+{
 	@FXML
 	private JFXDrawer drawer;
 	@FXML
@@ -31,23 +32,31 @@ public class MainLayoutController {
 	private static MainLayoutController mainLayoutController;
 
 	@FXML
-	private void initialize() {
+	private void initialize()
+	{
 		initFreundesliste();
 		mainLayoutController = this;
 		benachrichtigungenCount.setText(Integer.toString(BenachrichtigungenController.benachrichtigungCounter));
-		
-		if (BenachrichtigungenController.benachrichtigungCounter > 0) {
+
+		if (BenachrichtigungenController.benachrichtigungCounter > 0)
+		{
 			benachrichtigungenCount.setStyle(benachrichtigungenCount.getStyle() + "-fx-background-color: #9C2B27;");
-		} else {
+		}
+		else
+		{
 			benachrichtigungenCount.setStyle("");
 		}
 	}
 
-	private void initFreundesliste() {
-		try {
+	private void initFreundesliste()
+	{
+		try
+		{
 			AnchorPane freundesliste = FXMLLoader.load(getClass().getResource("Freundesliste.fxml"));
 			drawer.setSidePane(freundesliste);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
@@ -55,9 +64,11 @@ public class MainLayoutController {
 		hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
 			transition.setRate(transition.getRate() * -1);
 			transition.play();
-			if (drawer.isShown()) {
+			if (drawer.isShown())
+			{
 				drawer.close();
-			} else
+			}
+			else
 				drawer.open();
 		});
 	}

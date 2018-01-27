@@ -15,26 +15,32 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class PopupController {
+public class PopupController
+{
 	@FXML
 	private AnchorPane panemain;
 	private Stage popupstage;
 
 	@FXML
-	private void initialize() {
+	private void initialize()
+	{
 		this.popupstage = FreundeslisteController.getPopupstage();
-		panemain.setOnMouseExited(new EventHandler<MouseEvent>() {
+		panemain.setOnMouseExited(new EventHandler<MouseEvent>()
+		{
 
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(MouseEvent event)
+			{
 				popupstage.hide();
 			}
 		});
 	}
 
 	@FXML
-	private void chat() {
-		try {
+	private void chat()
+	{
+		try
+		{
 			Stage chatstage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("Chat.fxml"));
@@ -43,46 +49,57 @@ public class PopupController {
 			Scene scene = new Scene(chatAnchor);
 			chatstage.setScene(scene);
 			chatstage.show();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
-	private void removeFriend() {
-		application.model.User friend = FreundeslisteController.getFreundeslistecontroller().friendlist.getSelectionModel().getSelectedItem();
-		if (friend != null) {
+	private void removeFriend()
+	{
+		application.model.User friend = FreundeslisteController.getFreundeslistecontroller().friendlist
+				.getSelectionModel().getSelectedItem();
+		if (friend != null)
+		{
 			FreundeslisteController.getFreundeslistecontroller().friendlist.getItems().remove(friend);
 			FreundeslisteController.getFreundeslistecontroller().friendlist.refresh();
-			try {
-				if (Friends.delete(friend.getId())) {
+			try
+			{
+				if (Friends.delete(friend.getId()))
+				{
 					Alert alert = new Alert(AlertType.INFORMATION);
 					DialogPane dialogPane = alert.getDialogPane();
 					dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
 					dialogPane.getStyleClass().add("myDialog");
-					alert.setTitle("Freund erfolgreich gelöscht");
+					alert.setTitle("Freund erfolgreich gelï¿½scht");
 					alert.setHeaderText(null);
-					alert.setContentText("Freund gelöscht!");
-					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-					Image image = new Image("application/data/images/logo.png");
-					stage.getIcons().add(image);
-					alert.initOwner(null);
-					alert.showAndWait();
-				} else {
-					Alert alert = new Alert(AlertType.ERROR);
-					DialogPane dialogPane = alert.getDialogPane();
-					dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
-					dialogPane.getStyleClass().add("myDialog");
-					alert.setTitle("Freund nicht gelöscht");
-					alert.setHeaderText(null);
-					alert.setContentText("Fehler beim Löschen des Freundes!");
+					alert.setContentText("Freund gelï¿½scht!");
 					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 					Image image = new Image("application/data/images/logo.png");
 					stage.getIcons().add(image);
 					alert.initOwner(null);
 					alert.showAndWait();
 				}
-			} catch (JSONException e) {
+				else
+				{
+					Alert alert = new Alert(AlertType.ERROR);
+					DialogPane dialogPane = alert.getDialogPane();
+					dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
+					dialogPane.getStyleClass().add("myDialog");
+					alert.setTitle("Freund nicht gelï¿½scht");
+					alert.setHeaderText(null);
+					alert.setContentText("Fehler beim Lï¿½schen des Freundes!");
+					Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+					Image image = new Image("application/data/images/logo.png");
+					stage.getIcons().add(image);
+					alert.initOwner(null);
+					alert.showAndWait();
+				}
+			}
+			catch (JSONException e)
+			{
 				e.printStackTrace();
 			}
 		}

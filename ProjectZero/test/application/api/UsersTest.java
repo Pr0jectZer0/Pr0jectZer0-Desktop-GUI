@@ -10,34 +10,45 @@ import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class UsersTest {
-	
+public class UsersTest
+{
+
 	@Before
-	public void setUp() {
+	public void setUp()
+	{
 		User.login(DummyData.userEmail, DummyData.userPW);
 	}
-	
+
 	@Test
-	public void getAllUsers() {
-		try {
+	public void getAllUsers()
+	{
+		try
+		{
 			assertNotNull(Users.getUsers());
-		} catch (JSONException | IOException e) {
+		}
+		catch (JSONException | IOException e)
+		{
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void getNoFriends() {
-		try {
+	public void getNoFriends()
+	{
+		try
+		{
 			assertNotNull(Users.getNoFriends());
-		} catch (JSONException | IOException e) {
+		}
+		catch (JSONException | IOException e)
+		{
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void getUserByID() {
+	public void getUserByID()
+	{
 		assertEquals(Users.getUserByID(21).getName(), "PeterPeter");
 	}
 }

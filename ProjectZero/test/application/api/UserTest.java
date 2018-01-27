@@ -7,73 +7,91 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserTest {
-	
+public class UserTest
+{
+
 	@Test
-	public void getLoginTokenTestBeforeLogin() {
+	public void getLoginTokenTestBeforeLogin()
+	{
 		User.login(null, null);
 		assertNull(User.getLoginToken());
 	}
-	
+
 	@Test
-	public void getLoginTokenLoggedIn() {
+	public void getLoginTokenLoggedIn()
+	{
 		User.login(DummyData.userEmail, DummyData.userPW);
 		assertNotNull(User.getLoginToken());
 	}
-	
+
 	@Test
-	public void loginTestEmpty() {
+	public void loginTestEmpty()
+	{
 		assertEquals(User.login("", ""), User.LoginState.ServerError);
 	}
-	
+
 	@Test
-	public void loginTestNull() {
+	public void loginTestNull()
+	{
 		assertEquals(User.login(null, null), User.LoginState.ServerError);
 	}
-	
+
 	@Test
-	public void loginTestInvalid() {
-		assertEquals(User.login("randommüll", "irgendwas"), User.LoginState.WrongData);
+	public void loginTestInvalid()
+	{
+		assertEquals(User.login("randommï¿½ll", "irgendwas"), User.LoginState.WrongData);
 	}
-	
+
 	@Test
-	public void loginTestInvalidPassword() {
+	public void loginTestInvalidPassword()
+	{
 		assertEquals(User.login("peter@peter.com", "FALSCHESPW"), User.LoginState.WrongData);
 	}
-	
+
 	@Test
-	public void loginValid() {
+	public void loginValid()
+	{
 		assertEquals(User.login(DummyData.userEmail, DummyData.userPW), User.LoginState.Success);
 	}
+
 	@Test
-	public void registerEmpty() {
+	public void registerEmpty()
+	{
 		assertEquals(User.register("", "", ""), User.RegisterState.WrongData);
 	}
-	
+
 	@Test
-	public void registerNull() {
+	public void registerNull()
+	{
 		assertEquals(User.register(null, null, null), User.RegisterState.WrongData);
 	}
-	
+
 	@Test
-	public void registerInvalid() {
+	public void registerInvalid()
+	{
 		assertEquals(User.register("a", "aaaa", "ansdanbsda"), User.RegisterState.WrongData);
 	}
-	
-	//Cannot registerValid because we can't delete and it will fail after done once
-	//@Test
-	//public void registerValid() {
-	//	assertEquals(User.register("AAAAAAAAAAAAAAAAAAAAA", "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA"), User.RegisterState.Success);
-	//}
-	
+
+	// Cannot registerValid because we can't delete and it will fail after done
+	// once
+	// @Test
+	// public void registerValid() {
+	// assertEquals(User.register("AAAAAAAAAAAAAAAAAAAAA",
+	// "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA"),
+	// User.RegisterState.Success);
+	// }
+
 	@Test
-	public void registerValidAgain() {
+	public void registerValidAgain()
+	{
 		User.register("AAAAAAAAAAAAAAAAAAAAA", "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA");
-		assertEquals(User.register("AAAAAAAAAAAAAAAAAAAAA", "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA"), User.RegisterState.WrongData);
+		assertEquals(User.register("AAAAAAAAAAAAAAAAAAAAA", "aaaa@aaaaaaaaaa.com", "AAAAAAAAAAAAAAAAAAAAA"),
+				User.RegisterState.WrongData);
 	}
-	
+
 	@Test
-	public void deleteUser() {
+	public void deleteUser()
+	{
 		assertFalse(User.delete(-1));
 	}
 }

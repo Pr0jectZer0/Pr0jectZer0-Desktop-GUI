@@ -1,20 +1,24 @@
 package application.model;
 
-public class TerminRequest {
-	
+public class TerminRequest
+{
+
 	private Termin termin;
 	private int requestID;
-	
-	public TerminRequest(Termin termin, int requestID) {
+
+	public TerminRequest(Termin termin, int requestID)
+	{
 		this.termin = termin;
 		this.requestID = requestID;
 	}
-	
-	public Termin getTermin() {
+
+	public Termin getTermin()
+	{
 		return termin;
 	}
-	
-	public int requestID() {
+
+	public int requestID()
+	{
 		return requestID;
 	}
 }

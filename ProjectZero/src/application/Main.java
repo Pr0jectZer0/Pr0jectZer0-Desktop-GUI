@@ -14,15 +14,18 @@ import javafx.stage.Stage;
  * 
  * @author Dorsch, Paul, Deutsch, Penner, Kramer
  */
-public class Main extends Application {
+public class Main extends Application
+{
 	private Stage loginStage;
 
 	/**
 	 * Initialisiert und Startet das loginStage (Login-Fenster)
 	 */
 	@Override
-	public void start(Stage loginStage) {
-		try {
+	public void start(Stage loginStage)
+	{
+		try
+		{
 			this.loginStage = loginStage;
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/Login.fxml"));
@@ -35,7 +38,9 @@ public class Main extends Application {
 			loginStage.getIcons().add(image);
 			loginStage.setScene(scene);
 			loginStage.show();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Starten der Applikation!", loginStage, e);
 		}
 	}
@@ -45,7 +50,8 @@ public class Main extends Application {
 	 * 
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		launch();
 	}
 
@@ -54,7 +60,8 @@ public class Main extends Application {
 	 * 
 	 * @return loginStage
 	 */
-	public Stage getLoginStage() {
+	public Stage getLoginStage()
+	{
 		return loginStage;
 	}
 

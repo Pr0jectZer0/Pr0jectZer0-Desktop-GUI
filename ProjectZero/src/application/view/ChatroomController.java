@@ -49,11 +49,12 @@ public class ChatroomController
 	@FXML
 	private JFXButton btnsenden;
 	private Pusher pusher;
-	//private int chatroomID;
+	// private int chatroomID;
 	private int gruppenID;
+
 	@FXML
 	private void initialize()
-	{	
+	{
 		btnsenden.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
 
@@ -71,9 +72,9 @@ public class ChatroomController
 			public void handle(MouseEvent event)
 			{
 				Lableid temp = listgroup.getSelectionModel().getSelectedItem();
-				if(temp != null)
+				if (temp != null)
 				{
-					if(temp.istest())
+					if (temp.istest())
 					{
 						hbox.setVisible(true);
 						vbox.setVisible(false);
@@ -87,7 +88,7 @@ public class ChatroomController
 				}
 
 			}
-			
+
 		});
 		btnfertig.setOnMouseClicked(new EventHandler<MouseEvent>()
 		{
@@ -103,21 +104,23 @@ public class ChatroomController
 			}
 		});
 	}
+
 	private void addNewChat(Lableid toadd)
 	{
-		if(toadd != null && !toadd.istest())
+		if (toadd != null && !toadd.istest())
 		{
 			int size = listgroup.getItems().size();
-			listgroup.getItems().add(size-1,toadd);
+			listgroup.getItems().add(size - 1, toadd);
 		}
 	}
+
 	private void updatechat()
 	{
 		Lableid temp = listgroup.getSelectionModel().getSelectedItem();
-		if(temp != null)
+		if (temp != null)
 		{
 			gruppenID = temp.getGroupid();
-			//chatroomID = Chat.getChatroomID(gruppenID);
+			// chatroomID = Chat.getChatroomID(gruppenID);
 			PusherOptions pusheroptions = new PusherOptions();
 			pusheroptions.setCluster("eu");
 			pusheroptions.setEncrypted(true);
@@ -176,18 +179,21 @@ public class ChatroomController
 		}
 		taanzeige.setText(getMessages());
 	}
+
 	private String getMessages()
 	{
 		List<Message> messages = Chat.getGroupMessages(gruppenID);
 		if (messages == null)
 			return "Keine Nachrichten vorhanden!";
 		String output = "";
-		for (int i = 0; i < messages.size(); i++) {
+		for (int i = 0; i < messages.size(); i++)
+		{
 			Message curMessage = messages.get(i);
 			output += curMessage.getSender().getName() + ": " + curMessage.getMessage() + System.lineSeparator();
 		}
 		return output;
 	}
+
 	private void sendMessage()
 	{
 		if (taeingabe.getText() != null && !taeingabe.getText().equals(""))
@@ -197,13 +203,15 @@ public class ChatroomController
 			System.out.println(Chat.sendGroupMessage(gruppenID, message));
 		}
 	}
+
 	private void updateGrouplist()
 	{
 		listgroup.getItems().clear();
 		listgroup.getItems().add(new Lableid());
 		listgroup.refresh();
 		listgroup.setVisible(true);
-		try{
+		try
+		{
 			List<Group> groups = Groups.getUserGroups();
 			for (Group g : groups)
 			{
@@ -212,12 +220,11 @@ public class ChatroomController
 				addNewChat(lgroup);
 			}
 		}
-		catch(IOException e)
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 }

@@ -43,7 +43,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class TerminplanerController {
+public class TerminplanerController
+{
 	@FXML
 	private VBox calendarBox;
 	@FXML
@@ -61,7 +62,8 @@ public class TerminplanerController {
 	private List<Integer> addedTermine = new ArrayList<Integer>();
 
 	@FXML
-	private void initialize() {
+	private void initialize()
+	{
 		DatePicker dp = new DatePicker(LocalDate.now());
 		dp.setShowWeekNumbers(false);
 		DatePickerSkin calenderSkin = new DatePickerSkin(dp);
@@ -75,12 +77,15 @@ public class TerminplanerController {
 
 			terminPlan.getChildren().clear();
 
-			try {
-				for (int i = 0; i < Termin.getUserTermine().size(); i++) {
+			try
+			{
+				for (int i = 0; i < Termin.getUserTermine().size(); i++)
+				{
 					String[] s = Termin.getUserTermine().get(i).getStartDate().split(" ");
 					int id = Termin.getUserTermine().get(i).getID();
-					
-					if (dp.getValue().toString().equals(s[0])) {
+
+					if (dp.getValue().toString().equals(s[0]))
+					{
 						addedTermine.add(Termin.getUserTermine().get(i).getID());
 						Label titel = new Label(Termin.getUserTermine().get(i).getTitle());
 						Label terminId = new Label(Integer.toString(Termin.getUserTermine().get(i).getID()));
@@ -90,10 +95,13 @@ public class TerminplanerController {
 						JFXButton teilnehmer = new JFXButton("Teilnehmer (Id: " + id + ")");
 						teilnehmer.getStyleClass().add("login-button");
 						teilnehmer.setStyle(teilnehmer.getStyle() + "-fx-text-fill: #B2B2B2;");
-						teilnehmer.setOnAction(new EventHandler<ActionEvent>() {
+						teilnehmer.setOnAction(new EventHandler<ActionEvent>()
+						{
 							@Override
-							public void handle(ActionEvent e) {
-								try {
+							public void handle(ActionEvent e)
+							{
+								try
+								{
 									Stage teilnehmerStage = new Stage();
 									FXMLLoader loader = new FXMLLoader();
 									loader.setLocation(getClass().getResource("Teilnehmerliste.fxml"));
@@ -106,23 +114,32 @@ public class TerminplanerController {
 									Scene scene = new Scene(mainAnchor);
 									teilnehmerStage.setScene(scene);
 									teilnehmerStage.showAndWait();
-								} catch (Exception e1) {
-									ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Teilnehmer-Fensters!", (Stage) titel.getScene().getWindow(), e1);
+								}
+								catch (Exception e1)
+								{
+									ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Teilnehmer-Fensters!",
+											(Stage) titel.getScene().getWindow(), e1);
 								}
 							}
 						});
 						JFXButton loeschen = new JFXButton("Termin (" + id + ") Löschen");
-						loeschen.setOnAction(new EventHandler<ActionEvent>() {
+						loeschen.setOnAction(new EventHandler<ActionEvent>()
+						{
 							@Override
-							public void handle(ActionEvent e) {
-								try {
+							public void handle(ActionEvent e)
+							{
+								try
+								{
 									String[] help = loeschen.getText().split(" ");
 									String terminId = help[1].replace("(", "");
 									terminId = terminId.replace(")", "");
 									Termin.deleteTermin(Integer.parseInt(terminId));
 									dp.setValue(dp.getValue());
-								} catch (Exception e1) {
-									ErrorWindow.newErrorWindow("Es gab ein Fehler beim Löschen eines Termins!", (Stage) titel.getScene().getWindow(), e1);
+								}
+								catch (Exception e1)
+								{
+									ErrorWindow.newErrorWindow("Es gab ein Fehler beim Löschen eines Termins!",
+											(Stage) titel.getScene().getWindow(), e1);
 								}
 							}
 						});
@@ -141,21 +158,27 @@ public class TerminplanerController {
 
 						terminPlan.getChildren().add(vBox);
 
-					} 
-					for (int j = 0; j < Termin.getSharedTermine().size(); j++) {
+					}
+					for (int j = 0; j < Termin.getSharedTermine().size(); j++)
+					{
 						String[] s2 = Termin.getSharedTermine().get(j).getStartDate().split(" ");
 
-						if (dp.getValue().toString().equals(s2[0]) && !addedTermine.contains(Termin.getSharedTermine().get(i).getID())) {
+						if (dp.getValue().toString().equals(s2[0])
+								&& !addedTermine.contains(Termin.getSharedTermine().get(i).getID()))
+						{
 							Label titel = new Label(Termin.getSharedTermine().get(j).getTitle());
 							Label beschreibung = new Label(Termin.getSharedTermine().get(j).getDescription());
 							beschreibung.setStyle(beschreibung.getStyle() + "-fx-font-size: 12.0pt;");
 							JFXButton teilnehmer = new JFXButton("Teilnehmer");
 							teilnehmer.getStyleClass().add("login-button");
 							teilnehmer.setStyle(teilnehmer.getStyle() + "-fx-text-fill: #B2B2B2;");
-							teilnehmer.setOnAction(new EventHandler<ActionEvent>() {
+							teilnehmer.setOnAction(new EventHandler<ActionEvent>()
+							{
 								@Override
-								public void handle(ActionEvent e) {
-									try {
+								public void handle(ActionEvent e)
+								{
+									try
+									{
 										Stage teilnehmerStage = new Stage();
 										FXMLLoader loader = new FXMLLoader();
 										loader.setLocation(getClass().getResource("Teilnehmerliste.fxml"));
@@ -166,8 +189,12 @@ public class TerminplanerController {
 										Scene scene = new Scene(mainAnchor);
 										teilnehmerStage.setScene(scene);
 										teilnehmerStage.showAndWait();
-									} catch (Exception e1) {
-										ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Teilnehmer-Fensters!", (Stage) titel.getScene().getWindow(), e1);
+									}
+									catch (Exception e1)
+									{
+										ErrorWindow.newErrorWindow(
+												"Es gab ein Fehler beim Öffnen des Teilnehmer-Fensters!",
+												(Stage) titel.getScene().getWindow(), e1);
 									}
 								}
 							});
@@ -188,16 +215,19 @@ public class TerminplanerController {
 
 							terminPlan.getChildren().add(vBox);
 
-						} 
+						}
 					}
-					
-					if (addedTermine.isEmpty()) {
+
+					if (addedTermine.isEmpty())
+					{
 						Label label = new Label("Keine Termine vorhanden");
 						terminPlan.getChildren().add(label);
 					}
 				}
 
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -206,10 +236,13 @@ public class TerminplanerController {
 	}
 
 	@FXML
-	private void handleTerminErstellenAction(ActionEvent event) {
-		try {
+	private void handleTerminErstellenAction(ActionEvent event)
+	{
+		try
+		{
 			if (dateStart.getValue() != null && dateEnd.getValue() != null && !terminName.getText().equals("")
-					&& !terminBeschreibung.getText().equals("")) {
+					&& !terminBeschreibung.getText().equals(""))
+			{
 				Termin.createTermin(terminName.getText(), terminBeschreibung.getText(), dateStart.getValue().toString(),
 						dateEnd.getValue().toString());
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -228,7 +261,9 @@ public class TerminplanerController {
 				alert.showAndWait();
 				terminName.clear();
 				terminBeschreibung.clear();
-			} else {
+			}
+			else
+			{
 				Alert alert = new Alert(AlertType.INFORMATION);
 				DialogPane dialogPane = alert.getDialogPane();
 				dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
@@ -244,7 +279,9 @@ public class TerminplanerController {
 				alert.initOwner(owner);
 				alert.showAndWait();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Erstellen des Termins",
 					(Stage) date.getScene().getWindow(), e);
 		}

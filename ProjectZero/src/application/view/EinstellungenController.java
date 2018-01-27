@@ -5,11 +5,12 @@ import application.api.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-public class EinstellungenController {
-
+public class EinstellungenController
+{
 
 	@FXML
-	private void delAccount() {
-		
+	private void delAccount()
+	{
+
 	}
 }

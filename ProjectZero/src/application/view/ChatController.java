@@ -40,7 +40,8 @@ public class ChatController
 	@FXML
 	private void initialize()
 	{
-		int personID = FreundeslisteController.getFreundeslistecontroller().friendlist.getSelectionModel().getSelectedItem().getId();
+		int personID = FreundeslisteController.getFreundeslistecontroller().friendlist.getSelectionModel()
+				.getSelectedItem().getId();
 		chatroomID = Chat.getChatroomID(personID);
 		PusherOptions pusheroptions = new PusherOptions();
 		pusheroptions.setCluster("eu");
@@ -114,7 +115,7 @@ public class ChatController
 			@Override
 			public void handle(KeyEvent event)
 			{
-				if(event.getCode() == KeyCode.ENTER)
+				if (event.getCode() == KeyCode.ENTER)
 				{
 					if (tfschreiben.getText() != null && !tfschreiben.getText().isEmpty())
 					{
@@ -133,7 +134,8 @@ public class ChatController
 		if (messages == null)
 			return "Keine Nachrichten vorhanden!";
 		String output = "";
-		for (int i = 0; i < messages.size(); i++) {
+		for (int i = 0; i < messages.size(); i++)
+		{
 			Message curMessage = messages.get(i);
 			output += curMessage.getSender().getName() + ": " + curMessage.getMessage() + System.lineSeparator();
 		}

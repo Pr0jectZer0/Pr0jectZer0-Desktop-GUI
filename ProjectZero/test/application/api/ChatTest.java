@@ -12,48 +12,57 @@ import org.junit.Test;
 
 import application.model.Message;
 
-public class ChatTest {
+public class ChatTest
+{
 
-	private static int friendID = 14,
-			chatID = 33;
+	private static int friendID = 14, chatID = 33;
 	private static String message = "JUNIT_TEST";
+
 	@Before
-	public void setUp() {
+	public void setUp()
+	{
 		User.login("peter@peter.com", "Peter123");
 	}
-	
+
 	@Test
-	public void getChatIDValid() {
+	public void getChatIDValid()
+	{
 		assertEquals(Chat.getChatroomID(friendID), chatID);
 	}
-	
+
 	@Test
-	public void getChatIDInvalid() {
+	public void getChatIDInvalid()
+	{
 		assertEquals(Chat.getChatroomID(-1), -1);
 	}
-	
+
 	@Test
-	public void getChatIDNotExisting() {
+	public void getChatIDNotExisting()
+	{
 		assertEquals(Chat.getChatroomID(131231237), -1);
 	}
-	
+
 	@Test
-	public void sendMessageValid() {
+	public void sendMessageValid()
+	{
 		assertTrue(Chat.sendMessage(chatID, message));
 	}
-	
+
 	@Test
-	public void sendMessageNull() {
+	public void sendMessageNull()
+	{
 		assertFalse(Chat.sendMessage(chatID, null));
 	}
-	
+
 	@Test
-	public void sendMessageEmpty() {
+	public void sendMessageEmpty()
+	{
 		assertFalse(Chat.sendMessage(chatID, ""));
 	}
-	
+
 	@Test
-	public void getMessages() {
+	public void getMessages()
+	{
 		Chat.sendMessage(chatID, message);
 		List<Message> messages = Chat.getMessages(chatID);
 		if (messages == null)

@@ -8,9 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class ErrorMsg {
-	
-	public static void newError(String msg, VBox vBox, TextField tField) {
+public class ErrorMsg
+{
+
+	public static void newError(String msg, VBox vBox, TextField tField)
+	{
 		HBox hBox = new HBox();
 		hBox.setSpacing(5);
 		hBox.setAlignment(Pos.CENTER_LEFT);
@@ -24,8 +26,9 @@ public class ErrorMsg {
 		hBox.getChildren().addAll(icon, label);
 		vBox.getChildren().add(hBox);
 	}
-	
-	public static void newError(String msg, VBox vBox) {
+
+	public static void newError(String msg, VBox vBox)
+	{
 		HBox hBox = new HBox();
 		hBox.setSpacing(5);
 		hBox.setAlignment(Pos.CENTER_LEFT);

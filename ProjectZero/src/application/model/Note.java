@@ -1,38 +1,46 @@
 package application.model;
 
-public class Note {
-	
+public class Note
+{
+
 	private String title, text;
 	private int userID, id;
-	
-	public Note(String title, String text, int userID, int id) {
+
+	public Note(String title, String text, int userID, int id)
+	{
 		this.title = title;
 		this.text = text;
 		this.userID = userID;
 		this.id = id;
 	}
-	
-	public String getTitle() {
+
+	public String getTitle()
+	{
 		return title;
 	}
-	
-	public String getText() {
+
+	public String getText()
+	{
 		return text;
 	}
-	
-	public int getUserID() {
+
+	public int getUserID()
+	{
 		return userID;
 	}
-	
-	public int getID() {
+
+	public int getID()
+	{
 		return id;
 	}
-	
-	public void setTitle(String title) {
+
+	public void setTitle(String title)
+	{
 		this.title = title;
 	}
-	
-	public void setText(String text) {
+
+	public void setText(String text)
+	{
 		this.text = text;
 	}
 }

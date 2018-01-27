@@ -90,7 +90,7 @@ public class GruppenController
 			@Override
 			public void handle(MouseEvent event)
 			{
-				if(tfname.getText() != "" && tabezeichnung.getText() != "")
+				if (tfname.getText() != "" && tabezeichnung.getText() != "")
 				{
 					try
 					{
@@ -106,7 +106,7 @@ public class GruppenController
 					}
 				}
 				updategroups();
-				
+
 			}
 		});
 	}
@@ -117,46 +117,46 @@ public class GruppenController
 		listgruppenmitglieder.getItems().clear();
 		if (gruppen.getSelectionModel().getSelectedItem() != null)
 		{
-			if(!gruppen.getSelectionModel().getSelectedItem().istest())
+			if (!gruppen.getSelectionModel().getSelectedItem().istest())
 			{
 				hbox.setVisible(false);
 				vbox.setVisible(true);
-			try
-			{
-				List<User> friends = Friends.getFriends();
-				for (User u : friends)
+				try
 				{
-					Lableid l = new Lableid(u.getId());
-					l.setText(u.getName());
-					listfreunde.getItems().add(l);
+					List<User> friends = Friends.getFriends();
+					for (User u : friends)
+					{
+						Lableid l = new Lableid(u.getId());
+						l.setText(u.getName());
+						listfreunde.getItems().add(l);
+					}
+					int gruppenid = gruppen.getSelectionModel().getSelectedItem().getGroupid();
+					Group g = Groups.getGroupByID(gruppenid);
+					lblgruppe.setText("Gruppe: " + g.getName());
+					if (application.api.User.getUserID() == g.getAdmin().getId())
+					{
+						listfreunde.setDisable(false);
+						btnadd.setDisable(false);
+						btndelete.setDisable(false);
+					}
+					else
+					{
+						listfreunde.setDisable(true);
+						btnadd.setDisable(true);
+						btndelete.setDisable(true);
+					}
+					List<User> user = g.getMembers();
+					for (User u : user)
+					{
+						Lableid ll = new Lableid(u.getId());
+						ll.setText(u.getName());
+						listgruppenmitglieder.getItems().add(ll);
+					}
 				}
-				int gruppenid = gruppen.getSelectionModel().getSelectedItem().getGroupid();
-				Group g = Groups.getGroupByID(gruppenid);
-				lblgruppe.setText("Gruppe: " + g.getName());
-				if (application.api.User.getUserID() == g.getAdmin().getId())
+				catch (IOException e)
 				{
-					listfreunde.setDisable(false);
-					btnadd.setDisable(false);
-					btndelete.setDisable(false);
+					e.printStackTrace();
 				}
-				else
-				{
-					listfreunde.setDisable(true);
-					btnadd.setDisable(true);
-					btndelete.setDisable(true);
-				}
-				List<User> user = g.getMembers();
-				for (User u : user)
-				{
-					Lableid ll = new Lableid(u.getId());
-					ll.setText(u.getName());
-					listgruppenmitglieder.getItems().add(ll);
-				}
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
 			}
 			else
 			{
@@ -248,6 +248,7 @@ public class GruppenController
 			e.printStackTrace();
 		}
 	}
+
 	public static GruppenController getGruppenController()
 	{
 		return gc;

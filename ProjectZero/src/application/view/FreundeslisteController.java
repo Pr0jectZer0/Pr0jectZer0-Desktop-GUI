@@ -49,7 +49,8 @@ import javafx.util.Callback;
  * 
  * @author Dorsch, Deutsch, Penner, Kramer
  */
-public class FreundeslisteController {
+public class FreundeslisteController
+{
 	@FXML
 	public TableView<User> friendlist;
 	private TableView<User> newFriendlist;
@@ -69,7 +70,8 @@ public class FreundeslisteController {
 	 * Initialisierungen
 	 */
 	@FXML
-	private void initialize() {
+	private void initialize()
+	{
 		initFriends();
 		initNewFriend();
 		initPopup();
@@ -79,31 +81,42 @@ public class FreundeslisteController {
 	/**
 	 * Fügt die Freunde in die Freundesliste und legt deren Funktionen fest
 	 */
-	private void initFriends() {
+	private void initFriends()
+	{
 		friendlist.setPlaceholder(new Label("Füge jetzt deine Freunde hinzu"));
 		idCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
 		nameCol.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		friendlist.setStyle(friendlist.getStyle() + "-fx-background-color:  derive(-fx-primary, 10.0%);");
-		
+
 		friend.getStyleClass().add("deleteTextField");
 
-		try {
+		try
+		{
 			friendlist.setItems(Friends.getFriends());
-		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Freunde!", (Stage) friendlist.getScene().getWindow(), e);
 		}
-		
+		catch (Exception e)
+		{
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen aller Freunde!",
+					(Stage) friendlist.getScene().getWindow(), e);
+		}
+
 		friendlist.getSelectionModel().selectFirst();
-		
-		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>() {
+
+		nameCol.setCellFactory(new Callback<TableColumn<User, String>, TableCell<User, String>>()
+		{
 			@Override
-			public TableCell<User, String> call(TableColumn<User, String> param) {
+			public TableCell<User, String> call(TableColumn<User, String> param)
+			{
 				ImageView imageView = new ImageView();
-				TableCell<User, String> cell = new TableCell<User, String>() {
-					public void updateItem(String item, boolean empty) {
-						if (item != null) {
+				TableCell<User, String> cell = new TableCell<User, String>()
+				{
+					public void updateItem(String item, boolean empty)
+					{
+						if (item != null)
+						{
 							imageView.setImage(new Image("application/data/images/friend.png"));
-							if (friendlist.getSelectionModel().isEmpty()) {
+							if (friendlist.getSelectionModel().isEmpty())
+							{
 								friendlist.getSelectionModel().selectFirst();
 							}
 							setText(item + " (#" + friendlist.getSelectionModel().getSelectedItem().getId() + ")");
@@ -116,17 +129,26 @@ public class FreundeslisteController {
 			}
 		});
 
-		friendlist.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		friendlist.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
 			@Override
-			public void handle(MouseEvent event) {
-				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY && friendlist.getSelectionModel().getSelectedItem() != null) {
-					try {
+			public void handle(MouseEvent event)
+			{
+				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.SECONDARY
+						&& friendlist.getSelectionModel().getSelectedItem() != null)
+				{
+					try
+					{
 						popupstage.setX(event.getScreenX() - 1);
 						popupstage.setY(event.getScreenY() - 1);
 						popupstage.hide();
 						popupstage.show();
-					} catch (Exception e) {
-						ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Popup-Fensters der Freundesliste!", (Stage) friendlist.getScene().getWindow(), e);
+					}
+					catch (Exception e)
+					{
+						ErrorWindow.newErrorWindow(
+								"Es gab ein Fehler beim Öffnen des Popup-Fensters der Freundesliste!",
+								(Stage) friendlist.getScene().getWindow(), e);
 					}
 
 				}
@@ -138,25 +160,33 @@ public class FreundeslisteController {
 	 * Diese Methode öffnet die Freund-Hinzufügen-Funktionen
 	 */
 	@SuppressWarnings("unchecked")
-	private void initNewFriend() {
+	private void initNewFriend()
+	{
 		newFriendlist = new TableView<User>();
 		newFriendlist.setPlaceholder(new Label("Keinen Freund gefunden"));
-		newFriendlist.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		newFriendlist.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
 			@Override
-			public void handle(MouseEvent event) {
-				try {
-					if (event.getButton().equals(MouseButton.PRIMARY)) {
-						if (event.getClickCount() == 2) {
+			public void handle(MouseEvent event)
+			{
+				try
+				{
+					if (event.getButton().equals(MouseButton.PRIMARY))
+					{
+						if (event.getClickCount() == 2)
+						{
 							String newFriend = newFriendlist.getSelectionModel().getSelectedItem().getName() + " (Id: "
 									+ newFriendlist.getSelectionModel().getSelectedItem().getId() + ")";
 
-							FriendAddState response = Friends.add(newFriendlist.getSelectionModel().getSelectedItem().getId());
-							if (response == FriendAddState.Success) {
+							FriendAddState response = Friends
+									.add(newFriendlist.getSelectionModel().getSelectedItem().getId());
+							if (response == FriendAddState.Success)
+							{
 								Friends.getFriends().add(newFriendlist.getSelectionModel().getSelectedItem());
 								Users.getNoFriends().remove(newFriendlist.getSelectionModel().getSelectedItem());
 								newFriendlist.refresh();
 								friendlist.refresh();
-	
+
 								Alert alert = new Alert(AlertType.INFORMATION);
 								DialogPane dialogPane = alert.getDialogPane();
 								dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
@@ -164,14 +194,16 @@ public class FreundeslisteController {
 								alert.setTitle("Freund hinzufügen");
 								alert.setHeaderText(null);
 								alert.setContentText(newFriend + " erfolgreich hinzugefügt!");
-	
+
 								Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 								Stage owner = (Stage) newFriendlist.getScene().getWindow();
 								Image image = new Image("application/data/images/logo.png");
 								stage.getIcons().add(image);
 								alert.initOwner(owner);
 								alert.showAndWait();
-							} else if (response == FriendAddState.AlreadyFriends) {
+							}
+							else if (response == FriendAddState.AlreadyFriends)
+							{
 								Alert alert = new Alert(AlertType.INFORMATION);
 								DialogPane dialogPane = alert.getDialogPane();
 								dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
@@ -179,22 +211,25 @@ public class FreundeslisteController {
 								alert.setTitle("Freund hinzufügen");
 								alert.setHeaderText(null);
 								alert.setContentText(newFriend + " hat bereits eine Freundschaftsanfrage erhalten!");
-	
+
 								Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 								Stage owner = (Stage) newFriendlist.getScene().getWindow();
 								Image image = new Image("application/data/images/logo.png");
 								stage.getIcons().add(image);
 								alert.initOwner(owner);
-								alert.showAndWait();	
-							} else { //if (response == FriendAddState.ServerError)
+								alert.showAndWait();
+							}
+							else
+							{ // if (response == FriendAddState.ServerError)
 								Alert alert = new Alert(AlertType.INFORMATION);
 								DialogPane dialogPane = alert.getDialogPane();
 								dialogPane.getStylesheets().add("application/data/css/ProjectZero_theme.css");
 								dialogPane.getStyleClass().add("myDialog");
 								alert.setTitle("Freund hinzufügen");
 								alert.setHeaderText(null);
-								alert.setContentText("Es gabe einen Serverfehler beim hinzufügen von " + newFriend + "!");
-	
+								alert.setContentText(
+										"Es gabe einen Serverfehler beim hinzufügen von " + newFriend + "!");
+
 								Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
 								Stage owner = (Stage) newFriendlist.getScene().getWindow();
 								Image image = new Image("application/data/images/logo.png");
@@ -204,8 +239,12 @@ public class FreundeslisteController {
 							}
 						}
 					}
-				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freundes durch Maus-Doppelklick!", (Stage) friendlist.getScene().getWindow(), e);
+				}
+				catch (Exception e)
+				{
+					ErrorWindow.newErrorWindow(
+							"Es gab ein Fehler beim Hinzufügen eines neuen Freundes durch Maus-Doppelklick!",
+							(Stage) friendlist.getScene().getWindow(), e);
 				}
 			}
 		});
@@ -222,7 +261,7 @@ public class FreundeslisteController {
 		newFriendlist.getColumns().addAll(nameCol2, idCol2);
 		nameCol2.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 		idCol2.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-		
+
 		JFXHamburger hamburger = new JFXHamburger();
 
 		AnchorPane newFreundesliste = new AnchorPane();
@@ -254,11 +293,15 @@ public class FreundeslisteController {
 		vBox.getChildren().addAll(newFriendlist, stack);
 
 		newFreundesliste.getChildren().addAll(vBox);
-		button.setOnAction(new EventHandler<ActionEvent>() {
+		button.setOnAction(new EventHandler<ActionEvent>()
+		{
 			@Override
-			public void handle(ActionEvent e) {
-				try {
-					if (newFriendlist.getSelectionModel().getSelectedItem() != null) {
+			public void handle(ActionEvent e)
+			{
+				try
+				{
+					if (newFriendlist.getSelectionModel().getSelectedItem() != null)
+					{
 						String newFriend = newFriendlist.getSelectionModel().getSelectedItem().getName() + " (Id: "
 								+ newFriendlist.getSelectionModel().getSelectedItem().getId() + ")";
 
@@ -283,18 +326,23 @@ public class FreundeslisteController {
 						alert.initOwner(owner);
 						alert.showAndWait();
 					}
-				} catch (Exception e1) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freunde", (Stage) friendlist.getScene().getWindow(), e1);
+				}
+				catch (Exception e1)
+				{
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim Hinzufügen eines neuen Freunde",
+							(Stage) friendlist.getScene().getWindow(), e1);
 				}
 			}
 		});
 
-		try {
+		try
+		{
 			FilteredList<User> filteredData = new FilteredList<>(Users.getNoFriends(), p -> true);
 
 			friend.textProperty().addListener((observable, oldValue, newValue) -> {
 				newFriendlist.getSelectionModel().selectFirst();
-				if (friend.getText().length() >= 1) {		
+				if (friend.getText().length() >= 1)
+				{
 					drawer.setSidePane(newFreundesliste);
 					HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(hamburger);
 					transition.setRate(-1);
@@ -304,22 +352,29 @@ public class FreundeslisteController {
 					drawer.open();
 					friendlist.setVisible(false);
 					filteredData.setPredicate(user -> {
-						if (newValue == null || newValue.isEmpty()) {
+						if (newValue == null || newValue.isEmpty())
+						{
 							return true;
 						}
 
 						String lowerCaseFilter = newValue.toLowerCase();
-						
-						if (user.getName().toLowerCase().contains(lowerCaseFilter)) {
+
+						if (user.getName().toLowerCase().contains(lowerCaseFilter))
+						{
 							return true;
-						} else if (newValue.matches("[0-9]+")) {
-							if (user.getId() == Integer.parseInt(newValue)) {
+						}
+						else if (newValue.matches("[0-9]+"))
+						{
+							if (user.getId() == Integer.parseInt(newValue))
+							{
 								return true;
 							}
 						}
 						return false;
 					});
-				} else {
+				}
+				else
+				{
 					drawer.setVisible(false);
 					drawer.close();
 					friendlist.setVisible(true);
@@ -333,16 +388,21 @@ public class FreundeslisteController {
 			newFriendlist.setItems(sortedData);
 
 			newFriendlist.getSelectionModel().select(0);
-		} catch (IOException e2) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Filtern der Nutzerliste!", (Stage) friendlist.getScene().getWindow(), e2);
+		}
+		catch (IOException e2)
+		{
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Filtern der Nutzerliste!",
+					(Stage) friendlist.getScene().getWindow(), e2);
 		}
 	}
 
 	/**
 	 * Diese Methode initialisert das Popup-Stage in der Freundesliste
 	 */
-	private void initPopup() {
-		try {
+	private void initPopup()
+	{
+		try
+		{
 			popupstage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("Popup.fxml"));
@@ -353,8 +413,11 @@ public class FreundeslisteController {
 			mainAnchor = (AnchorPane) loader.load();
 			Scene scene = new Scene(mainAnchor);
 			popupstage.setScene(scene);
-		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Popup-Fensters!", (Stage) friendlist.getScene().getWindow(), e);
+		}
+		catch (Exception e)
+		{
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Popup-Fensters!",
+					(Stage) friendlist.getScene().getWindow(), e);
 		}
 	}
 
@@ -366,7 +429,8 @@ public class FreundeslisteController {
 	 * @throws IOException
 	 */
 	@FXML
-	private void friendPopupMenu(MouseEvent event) throws IOException {
+	private void friendPopupMenu(MouseEvent event) throws IOException
+	{
 		JFXPopup popup = new JFXPopup();
 		JFXButton b1 = new JFXButton("Nachrichten");
 		JFXButton b2 = new JFXButton("Freund entfernen");
@@ -386,8 +450,8 @@ public class FreundeslisteController {
 		popup.show(friendlist, event.getX(), event.getY());
 	}
 
-
-	public static Stage getPopupstage() {
+	public static Stage getPopupstage()
+	{
 		return popupstage;
 	}
 

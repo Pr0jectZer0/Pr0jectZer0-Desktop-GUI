@@ -50,27 +50,27 @@ public class TimeCompare
 				}
 				else
 				{
-					if(c1Hour < c2Hour)
+					if (c1Hour < c2Hour)
 					{
 						return true;
 					}
-					else if(c1Hour > c2Hour)
+					else if (c1Hour > c2Hour)
 					{
 						return false;
 					}
 					else
 					{
-						if(c1Minute < c2Minute)
+						if (c1Minute < c2Minute)
 						{
 							return true;
 						}
-						else if(c1Minute > c2Minute)
+						else if (c1Minute > c2Minute)
 						{
 							return false;
 						}
 						else
 						{
-							if(c1Second < c2Second)
+							if (c1Second < c2Second)
 							{
 								return true;
 							}

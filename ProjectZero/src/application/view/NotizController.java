@@ -27,160 +27,208 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Controller-Klasse für die Notizenfunktion
+ * Controller-Klasse fï¿½r die Notizenfunktion
  * 
  * @author Dorsch, Deutsch, Penner, Kramer
  */
-public class NotizController {
+public class NotizController
+{
 	@FXML
 	private JFXTextArea selectedNoteText;
 	@FXML
 	private JFXTextArea selectedNoteTitle;
-	
+
 	@FXML
 	private TableColumn<Note, String> noteNameCol;
 	@FXML
 	private TableColumn<Note, Integer> noteIdCol;
-	
+
 	@FXML
 	private TableView<Note> noteList;
 	@FXML
 	private TableView<User> memberList;
-	
+
 	@FXML
 	private TableColumn<User, String> memberNameCol;
 	@FXML
 	private TableColumn<User, Integer> memberIdCol;
-	
+
 	@FXML
 	private JFXButton btnSelectNote;
 	@FXML
 	private JFXButton btnNewNote;
 	@FXML
 	private JFXButton btnSaveNote;
-	
+
 	@FXML
 	private Stage confStage;
-	
+
 	private AnchorPane popAnchor;
-	
-	
-	//-3 = Notiz offen und gespeichert, -2 = noch keine Notiz geï¿½ffnet, -1 = neue Notiz offen NICHT gespeichert, rest = ID der Notiz (NICHT gespeichert)
-	//private int currentNoteId = -2;
+
+	// -3 = Notiz offen und gespeichert, -2 = noch keine Notiz geï¿½ffnet, -1 =
+	// neue Notiz offen NICHT gespeichert, rest = ID der Notiz (NICHT
+	// gespeichert)
+	// private int currentNoteId = -2;
 	private String currentNoteTitle;
 	private String currentNoteText;
 	private Note currentNote;
-	
+
 	private static NotizController notizcontroller;
 
-	//-1 = neue Notiz, sonst ID der Notiz
+	// -1 = neue Notiz, sonst ID der Notiz
 	private int currentNoteId = -1;
 
-	
 	/**
 	 * Initialisierung
 	 */
 	@FXML
-	private void initialize() {
+	private void initialize()
+	{
 		notizcontroller = this;
 		initNoteList();
 		initMemberList();
 	}
+
 	/**
 	 * Initialiesierung der Notizen-Liste
 	 */
-	private void initNoteList() {
-		try {
+	private void initNoteList()
+	{
+		try
+		{
 			noteList.setItems(Notes.getNotesFromUser());
 			newNoteAction();
-		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab einen Fehler beim Hinzufï¿½gen aller Notizen!", (Stage) noteList.getScene().getWindow(), e);
+		}
+		catch (Exception e)
+		{
+			ErrorWindow.newErrorWindow("Es gab einen Fehler beim Hinzufï¿½gen aller Notizen!",
+					(Stage) noteList.getScene().getWindow(), e);
 		}
 		noteIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
 		noteNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
-		
-		noteList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+		noteList.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
 			@Override
-			public void handle(MouseEvent event) {
-				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.PRIMARY) {
-					try {
+			public void handle(MouseEvent event)
+			{
+				if (event.getEventType() == MouseEvent.MOUSE_CLICKED && event.getButton() == MouseButton.PRIMARY)
+				{
+					try
+					{
 						selectNoteAction();
-					} catch (Exception e) {
-						ErrorWindow.newErrorWindow("Es gab ein Fehler beim öffnen der Notiz!", (Stage) noteList.getScene().getWindow(), e);
+					}
+					catch (Exception e)
+					{
+						ErrorWindow.newErrorWindow("Es gab ein Fehler beim ï¿½ffnen der Notiz!",
+								(Stage) noteList.getScene().getWindow(), e);
 					}
 
 				}
 			}
 		});
 	}
-	
-	private void initMemberList() {
-		try {
+
+	private void initMemberList()
+	{
+		try
+		{
 			memberList.setItems(Friends.getFriends());
-		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim laden der Freunde!", (Stage) noteList.getScene().getWindow(), e);
+		}
+		catch (Exception e)
+		{
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim laden der Freunde!",
+					(Stage) noteList.getScene().getWindow(), e);
 		}
 		memberIdCol.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
 		memberNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 	}
-	
+
 	/**
-	 * Methode, die ausgeführt wird, wenn btnNewNote genutzt wird.
+	 * Methode, die ausgefï¿½hrt wird, wenn btnNewNote genutzt wird.
 	 */
 	@FXML
-	private void newNoteAction() {
+	private void newNoteAction()
+	{
 		selectedNoteTitle.setText("Bitte Titel eingeben");
 		selectedNoteText.setText("Bitte Text eingeben");
 		currentNoteTitle = "Bitte Titel eingeben";
 		currentNoteText = "Bitte Text eingeben";
 		currentNoteId = -1;
 	}
+
 	/**
-	 * Methode, die ausgeführt wird, wenn btnSaveNote genutzt wird.
+	 * Methode, die ausgefï¿½hrt wird, wenn btnSaveNote genutzt wird.
 	 */
 	@FXML
-	private void saveNoteAction() {
-		if(currentNoteId < -1) {
-			
-		}else if(currentNoteId == -1) {
-			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
-				try {
+	private void saveNoteAction()
+	{
+		if (currentNoteId < -1)
+		{
+
+		}
+		else if (currentNoteId == -1)
+		{
+			if (!(selectedNoteTitle.getText().equals(currentNoteTitle))
+					|| !(selectedNoteText.getText().equals(currentNoteText)))
+			{
+				try
+				{
 					Note tempNote = Notes.createNote(selectedNoteTitle.getText(), selectedNoteText.getText());
-					if(tempNote != null) {
+					if (tempNote != null)
+					{
 						currentNoteId = -3;
 						currentNoteTitle = tempNote.getTitle();
 						currentNoteText = tempNote.getText();
 						noteList.getItems().add(tempNote);
 					}
-				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!", (Stage) noteList.getScene().getWindow(), e);
+				}
+				catch (Exception e)
+				{
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der neuen Notiz!",
+							(Stage) noteList.getScene().getWindow(), e);
 				}
 			}
 
-		}else {
-			if(!(selectedNoteTitle.getText().equals(currentNoteTitle)) || !(selectedNoteText.getText().equals(currentNoteText))) {
-				try {
-					Note tempNote = Notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(), currentNoteId);
-					if(tempNote != null) {
+		}
+		else
+		{
+			if (!(selectedNoteTitle.getText().equals(currentNoteTitle))
+					|| !(selectedNoteText.getText().equals(currentNoteText)))
+			{
+				try
+				{
+					Note tempNote = Notes.changeNote(selectedNoteTitle.getText(), selectedNoteText.getText(),
+							currentNoteId);
+					if (tempNote != null)
+					{
 						noteList.getItems().set(noteList.getItems().indexOf(currentNote), tempNote);
 						currentNote = tempNote;
 						currentNoteId = -3;
 						currentNoteTitle = tempNote.getTitle();
 						currentNoteText = tempNote.getText();
 					}
-				} catch (Exception e) {
-					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der Notiz!", (Stage) noteList.getScene().getWindow(), e);
 				}
+				catch (Exception e)
+				{
+					ErrorWindow.newErrorWindow("Es gab ein Fehler beim speichern der Notiz!",
+							(Stage) noteList.getScene().getWindow(), e);
 				}
+			}
 		}
 		noteList.refresh();
-				
+
 	}
+
 	@FXML
-	private void selectNoteAction() {
-		if(/*(currentNoteId <= -2)||*/((selectedNoteTitle.getText().equals(currentNoteTitle)) && (selectedNoteText.getText().equals(currentNoteText)))) {
+	private void selectNoteAction()
+	{
+		if (/* (currentNoteId <= -2)|| */((selectedNoteTitle.getText().equals(currentNoteTitle))
+				&& (selectedNoteText.getText().equals(currentNoteText))))
+		{
 			Note tempNote = noteList.getSelectionModel().getSelectedItem();
-			if (tempNote != null){
+			if (tempNote != null)
+			{
 				currentNote = tempNote;
 				currentNoteId = tempNote.getID();
 				selectedNoteTitle.setText(tempNote.getTitle());
@@ -188,20 +236,26 @@ public class NotizController {
 				currentNoteTitle = tempNote.getTitle();
 				currentNoteText = tempNote.getText();
 			}
-		}else {
+		}
+		else
+		{
 			loadConfirmationPopup();
 		}
 	}
-		
+
 	@FXML
-	private void deleteNoteAction() {
-		if(currentNoteId == -1) {
+	private void deleteNoteAction()
+	{
+		if (currentNoteId == -1)
+		{
 			selectedNoteTitle.setText("Bitte Titel eingeben");
 			selectedNoteText.setText("Bitte Text eingeben");
 			currentNoteTitle = "Bitte Titel eingeben";
 			currentNoteText = "Bitte Text eingeben";
 			currentNoteId = -1;
-		}else if(currentNoteId == -3 || currentNoteId > -1) {
+		}
+		else if (currentNoteId == -3 || currentNoteId > -1)
+		{
 			Notes.deleteNote(currentNote.getID());
 			noteList.getItems().remove(noteList.getItems().indexOf(currentNote));
 			selectedNoteTitle.setText("Bitte Titel eingeben");
@@ -212,8 +266,11 @@ public class NotizController {
 		}
 		noteList.refresh();
 	}
-	private void loadConfirmationPopup() {
-		try {
+
+	private void loadConfirmationPopup()
+	{
+		try
+		{
 			confStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("ConfirmPopup.fxml"));
@@ -221,35 +278,52 @@ public class NotizController {
 			popAnchor = (AnchorPane) loader.load();
 			Scene scene = new Scene(popAnchor);
 			confStage.setScene(scene);
-			confStage.setY(selectedNoteTitle.getLayoutY()+300);
-			confStage.setX(selectedNoteTitle.getLayoutX()+700);
-		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim öffnen des Popup-Fensters!", (Stage) noteList.getScene().getWindow(), e);
+			confStage.setY(selectedNoteTitle.getLayoutY() + 300);
+			confStage.setX(selectedNoteTitle.getLayoutX() + 700);
+		}
+		catch (Exception e)
+		{
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim ï¿½ffnen des Popup-Fensters!",
+					(Stage) noteList.getScene().getWindow(), e);
 		}
 	}
-	public Stage getConfStage() {
+
+	public Stage getConfStage()
+	{
 		return this.confStage;
 	}
-	public static NotizController getNotizController() {
+
+	public static NotizController getNotizController()
+	{
 		return notizcontroller;
 	}
-	public void saveExtern() {
+
+	public void saveExtern()
+	{
 		saveNoteAction();
 	}
-	public void dontSave() {
+
+	public void dontSave()
+	{
 		selectedNoteTitle.setText(currentNoteTitle);
 		selectedNoteText.setText(currentNoteText);
 	}
+
 	@FXML
-	private void addMemberAction() {
-		if(currentNoteId > -1) {
+	private void addMemberAction()
+	{
+		if (currentNoteId > -1)
+		{
 			User tempUser = memberList.getSelectionModel().getSelectedItem();
-			try {
+			try
+			{
 				Notes.addUserToNote(currentNote.getID(), tempUser.getId());
-			} catch (Exception e) {
-				ErrorWindow.newErrorWindow("Es gab ein Fehler beim hinzufügen des Mitglieds!", (Stage) noteList.getScene().getWindow(), e);
-			} 
+			}
+			catch (Exception e)
+			{
+				ErrorWindow.newErrorWindow("Es gab ein Fehler beim hinzufï¿½gen des Mitglieds!",
+						(Stage) noteList.getScene().getWindow(), e);
+			}
 		}
 	}
 }
-

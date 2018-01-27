@@ -12,33 +12,41 @@ import org.junit.Test;
 
 import application.api.Friends.FriendAddState;
 
-public class FriendsTest {
-	
+public class FriendsTest
+{
+
 	private static int friendID = DummyData.user2ID;
-	
+
 	@Before
-	public void setUp() {
+	public void setUp()
+	{
 		User.login(DummyData.userEmail, DummyData.userPW);
 	}
-	
+
 	@Test
-	public void testAddFriendValid() {
+	public void testAddFriendValid()
+	{
 		Friends.delete(friendID);
 		assertEquals(Friends.add(friendID), Friends.FriendAddState.Success);
 	}
-	
+
 	@Test
-	public void testAddAlreadyFriends() {
+	public void testAddAlreadyFriends()
+	{
 		Friends.add(friendID);
 		assertEquals(Friends.add(friendID), FriendAddState.AlreadyFriends);
 	}
-	
+
 	@Test
-	public void testGetFriends() {
+	public void testGetFriends()
+	{
 		Friends.add(friendID);
-		try {
+		try
+		{
 			assertNotNull(Friends.getFriends());
-		} catch (JSONException | IOException e) {
+		}
+		catch (JSONException | IOException e)
+		{
 			fail(e.getMessage());
 		}
 	}

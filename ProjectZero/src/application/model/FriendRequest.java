@@ -5,39 +5,47 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class FriendRequest {
-	
+public class FriendRequest
+{
+
 	private final IntegerProperty id;
 	private final StringProperty userName;
 	private final IntegerProperty userId;
-	
-	public FriendRequest(int id, String userName, int userId) {
+
+	public FriendRequest(int id, String userName, int userId)
+	{
 		this.id = new SimpleIntegerProperty(id);
 		this.userName = new SimpleStringProperty(userName);
 		this.userId = new SimpleIntegerProperty(userId);
 	}
-	
-	public int getId() {
+
+	public int getId()
+	{
 		return id.get();
 	}
 
-	public IntegerProperty idProperty() {
+	public IntegerProperty idProperty()
+	{
 		return id;
 	}
-	
-	public String getUserName() {
+
+	public String getUserName()
+	{
 		return userName.get();
 	}
 
-	public StringProperty userNameProperty() {
-		return userName;	
+	public StringProperty userNameProperty()
+	{
+		return userName;
 	}
-	
-	public int getUserId() {
+
+	public int getUserId()
+	{
 		return userId.get();
 	}
 
-	public IntegerProperty userIdProperty() {
+	public IntegerProperty userIdProperty()
+	{
 		return userId;
 	}
 }

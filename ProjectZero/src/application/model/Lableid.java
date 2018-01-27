@@ -6,16 +6,17 @@ public class Lableid extends Label
 {
 	private int groupid;
 	private boolean istest;
-	
+
 	public Lableid(int id)
 	{
 		groupid = id;
 		istest = false;
 	}
+
 	public Lableid()
 	{
 		istest = true;
-		setText("Neu hinzufügen");
+		setText("Neu hinzufï¿½gen");
 		setStyle("-fx-text-fill: #0db518");
 	}
 
@@ -28,8 +29,9 @@ public class Lableid extends Label
 	{
 		this.groupid = groupid;
 	}
+
 	public boolean istest()
 	{
 		return istest;
-	}	
+	}
 }

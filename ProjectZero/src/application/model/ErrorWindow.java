@@ -11,9 +11,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
-public class ErrorWindow {
+public class ErrorWindow
+{
 
-	public static void newErrorWindow(String msg, Stage owner, Exception e) {
+	public static void newErrorWindow(String msg, Stage owner, Exception e)
+	{
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Fehler!");
 		alert.setHeaderText(msg);
