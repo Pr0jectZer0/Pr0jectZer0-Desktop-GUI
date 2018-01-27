@@ -23,7 +23,10 @@ public class Games
 	private Games()
 	{
 	}
-
+/**
+ * Gibt eine Liste mit allen Publishern zurück
+ * @return Liste mit allen Publishern
+ */
 	public static List<application.model.Publisher> getPublishers() throws JSONException, IOException
 	{
 		List<application.model.Publisher> publisherList = new ArrayList<application.model.Publisher>();
@@ -37,7 +40,10 @@ public class Games
 		}
 		return publisherList;
 	}
-
+/**
+ * Gibt eine Liste mit allen Genres zurück
+ * @return Liste mit allen Genres
+ */
 	public static List<application.model.Genre> getGenres() throws JSONException, IOException
 	{
 		List<application.model.Genre> genreList = new ArrayList<application.model.Genre>();
@@ -51,7 +57,10 @@ public class Games
 		}
 		return genreList;
 	}
-
+/**
+ * Gibt eine Liste mit allen Spielen zurück
+ * @return Liste mit allen Spielen
+ */
 	public static List<application.model.Game> getGames() throws JSONException, IOException
 	{
 		List<application.model.Game> gameList = new ArrayList<application.model.Game>();
@@ -67,13 +76,12 @@ public class Games
 	}
 
 	/**
-	 * 
-	 * @param genreID
-	 * @param publisherID
-	 * @param name
-	 * @param description
+	 * Fügt ein Spiel der Datenbank hinzu
+	 * @param genreID ID des Genres
+	 * @param publisherID ID des Publishers
+	 * @param name Name des Spiels
+	 * @param description Beschreibung des Spiels
 	 * @return the new id of the added game
-	 * @throws IOException
 	 */
 	public static int addGame(int genreID, int publisherID, String name, String description) throws IOException
 	{
@@ -88,11 +96,9 @@ public class Games
 	}
 
 	/**
-	 * 
-	 * @param game_id
-	 * @return
-	 * @throws JSONException
-	 * @throws IOException
+	 * Löscht eine Spiel aus der Datenbank
+	 * @param game_id ID des Spiels
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
 	 */
 	public static boolean deleteGame(int gameID) throws JSONException, IOException
 	{

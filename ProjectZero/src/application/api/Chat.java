@@ -22,7 +22,11 @@ public class Chat
 	private Chat()
 	{
 	}
-
+/**
+ * Gibt die Chatroom id von dem zugehörigen User zurück
+ * @param userID  ID vom User
+ * @return ID vom Chatroom
+ */
 	public static int getChatroomID(int userID)
 	{
 		try
@@ -36,7 +40,11 @@ public class Chat
 			return -1;
 		}
 	}
-
+/**
+ * Gibt alle Nachrichten von einem privat-Chat zurück
+ * @param chatID ID vom Chat
+ * @return Liste mit Nachrichten-objekte
+ */
 	public static List<Message> getMessages(int chatID)
 	{
 		if (chatID < 0)
@@ -66,15 +74,19 @@ public class Chat
 			return null;
 		}
 	}
-
-	public static List<Message> getGroupMessages(int chatID)
+/**
+ * Gibt alle Gruppennachrichten zurück
+ * @param gruppenID ID der Gruppe
+ * @return Liste mit Nachrichten der Gruppe
+ */
+	public static List<Message> getGroupMessages(int gruppenID)
 	{
-		if (chatID < 0)
+		if (gruppenID < 0)
 			return null;
 		try
 		{
 			String response = HttpWebRequest
-					.sendGetRequest("groupchat/" + chatID + "/messages?token=" + application.api.User.getLoginToken());
+					.sendGetRequest("groupchat/" + gruppenID + "/messages?token=" + application.api.User.getLoginToken());
 			JSONArray messages = new JSONObject(response).getJSONArray("message");
 			List<Message> messageList = new ArrayList<Message>();
 			for (int i = 0; i < messages.length(); i++)
@@ -96,7 +108,12 @@ public class Chat
 			return null;
 		}
 	}
-
+/**
+ * Sendet eine Nachricht an einen bestimmten privat-Chat
+ * @param chatID ID des Chats
+ * @param message Nachricht die verschickt werden soll
+ * @return Rückmeldung ob es geklappt hat, true = geklappt
+ */
 	public static boolean sendMessage(int chatID, String message)
 	{
 		if (message == null || message.isEmpty())
@@ -113,8 +130,13 @@ public class Chat
 			return false;
 		}
 	}
-
-	public static boolean sendGroupMessage(int chatID, String message)
+	/**
+	 * Sendet eine Nachricht an einen bestimmten Gruppenchat
+	 * @param gruppenID ID der Gruppe
+	 * @param message Nachricht die verschickt werden soll
+	 * @return Rückmeldung ob es geklappt hat, true = geklappt
+	 */
+	public static boolean sendGroupMessage(int gruppenID, String message)
 	{
 		if (message == null || message.isEmpty())
 			return false;
@@ -122,7 +144,7 @@ public class Chat
 		try
 		{
 			String response = HttpWebRequest.sendPostRequest(
-					"groupchat/" + chatID + "/messages?token=" + application.api.User.getLoginToken(), parameter);
+					"groupchat/" + gruppenID + "/messages?token=" + application.api.User.getLoginToken(), parameter);
 			return response.contains("Nachricht wurde gesendet.");
 		}
 		catch (IOException e)

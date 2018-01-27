@@ -16,6 +16,7 @@ import application.model.Note;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 /**
  * Das ist die Api-Klasse für die Gruppen
  * 
@@ -33,14 +34,10 @@ public class Groups
 	private static ObservableList<GroupRequest> groupRequests = null;
 
 	/**
-	 * 
-	 * @param name
-	 *            of the group
-	 * @param description
-	 *            of the group
-	 * @return the created group or null on ServerError
-	 * @throws IOException
-	 * @throws JSONException
+	 * Methode zum Erstellen der Gruppe
+	 * @param name Name der Grupe
+	 * @param description Beschreibung der Gruppe
+	 * @return die erstellte Gruppe
 	 */
 	public static Group createGroup(String name, String description) throws JSONException, IOException
 	{
@@ -53,12 +50,9 @@ public class Groups
 	}
 
 	/**
-	 * 
-	 * @param id
-	 *            of the group
-	 * @return the group object assigned to this id
-	 * @throws IOException
-	 *             on ServerError
+	 * Gibt die Gruppe von einer ID zurück
+	 * @param id ID der Gruppe
+	 * @return die Gruppe die zu dieser ID gehört
 	 */
 	public static Group getGroupByID(int id) throws IOException
 	{
@@ -89,12 +83,8 @@ public class Groups
 	}
 
 	/**
-	 * 
-	 * @return all groups existing
-	 * @throws JSONException
-	 *             on JSON not well formed
-	 * @throws IOException
-	 *             on ServerError
+	 * Gibt alle Gruppen zurück die in der Datenbank verzeichnet sind
+	 * @return Liste mit allen Gruppen
 	 */
 	public static ObservableList<Group> getAllGroups() throws JSONException, IOException
 	{
@@ -119,9 +109,8 @@ public class Groups
 	}
 
 	/**
-	 * @return all groups where the current user is member or admin
-	 * @throws IOException
-	 * @throws JSONException
+	 * Gibt eine Liste mit allen Gruppen des eingeloggten Benutzers zurück
+	 * @return alle Gruppen, wo der Benutzer admin oder teilnehmer von ist
 	 */
 	public static ObservableList<Group> getUserGroups() throws JSONException, IOException
 	{
@@ -156,7 +145,12 @@ public class Groups
 		}
 		return userGroups;
 	}
-
+	/**
+	 * Methode zum hinzufügen eines Benutzers zu einer Gruppe
+	 * @param userID ID des Benutzers der hinzugefügt werden soll
+	 * @param groupID ID der zugehörigen Gruppe
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+	 */
 	public static boolean addUserToGroup(int userID, int groupID) throws JSONException, IOException
 	{
 		if (userID < 0 || groupID <= 0)
@@ -166,7 +160,12 @@ public class Groups
 				"group/" + groupID + "/add_user?token=" + application.api.User.getLoginToken(), parameter));
 		return response.getString("message").equals("User wurde in Gruppe hinzugef�gt.");
 	}
-
+	/**
+	 * Methode zum kicken eines Benutzers aus einer Gruppe
+	 * @param userID ID des Benutzers der gekickt werden soll
+	 * @param groupID ID der zugehörigen Gruppe
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+	 */
 	public static boolean deleteUserFromGroup(int userID, int groupID) throws JSONException, IOException
 	{
 		if (userID < 0 || groupID <= 0)
@@ -176,35 +175,57 @@ public class Groups
 				"group/" + groupID + "/remove_user?token=" + application.api.User.getLoginToken(), parameter));
 		return response.getString("message").equals("User wurde aus Gruppe entfenrt.");
 	}
-
+	/**
+	 * 
+	 * @param userID ID des Benutzers
+	 * @param groupID ID der zugehörigen Gruppe
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+	 */
 	public static boolean acceptGroup(int groupID, int userID) throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest(
 				"group/" + groupID + "/accept/userID" + "?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
-
+	/**
+	 *
+	 * @param userID ID des Benutzers 
+	 * @param groupID ID der zugehörigen Gruppe
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+	 */
 	public static boolean declineGroup(int groupID, int userID) throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(HttpWebRequest.sendGetRequest(
 				"group/" + groupID + "/decline/" + userID + "?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
-
+	/**
+	 * Methode zum akzeptieren einer Gruppenanfrage
+	 * @param groupID ID der zugehörigen Gruppe
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+	 */
 	public static boolean acceptGroupRequest(int groupID) throws JSONException, IOException
 	{
 		JSONObject reponse = new JSONObject(HttpWebRequest
 				.sendGetRequest("user/group/" + groupID + "/accept?token=" + application.api.User.getLoginToken()));
 		return reponse.has("message");
 	}
-
+	/**
+	 * Methode zum ablehnen einer Gruppenanfrage
+	 * @param groupID ID der zugehörigen Gruppe
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+	 */
 	public static boolean declineGroupRequest(int groupID) throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(HttpWebRequest
 				.sendGetRequest("user/group/" + groupID + "/decline?token=" + application.api.User.getLoginToken()));
 		return response.has("message");
 	}
-
+/**
+ * Methode zum löschen einer Gruppe
+ * @param id ID der Gruppe
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean deleteGroup(int id)
 	{
 		if (id < 0)
@@ -224,7 +245,12 @@ public class Groups
 			return false;
 		}
 	}
-
+/**
+ * Methode zum hinzugfügen einer Gruppe zu einer Notiz
+ * @param groupID ID der Gruppe
+ * @param noteID ID der Notiz
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean addGroupNote(int groupID, int noteID)
 	{
 		if (groupID < 0 || noteID < 0)
@@ -241,7 +267,11 @@ public class Groups
 			return false;
 		}
 	}
-
+/**
+ * Gibt eine Liste mit Notizen einer Gruppe zurück
+ * @param groupID ID der Gruppe
+ * @return Liste mit Notizen der Gruppe
+ */
 	public static List<Note> getGroupNotes(int groupID) throws JSONException, IOException
 	{
 		if (groupID <= 0)
@@ -295,7 +325,10 @@ public class Groups
 				"groupchat/" + groupID + "/messages?token=" + application.api.User.getLoginToken(), parameters));
 		return response.getString("message").equals("Nachricht wurde gesendet.");
 	}
-
+/**
+ * Gibt Liste mit allen offenen Gruppenanfragen zurück
+ * @return Liste mit Gruppenanfragen
+ */
 	public static ObservableList<GroupRequest> getGroupRequests() throws JSONException, IOException
 	{
 		if (groupRequests == null)

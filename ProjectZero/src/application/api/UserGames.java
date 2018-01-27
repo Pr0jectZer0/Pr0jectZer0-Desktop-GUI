@@ -25,10 +25,9 @@ public class UserGames
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws IOException
+	 * Methode zum hinzufügen eines Spiels zur Spielebibliothek
+	 * @param id ID des Spiels
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
 	 */
 	public static boolean add(int id) throws IOException
 	{
@@ -41,9 +40,9 @@ public class UserGames
 	}
 
 	/**
-	 * 
-	 * @param id
-	 * @return
+	 * Methode zum löschen eines Spiels aus der Spielebibliothek
+	 * @param id ID des Spiels
+	 * @return Rückmeldung, ob es geklappt hat(true = geklappt)
 	 * @throws IOException
 	 */
 	public static boolean delete(int id) throws IOException
@@ -54,7 +53,10 @@ public class UserGames
 				HttpWebRequest.sendDeleteRequest("user/game/remove/" + id + "?token=" + User.getLoginToken()));
 		return response.getString("message").equals("Spiel wurde aus Liste entfernt.");
 	}
-
+/**
+ * Gibt alle Spiele aus der Spielebibliothek des eingeloggten Benutzers zurück
+ * @return Liste mit Spielen
+ */
 	public static ObservableList<Game> getGames() throws JSONException, IOException
 	{
 		if (games == null)

@@ -24,7 +24,11 @@ public class Friends
 	private Friends()
 	{
 	}
-
+	/**
+	 * Methode zum hinzufügen eines Freundes
+	 * @param id ID des Freundes der hinzugefügt werden soll
+	 * @return enum-state als Rückmeldung, ob es geklappt hat
+	 */
 	public static FriendAddState add(int id)
 	{
 		try
@@ -43,7 +47,11 @@ public class Friends
 			return FriendAddState.ServerError;
 		}
 	}
-
+	/**
+	 * Methode zum löschen eines Freundes aus der Freundesliste
+	 * @param id ID des Freundes der entfehrnt werden soll
+	 * @return Rückmeldung, ob das löschen geklappt hat(true = geklappt)
+	 */
 	public static boolean delete(int id)
 	{
 		try
@@ -62,7 +70,10 @@ public class Friends
 	{
 		Success, AlreadyFriends, ServerError,
 	}
-
+	/**
+	 * Gibt die Freundesliste des eingeloggten Benutzers zurück
+	 * @return Liste mit Freunden des Nutzers
+	 */
 	public static ObservableList<User> getFriends() throws JSONException, IOException
 	{
 		if (friends == null)
@@ -83,14 +94,22 @@ public class Friends
 		}
 		return friends;
 	}
-
+/**
+ * Methode zum annehmen einer Freundschaftsanfrage
+ * @param requestID ID der Anfrage
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean acceptRequest(int requestID) throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(HttpWebRequest
 				.sendGetRequest("friend/" + requestID + "/accept?token=" + application.api.User.getLoginToken()));
 		return response.getString("message").equals("Freundschaftsanfrage wurde angenommen.");
 	}
-
+/**
+ * Methode zum ablehnen einer Freundschaftsanfrage
+ * @param requestID ID der Anfrage
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean declineRequest(int requestID) throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(HttpWebRequest
@@ -98,7 +117,10 @@ public class Friends
 		System.out.println(response);
 		return response.getString("message").equals("Freundschaftsanfrage wurde abgelehnt.");
 	}
-
+/**
+ * Gibt eine Liste mit allen ausstehenden Freunschaftsanfragen zurück
+ * @return Liste mit austehendenden Freunschaftsanfragen
+ */
 	public static ObservableList<application.model.FriendRequest> getFriendRequests() throws JSONException, IOException
 	{
 		if (friendRequests == null)

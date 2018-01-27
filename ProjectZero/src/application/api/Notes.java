@@ -25,7 +25,12 @@ public class Notes
 	}
 
 	private static ObservableList<Note> userNotes = null;
-
+  /**
+   * Gibt alle Notizen des Benutzers zurück
+   * @return Liste mit Notizen des Benutzers
+   * @throws JSONException
+   * @throws IOException
+   */
 	public static ObservableList<Note> getNotesFromUser() throws JSONException, IOException
 	{
 		if (userNotes == null)
@@ -46,7 +51,12 @@ public class Notes
 		}
 		return userNotes;
 	}
-
+/**
+ * Methode zum erstellen einer Notiz
+ * @param title Titel der Notiz
+ * @param text Inhalt der Notiz
+ * @return Die erstellte Notiz
+ */
 	public static Note createNote(String title, String text) throws JSONException, IOException
 	{
 		if (title == null || text == null || title.isEmpty() || text.isEmpty())
@@ -62,7 +72,11 @@ public class Notes
 		String textGot = response.getString("text");
 		return new Note(titleGot, textGot, userID, id);
 	}
-
+/**
+ * Gibt die Notiz einer ID zurück
+ * @param id ID der Notiz
+ * @return die Notiz
+ */
 	public static Note getNoteByID(int id) throws JSONException, IOException
 	{
 		if (id < 0)
@@ -80,7 +94,13 @@ public class Notes
 		String text = note.getString("text");
 		return new Note(title, text, userID, idgot);
 	}
-
+/**
+ * Methode zum ändern einer Notiz
+ * @param title neuer Titel
+ * @param text neuer Inhalt
+ * @param id ID der Notiz
+ * @return die neue Notiz
+ */
 	public static Note changeNote(String title, String text, int id) throws JSONException, IOException
 	{
 		if (title == null || text == null || id < 0 || title.isEmpty() || text.isEmpty())
@@ -99,7 +119,11 @@ public class Notes
 		String textGot = note.getString("text");
 		return new Note(titleGot, textGot, userID, idgot);
 	}
-
+/**
+ * Methode zum löschen einer Notiz
+ * @param id ID der Notiz
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean deleteNote(int id)
 	{
 		if (id < 0)
@@ -122,7 +146,12 @@ public class Notes
 			return false;
 		}
 	}
-
+/**
+ * Methode zum hinzufügen eines Benutzers zu einer Notiz
+ * @param noteID ID der Notiz
+ * @param userID ID des Benutzers
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean addUserToNote(int noteID, int userID) throws JSONException, IOException
 	{
 		if (userID < 0 || noteID < 0)
@@ -134,7 +163,12 @@ public class Notes
 				.sendPostRequest("note/" + noteID + "/add_user?token=" + User.getLoginToken(), parameter));
 		return response.getString("message").equals("Notiz anfrage wurde an User gesendet.");
 	}
-
+/**
+ * Methode um einen Benutzer von einer Notiz zu entfernen
+ * @param noteID ID der Notiz 
+ * @param userID ID von dem Benutzer der entfernt werden soll
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean deleteUserFromNote(int noteID, int userID) throws JSONException, IOException
 	{
 		if (userID < 0 || noteID < 0)
@@ -145,7 +179,10 @@ public class Notes
 				.sendPostRequest("note/" + noteID + "/remove_user?token=" + User.getLoginToken() + "&id=" + userID));
 		return response.getString("message").equals("User wurde aus Notiz entfernt.");
 	}
-
+/**
+ * Alle Notizanfragen von dem eingeloggten Benutzer
+ * @return Liste mit Notizanfragen
+ */
 	public static List<Note> getNoteRequests() throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(

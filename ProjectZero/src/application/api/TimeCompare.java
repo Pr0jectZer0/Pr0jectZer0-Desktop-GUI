@@ -8,6 +8,12 @@ import java.util.Calendar;
  */
 public class TimeCompare
 {
+	/**
+	 * Methode zum überprüfen ob ein Termin vor einem anderen liegt
+	 * @param c1 erster Termin
+	 * @param c2 zweiter Termin
+	 * @return der Termin liegt vor dem zweiten = true
+	 */
 	public static boolean before(Calendar c1, Calendar c2)
 	{
 		int c1Year = c1.get(Calendar.YEAR);

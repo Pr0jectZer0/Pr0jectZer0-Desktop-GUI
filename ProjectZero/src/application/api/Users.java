@@ -24,7 +24,10 @@ public class Users
 	private Users()
 	{
 	}
-
+/**
+ * Gibt alle Benutzer die in der Datenbank verzeichnet sind zurück
+ * @return Liste mit Benutzern
+ */
 	public static ObservableList<application.model.User> getUsers() throws JSONException, IOException
 	{
 		if (users == null)
@@ -41,7 +44,10 @@ public class Users
 		}
 		return users;
 	}
-
+/**
+ * Gibt eine Liste mit allen Benutzern zurück, die keine Freunde von dem eingeloggten Benutzer sind
+ * @return Liste mit Benutzern
+ */
 	public static ObservableList<User> getNoFriends() throws JSONException, IOException
 	{
 		if (noFriends == null)
@@ -66,7 +72,11 @@ public class Users
 		}
 		return noFriends;
 	}
-
+/**
+ * Gibt einen Benutzer zu der zugehörigen ID zurück
+ * @param id ID des Benutzers
+ * @return Der Benutzer
+ */
 	public static User getUserByID(int id)
 	{
 		try

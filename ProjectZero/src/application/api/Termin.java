@@ -25,7 +25,14 @@ public class Termin
 	private Termin()
 	{
 	}
-
+/**
+ * Methode zum erstellen eines Termin 
+ * @param title Titel des Termins
+ * @param description Beschreibung des Termin
+ * @param startDate Startdatum des Termins
+ * @param endDate Enddatum des Termins
+ * @return der erstellte Termin
+ */
 	public static application.model.Termin createTermin(String title, String description, String startDate,
 			String endDate) throws JSONException, IOException
 	{
@@ -45,7 +52,11 @@ public class Termin
 		int id = response.getInt("id");
 		return new application.model.Termin(startDateGot, endDateGot, titleGot, descriptionGot, id);
 	}
-
+/**
+ * Methode zum löschen eines Termins
+ * @param id ID des Termins
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean deleteTermin(int id) throws JSONException, IOException
 	{
 		if (id < 0)
@@ -87,7 +98,11 @@ public class Termin
 		int idGot = response.getInt("id");
 		return new application.model.Termin(startDateGot, endDateGot, titleGot, descriptionGot, idGot);
 	}
-
+/**
+ * Gibt den Termin der zugehörigen ID zurück
+ * @param id ID des Termins
+ * @return der Termin
+ */
 	public static application.model.Termin getTerminByID(int id) throws JSONException, IOException
 	{
 		if (id < 0)
@@ -103,7 +118,12 @@ public class Termin
 		int idGot = response.getInt("id");
 		return new application.model.Termin(startDateGot, endDateGot, titleGot, descriptionGot, idGot);
 	}
-
+/**
+ * Methode zum hinzufügen eines Benutzers zu einem Termin
+ * @param userID ID des Benutzers
+ * @param terminID ID des Termins
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean addUserToTermin(int userID, int terminID) throws JSONException, IOException
 	{
 		if (userID < 0 || terminID < 0)
@@ -115,7 +135,12 @@ public class Termin
 				.sendPostRequest("date/" + terminID + "/add_user?token=" + User.getLoginToken(), parameter));
 		return response.getString("message").equals("Termin anfrage wurde an User gesendet.");
 	}
-
+/**
+ * Methode zum entfernen eines Benutzers von einem Termin
+ * @param userID ID des zu entfernenden Nutzers
+ * @param terminID ID des Termins
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean deleteUserFromTermin(int userID, int terminID) throws JSONException, IOException
 	{
 		if (userID < 0 || terminID < 0)
@@ -126,7 +151,10 @@ public class Termin
 				.sendPostRequest("date/" + terminID + "/remove_user?token=" + User.getLoginToken() + "&id=" + userID));
 		return response.getString("message").equals("User wurde aus Termin entfernt.");
 	}
-
+/**
+ * Gibt eine Liste mit allen Terminen des eingeloggten Benutzers zurück
+ * @return Liste mit Terminen
+ */
 	public static List<application.model.Termin> getUserTermine() throws JSONException, IOException
 	{
 		JSONArray dates = new JSONObject(HttpWebRequest.sendGetRequest("dates?token=" + User.getLoginToken()))
@@ -144,7 +172,10 @@ public class Termin
 		}
 		return terminList;
 	}
-
+/**
+ * Gibt eine Liste mit allen geteilten Terminen zurück
+ * @return Liste mit allen geteilten Terminen
+ */
 	public static List<application.model.Termin> getSharedTermine() throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(
@@ -167,7 +198,10 @@ public class Termin
 		}
 		return terminList;
 	}
-
+/**
+ * Gibt eine Liste mit allen austehenden Terminanfragen zurück
+ * @return Liste mit Terminanfragen
+ */
 	public static ObservableList<TerminRequest> getTerminRequests() throws JSONException, IOException
 	{
 		if (terminRequests == null)
@@ -194,14 +228,22 @@ public class Termin
 		}
 		return terminRequests;
 	}
-
+/**
+ * Methode zum annehmen einer Terminanfrage
+ * @param requestID ID der Anfrage
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean acceptRequest(int requestID) throws JSONException, IOException
 	{
 		JSONObject reponse = new JSONObject(
 				HttpWebRequest.sendGetRequest("date/" + requestID + "/accept?token=" + User.getLoginToken()));
 		return reponse.getString("message").equals("User ist jetzt Teilnehmer des Termins.");
 	}
-
+/**
+ * Methode zum ablehnen einer Terminanfrage
+ * @param requestID ID der Anfrage
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean declineRequest(int requestID) throws JSONException, IOException
 	{
 		JSONObject response = new JSONObject(

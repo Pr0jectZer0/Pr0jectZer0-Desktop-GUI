@@ -21,12 +21,18 @@ public final class User
 	private static String loginToken;
 	private static int userID = -1;
 	private static String userName = null, userEmail = null;
-
+ /**
+  * Gibt den LoginToken des eingeloggten Benutzers zurück
+  * @return der LoginToken
+  */
 	public static String getLoginToken()
 	{
 		return loginToken;
 	}
-
+/**
+ * Gibt die ID des eingeloggten Benutzers zurück
+ * @return ID des Benutzers
+ */
 	public static int getUserID() throws JSONException, IOException
 	{
 		if (userID == -1)
@@ -42,12 +48,15 @@ public final class User
 		}
 		return userID;
 	}
-
+/**
+ * Gibt den Benutzernamen des eingeloggten Benutzers zurück
+ * @return der Benutzername
+ */
 	public static String getUserName() throws JSONException, IOException
 	{
 		if (userName == null)
 		{
-			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user")).getJSONObject("user");
+			JSONObject Response = new JSONObject(HttpWebRequest.sendGetRequest("user"+ "?token=" + loginToken)).getJSONObject("user");
 			int id = Response.getInt("id");
 			String name = Response.getString("name");
 			String email = Response.getString("email");
@@ -57,7 +66,10 @@ public final class User
 		}
 		return userName;
 	}
-
+/**
+ * Gibt die E-mail-Adresse von dem eingeloggten Benutzers zurück
+ * @return die E-mail des Benutzers
+ */
 	public static String getUserEmail() throws JSONException, IOException
 	{
 		if (userEmail == null)
@@ -73,7 +85,12 @@ public final class User
 		}
 		return userEmail;
 	}
-
+/**
+ * Methode zum einloggen
+ * @param eMail E-Mail-Adresse des Benutzer
+ * @param password Passwort des Benutzers
+ * @return Rückmeldung, ob es geklappt hat
+ */
 	public static LoginState login(String eMail, String password)
 	{
 		if (eMail == null || eMail.isEmpty() || password == null || password.isEmpty())
@@ -109,7 +126,13 @@ public final class User
 		loginToken = null;
 		return LoginState.ServerError;
 	}
-
+/**
+ * Methode zum Registrieren
+ * @param username Benutzername des Benutzers
+ * @param eMail E-mail des Benutzers
+ * @param password Passwort des Benutzers
+ * @return Rückmeldung, ob es geklappt hat
+ */
 	public static RegisterState register(String username, String eMail, String password)
 	{
 		if (username == null || username.isEmpty() || eMail == null || eMail.isEmpty() || password == null
@@ -143,7 +166,11 @@ public final class User
 	{
 		Success, WrongData, ServerError,
 	}
-
+/**
+ * Methode zum löschen eines Benutzers
+ * @param userID ID des Benutzers
+ * @return Rückmeldung, ob es geklappt hat(true = geklappt)
+ */
 	public static boolean delete(int userID)
 	{
 		if (userID < 0)
