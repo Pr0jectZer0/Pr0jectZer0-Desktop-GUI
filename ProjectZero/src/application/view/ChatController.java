@@ -41,6 +41,9 @@ public class ChatController
 	private int chatroomID;
 	private Pusher pusher;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -132,6 +135,10 @@ public class ChatController
 		});
 	}
 
+	/**
+	 * Diese Methode empfängt Chat-Nachrichten
+	 * @return
+	 */
 	public String getMessages()
 	{
 		List<Message> messages = Chat.getMessages(chatroomID);

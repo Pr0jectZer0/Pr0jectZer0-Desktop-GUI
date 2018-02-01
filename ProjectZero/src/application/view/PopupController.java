@@ -25,6 +25,9 @@ public class PopupController
 	private AnchorPane panemain;
 	private Stage popupstage;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -40,6 +43,9 @@ public class PopupController
 		});
 	}
 
+	/**
+	 * Diese Methode initialisiert das Chat-Fenster
+	 */
 	@FXML
 	private void chat()
 	{
@@ -60,6 +66,9 @@ public class PopupController
 		}
 	}
 
+	/**
+	 * Diese Methode entfernt ein Freund von der Freundesliste
+	 */
 	@FXML
 	private void removeFriend()
 	{

@@ -18,9 +18,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * Controller-Klasse für das Login-Fenster
+ * Controller-Klasse fÃ¼r das Login-Fenster
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class LoginController {
 	@FXML
@@ -35,7 +35,7 @@ public class LoginController {
 	private Main main;
 
 	/**
-	 * Übergibt eine Referenz zu den Controllern der Main-Methode
+	 * ï¿½bergibt eine Referenz zu den Controllern der Main-Methode
 	 * 
 	 * @param main
 	 */
@@ -114,15 +114,23 @@ public class LoginController {
 			registerStage.setResizable(false);
 			registerStage.show();
 		} catch (Exception e) {
-			ErrorWindow.newErrorWindow("Es gab ein Fehler beim Öffnen des Registrier-Fensters!", main.getLoginStage(),
+			ErrorWindow.newErrorWindow("Es gab ein Fehler beim ï¿½ffnen des Registrier-Fensters!", main.getLoginStage(),
 					e);
 		}
 	}
 
+	/**
+	 * Getter: registerStage
+	 * @return
+	 */
 	public Stage getRegisterStage() {
 		return registerStage;
 	}
 
+	/**
+	 * Getter: mainStage
+	 * @return
+	 */
 	public Stage getMainStage() {
 		return mainStage;
 	}

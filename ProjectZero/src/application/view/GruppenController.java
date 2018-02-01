@@ -53,6 +53,9 @@ public class GruppenController
 	private JFXButton btnerstellen;
 	private static GruppenController gc;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -115,6 +118,9 @@ public class GruppenController
 		});
 	}
 
+	/**
+	 * Diese Methode aktualisiert die Gruppenliste
+	 */
 	private void updateGroupList()
 	{
 		listfreunde.getItems().clear();
@@ -171,6 +177,9 @@ public class GruppenController
 		}
 	}
 
+	/**
+	 * Diese Methode kickt ein Gruppenmitglied (vorausgesetzt der Nutzer hat die benötigten Rechte)
+	 */
 	private void kickGroupMember()
 	{
 		if (listgruppenmitglieder.getSelectionModel().getSelectedItem() != null)
@@ -200,6 +209,9 @@ public class GruppenController
 		}
 	}
 
+	/**
+	 * Diese Methode lädt ein Freund in eine Gruppe ein
+	 */
 	private void inviteFriendToGroup()
 	{
 		if (listfreunde.getSelectionModel().getSelectedItem() != null)
@@ -229,6 +241,9 @@ public class GruppenController
 		}
 	}
 
+	/**
+	 * Diese Methode aktualisiert die TableView-Gruppen
+	 */
 	public void updategroups()
 	{
 		gruppen.getItems().clear();
@@ -253,6 +268,10 @@ public class GruppenController
 		}
 	}
 
+	/**
+	 * Getter: gc
+	 * @return
+	 */
 	public static GruppenController getGruppenController()
 	{
 		return gc;

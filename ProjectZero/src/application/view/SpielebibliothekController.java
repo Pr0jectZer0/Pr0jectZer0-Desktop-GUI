@@ -26,6 +26,9 @@ public class SpielebibliothekController
 	@FXML
 	private JFXTextArea selectedGameDescription;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -33,6 +36,9 @@ public class SpielebibliothekController
 		initSelectedGame();
 	}
 
+	/**
+	 * Diese Methode initialisert die Spieleliste in die Spielebibliothek (TableView)
+	 */
 	private void initGames()
 	{
 		try
@@ -45,6 +51,9 @@ public class SpielebibliothekController
 		}
 	}
 
+	/**
+	 * Diese Methode aktualisiert die Anzeige nach dem selektiertem Spiel
+	 */
 	private void initSelectedGame()
 	{
 		gamelist.getSelectionModel().selectedItemProperty()
@@ -55,6 +64,9 @@ public class SpielebibliothekController
 				});
 	}
 
+	/**
+	 * Diese Methode fügt ein Spiel der Spielebibliothek hinzu
+	 */
 	@FXML
 	private void addGame()
 	{
@@ -69,6 +81,9 @@ public class SpielebibliothekController
 		// }
 	}
 
+	/**
+	 * Diese Methode löscht ein Spiel aus der Spielebibliothek
+	 */
 	@FXML
 	private void deleteGame()
 	{

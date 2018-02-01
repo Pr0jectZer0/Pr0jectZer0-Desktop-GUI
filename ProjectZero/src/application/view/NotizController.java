@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Controller-Klasse f�r die Notizenfunktion
+ * Controller-Klasse für die Notizenfunktion
  * 
  * @author Dorsch, Deutsch, Penner, Kramer
  */
@@ -220,6 +220,9 @@ public class NotizController
 
 	}
 
+	/**
+	 * Diese Methode lädt die ausgewählte Notiz in die initialisierten Paramter
+	 */
 	@FXML
 	private void selectNoteAction()
 	{
@@ -243,6 +246,9 @@ public class NotizController
 		}
 	}
 
+	/**
+	 * Diese Methode verwirft die initialisierten Paramter
+	 */
 	@FXML
 	private void deleteNoteAction()
 	{
@@ -267,6 +273,9 @@ public class NotizController
 		noteList.refresh();
 	}
 
+	/**
+	 * Diese Methode öffnet ein Sicherheitsabfrage-Stage wenn eine Notiz-Änderung vorgenommen wurde und ohne Speicherung eine andere Notiz ausgewählt wurde
+	 */
 	private void loadConfirmationPopup()
 	{
 		try
@@ -288,27 +297,44 @@ public class NotizController
 		}
 	}
 
+	/**
+	 * Getter: confStage
+	 * @return
+	 */
 	public Stage getConfStage()
 	{
 		return this.confStage;
 	}
 
+	/**
+	 * Getter: notizcontroller
+	 * @return
+	 */
 	public static NotizController getNotizController()
 	{
 		return notizcontroller;
 	}
 
+	/**
+	 * Diese Methode speichert die Methode
+	 */
 	public void saveExtern()
 	{
 		saveNoteAction();
 	}
 
+	/**
+	 * Diese Methode speichert die Änderungen nicht
+	 */
 	public void dontSave()
 	{
 		selectedNoteTitle.setText(currentNoteTitle);
 		selectedNoteText.setText(currentNoteText);
 	}
 
+	/**
+	 * Diese Methode macht eine Notizanfrage an einen Freund
+	 */
 	@FXML
 	private void addMemberAction()
 	{
