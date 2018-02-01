@@ -450,11 +450,19 @@ public class FreundeslisteController
 		popup.show(friendlist, event.getX(), event.getY());
 	}
 
+	/**
+	 * Getter: popupstage
+	 * @return
+	 */
 	public static Stage getPopupstage()
 	{
 		return popupstage;
 	}
 
+	/**
+	 * Getter: freundeslisteController
+	 * @return
+	 */
 	public static FreundeslisteController getFreundeslistecontroller()
 	{
 		return freundeslistecontroller;
