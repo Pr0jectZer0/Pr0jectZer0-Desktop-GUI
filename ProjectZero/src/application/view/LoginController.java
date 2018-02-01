@@ -119,10 +119,18 @@ public class LoginController {
 		}
 	}
 
+	/**
+	 * Getter: registerStage
+	 * @return
+	 */
 	public Stage getRegisterStage() {
 		return registerStage;
 	}
 
+	/**
+	 * Getter: mainStage
+	 * @return
+	 */
 	public Stage getMainStage() {
 		return mainStage;
 	}
