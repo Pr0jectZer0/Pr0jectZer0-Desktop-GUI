@@ -18,6 +18,9 @@ public class ConfirmPopupController
 
 	private Stage stage;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -27,6 +30,9 @@ public class ConfirmPopupController
 		this.stage.show();
 	}
 
+	/**
+	 * Diese Methode speichert die gemachten Änderungen nach einer Sicherheitsabfrage
+	 */
 	@FXML
 	private void jaButtonAction()
 	{
@@ -34,6 +40,9 @@ public class ConfirmPopupController
 		this.stage.close();
 	}
 
+	/**
+	 * Diese Methode verwirft die gemachten Änderungen nach einer Sicherheitsabfrage
+	 */
 	@FXML
 	private void neinButtonAction()
 	{
