@@ -56,6 +56,9 @@ public class ChatroomController
 	// private int chatroomID;
 	private int gruppenID;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -109,6 +112,10 @@ public class ChatroomController
 		});
 	}
 
+	/**
+	 * Diese Methode fügt ein Chat hinzu
+	 * @param toadd
+	 */
 	private void addNewChat(Lableid toadd)
 	{
 		if (toadd != null && !toadd.istest())
@@ -118,6 +125,9 @@ public class ChatroomController
 		}
 	}
 
+	/**
+	 * Diese Methode initialisert den Pusher für den Chat
+	 */
 	private void updatechat()
 	{
 		Lableid temp = listgroup.getSelectionModel().getSelectedItem();
@@ -184,6 +194,10 @@ public class ChatroomController
 		taanzeige.setText(getMessages());
 	}
 
+	/**
+	 * Diese Methode empfängt Chat-Nachrichten
+	 * @return output
+	 */
 	private String getMessages()
 	{
 		List<Message> messages = Chat.getGroupMessages(gruppenID);
@@ -198,6 +212,9 @@ public class ChatroomController
 		return output;
 	}
 
+	/**
+	 * Diese Methode sendet Chat-Nachrichten
+	 */
 	private void sendMessage()
 	{
 		if (taeingabe.getText() != null && !taeingabe.getText().equals(""))
@@ -208,6 +225,9 @@ public class ChatroomController
 		}
 	}
 
+	/**
+	 * Diese Methode aktualisiert die Gruppenliste
+	 */
 	private void updateGrouplist()
 	{
 		listgroup.getItems().clear();
