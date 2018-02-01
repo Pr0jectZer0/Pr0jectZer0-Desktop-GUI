@@ -12,6 +12,9 @@ import javafx.fxml.FXMLLoader;
 public class EinstellungenController
 {
 
+	/**
+	 * Diese Methode löscht ein Profil
+	 */
 	@FXML
 	private void delAccount()
 	{
