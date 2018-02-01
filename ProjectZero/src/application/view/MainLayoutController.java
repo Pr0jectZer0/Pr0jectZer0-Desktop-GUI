@@ -31,6 +31,9 @@ public class MainLayoutController
 	public Label benachrichtigungenCount;
 	private static MainLayoutController mainLayoutController;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -48,6 +51,9 @@ public class MainLayoutController
 		}
 	}
 
+	/**
+	 * Diese Methode initialisiert die Freundesliste-TableView
+	 */
 	private void initFreundesliste()
 	{
 		try
@@ -73,6 +79,10 @@ public class MainLayoutController
 		});
 	}
 
+	/**
+	 * Getter: mainLayoutController
+	 * @return
+	 */
 	public static MainLayoutController getMainLayoutController()
 	{
 		return mainLayoutController;
