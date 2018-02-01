@@ -65,6 +65,9 @@ public class TerminplanerController
 	private VBox terminPlan;
 	private List<Integer> addedTermine = new ArrayList<Integer>();
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -239,6 +242,10 @@ public class TerminplanerController
 
 	}
 
+	/**
+	 * Diese Methode erstellt ein neuen Termin
+	 * @param event
+	 */
 	@FXML
 	private void handleTerminErstellenAction(ActionEvent event)
 	{
