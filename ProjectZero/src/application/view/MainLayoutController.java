@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * Main-Controller-Klasse
  * 
- * @author Dorsch, Paul, Deutsch, Penner, Kramer
+ * @author Dorsch, Deutsch, Penner, Kramer
  */
 public class MainLayoutController
 {

@@ -34,12 +34,18 @@ public class BenachrichtigungenController
 	private VBox benachrichtigungenBox;
 	public static int benachrichtigungCounter = 0;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
 		initBenachrichtigungen();
 	}
 
+	/**
+	 * Diese Methode initialisiert die Anfragen unter Benachrichtigungen
+	 */
 	private void initBenachrichtigungen()
 	{
 		try
@@ -217,6 +223,12 @@ public class BenachrichtigungenController
 		}
 	}
 
+	/**
+	 * Diese Methode akzeptiert Freundschaftsanfragen
+	 * @param id
+	 * @param friend
+	 * @param vBox
+	 */
 	private void acceptFriendRequest(int id, User friend, VBox vBox)
 	{
 		try
@@ -233,6 +245,11 @@ public class BenachrichtigungenController
 		}
 	}
 
+	/**
+	 * Diese Methode lehnt Freundschaftsanfragen ab
+	 * @param id
+	 * @param vBox
+	 */
 	private void declineFriendRequest(int id, VBox vBox)
 	{
 		try
@@ -250,6 +267,11 @@ public class BenachrichtigungenController
 		}
 	}
 
+	/**
+	 * Diese Methode akzeptiert Gruppenanfragen
+	 * @param group
+	 * @param vBox
+	 */
 	private void acceptGroupRequest(Group group, VBox vBox)
 	{
 		try
@@ -267,6 +289,11 @@ public class BenachrichtigungenController
 		}
 	}
 
+	/**
+	 * Diese Methode lehnt Gruppenanfragen ab
+	 * @param groupID
+	 * @param vBox
+	 */
 	private void declineGroupRequest(int groupID, VBox vBox)
 	{
 		try

@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Controller-Klasse f�r die Notizenfunktion
+ * Controller-Klasse für die Notizenfunktion
  * 
  * @author Dorsch, Deutsch, Penner, Kramer
  */
