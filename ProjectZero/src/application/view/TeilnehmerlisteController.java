@@ -29,6 +29,9 @@ public class TeilnehmerlisteController
 	@FXML
 	private TableColumn<User, Integer> idCol2;
 
+	/**
+	 * Initialisierungen
+	 */
 	@FXML
 	private void initialize()
 	{
@@ -52,6 +55,10 @@ public class TeilnehmerlisteController
 
 	}
 
+	/**
+	 * Diese Methode lädt ein Freund in ein Termin ein
+	 * @param event
+	 */
 	@FXML
 	private void add(ActionEvent event)
 	{
@@ -77,6 +84,10 @@ public class TeilnehmerlisteController
 		}
 	}
 
+	/**
+	 * Diese Methode entfernt ein Freund von einem Termin
+	 * @param event
+	 */
 	@FXML
 	private void remove(ActionEvent event)
 	{
